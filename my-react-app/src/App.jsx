@@ -16,32 +16,32 @@ HARD RULES:
 
 Return exactly this JSON shape:
 {
-  "overview": {
-    "hook": "2-3 punchy, exciting sentences about what we're building and why it's genuinely cool. Make someone want to build this immediately.",
-    "concept": "3-4 sentences explaining how it works in plain English. First person. Use one good analogy. Sound like you're explaining it at a workbench.",
-    "difficulty": "Complete Novice OR Weekend Warrior OR Intermediate Builder",
-    "buildTime": "e.g. 2-3 hours"
-  },
-  "parts": [
-    { "category": "Microcontroller", "name": "ESP32 Dev Board", "quantity": 1, "why": "one honest sentence on why this part." },
-    { "category": "Sensors", "name": "Water Level Sensor", "quantity": 1, "why": "[EXTERNAL] Not in kit. Must be externally sourced to detect water depth." }
-  ],
-  "steps": [
-    {
-      "phase": "Phase 1: Breadboarding",
-      "number": 1,
-      "title": "Short title",
-      "instruction": "2-3 clear sentences in your voice. Specific pin numbers.",
-      "sanityCheck": "What they should see or hear at this exact point. Or null.",
-      "proTip": "A genuinely useful tip for this step. Or null."
-    }
-  ],
-  "code": {
-    "language": "cpp",
-    "filename": "snake_case_project_name.ino",
-    "snippet": "Complete working Arduino C++ with clear inline comments. No shortcuts.",
-    "breakdown": "3-4 sentences walking through the logic. Point out anything that trips people up. First person tone."
-  }
+  "overview": {
+    "hook": "2-3 punchy, exciting sentences about what we're building and why it's genuinely cool. Make someone want to build this immediately.",
+    "concept": "3-4 sentences explaining how it works in plain English. First person. Use one good analogy. Sound like you're explaining it at a workbench.",
+    "difficulty": "Complete Novice OR Weekend Warrior OR Intermediate Builder",
+    "buildTime": "e.g. 2-3 hours"
+  },
+  "parts": [
+    { "category": "Microcontroller", "name": "ESP32 Dev Board", "quantity": 1, "why": "one honest sentence on why this part." },
+    { "category": "Sensors", "name": "Water Level Sensor", "quantity": 1, "why": "[EXTERNAL] Not in kit. Must be externally sourced to detect water depth." }
+  ],
+  "steps": [
+    {
+      "phase": "Phase 1: Breadboarding",
+      "number": 1,
+      "title": "Short title",
+      "instruction": "2-3 clear sentences in your voice. Specific pin numbers.",
+      "sanityCheck": "What they should see or hear at this exact point. Or null.",
+      "proTip": "A genuinely useful tip for this step. Or null."
+    }
+  ],
+  "code": {
+    "language": "cpp",
+    "filename": "snake_case_project_name.ino",
+    "snippet": "Complete working Arduino C++ with clear inline comments. No shortcuts.",
+    "breakdown": "3-4 sentences walking through the logic. Point out anything that trips people up. First person tone."
+  }
 }
 
 Voice rules inside JSON strings:
@@ -146,13 +146,7 @@ button{font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;}
 .menu-btn{display:none;}
 .main-pad{padding:48px 48px 80px;}
 
-@media(max-width: 900px) {
-  .sidebar{position:fixed;left:0;top:0;bottom:0;z-index:100;transform:translateX(-100%);}
-  .sidebar.open{transform:translateX(0);}
-  .overlay.open{display:block;}
-  .menu-btn{display:block;background:none;border:none;padding:8px;margin-right:12px;color:inherit;}
-  .topbar-px{padding:0 16px !important;}
-  .main-pad{padding:24px 16px 80px;}
+@media(max-width: 900px) {.sidebar{position:fixed;left:0;top:0;bottom:0;z-index:100;transform:translateX(-100%);}.sidebar.open{transform:translateX(0);}.overlay.open{display:block;}.menu-btn{display:block;background:none;border:none;padding:8px;margin-right:12px;color:inherit;}.topbar-px{padding:0 16px !important;}.main-pad{padding:24px 16px 80px;}
 }
 `;
 
@@ -844,16 +838,11 @@ const LESSONS = {
       filename: 'onboard_blink.ino',
       snippet: `const int LED_PIN = 2; // Onboard Blue LED
 
-void setup() {
-  pinMode(LED_PIN, OUTPUT);
+void setup() {pinMode(LED_PIN, OUTPUT);
 }
 
-void loop() {
-  digitalWrite(LED_PIN, HIGH);
-  delay(1000); // Wait 1000ms (1 second)
-  
-  digitalWrite(LED_PIN, LOW);
-  delay(1000); 
+void loop() {digitalWrite(LED_PIN, HIGH);delay(1000); // Wait 1000ms (1 second)
+  digitalWrite(LED_PIN, LOW);delay(1000); 
 }`,
       breakdown:
         'This code declares GPIO 2 as an Output. In the loop, `digitalWrite(2, HIGH)` raises voltage to 3.3V, lighting the LED. It waits 1000ms, drops the pin back to 0V (LOW), and repeats.',
@@ -910,22 +899,11 @@ void loop() {
       snippet: `const int BUTTON_PIN = 4;
 const int LED_PIN = 2;
 
-void setup() {
-  Serial.begin(115200);
-  pinMode(BUTTON_PIN, INPUT_PULLUP);
-  pinMode(LED_PIN, OUTPUT);
+void setup() {Serial.begin(115200);pinMode(BUTTON_PIN, INPUT_PULLUP);pinMode(LED_PIN, OUTPUT);
 }
 
-void loop() {
-  int state = digitalRead(BUTTON_PIN);
-  
-  if (state == LOW) {
-    digitalWrite(LED_PIN, HIGH);
-    Serial.println("Button Pressed!");
-  } else {
-    digitalWrite(LED_PIN, LOW);
-  }
-  delay(50);
+void loop() {int state = digitalRead(BUTTON_PIN);
+  if (state == LOW) {  digitalWrite(LED_PIN, HIGH);  Serial.println("Button Pressed!");} else {  digitalWrite(LED_PIN, LOW);}delay(50);
 }`,
       breakdown:
         'By setting `INPUT_PULLUP`, the ESP32 feeds 3.3V directly to GPIO 4 internally. Unpressed reads HIGH. Pressing the button pulls it to Ground (LOW). Our conditional `if` captures this switch and flashes the blue LED.',
@@ -978,20 +956,10 @@ const int FREQ = 5000;
 const int CHANNEL = 0;
 const int RESOLUTION = 8; // 0-255
 
-void setup() {
-  ledcSetup(CHANNEL, FREQ, RESOLUTION);
-  ledcAttachPin(LED_PIN, CHANNEL);
+void setup() {ledcSetup(CHANNEL, FREQ, RESOLUTION);ledcAttachPin(LED_PIN, CHANNEL);
 }
 
-void loop() {
-  for (int duty = 0; duty <= 255; duty++) {
-    ledcWrite(CHANNEL, duty);
-    delay(5);
-  }
-  for (int duty = 255; duty >= 0; duty--) {
-    ledcWrite(CHANNEL, duty);
-    delay(5);
-  }
+void loop() {for (int duty = 0; duty <= 255; duty++) {  ledcWrite(CHANNEL, duty);  delay(5);}for (int duty = 255; duty >= 0; duty--) {  ledcWrite(CHANNEL, duty);  delay(5);}
 }`,
       breakdown:
         'We configure an internal PWM generator on Channel 0 running at 5000Hz. Using a standard `for` loop, we increment the duty cycle from 0 to 255, producing a smooth breathing effect on the LED.',
@@ -1044,21 +1012,10 @@ void loop() {
 Servo myServo;
 const int SERVO_PIN = 13;
 
-void setup() {
-  ESP32PWM::allocateTimer(0);
-  myServo.setPeriodHertz(50);
-  myServo.attach(SERVO_PIN, 500, 2400);
+void setup() {ESP32PWM::allocateTimer(0);myServo.setPeriodHertz(50);myServo.attach(SERVO_PIN, 500, 2400);
 }
 
-void loop() {
-  for (int pos = 0; pos <= 180; pos++) {
-    myServo.write(pos);
-    delay(15);
-  }
-  for (int pos = 180; pos >= 0; pos--) {
-    myServo.write(pos);
-    delay(15);
-  }
+void loop() {for (int pos = 0; pos <= 180; pos++) {  myServo.write(pos);  delay(15);}for (int pos = 180; pos >= 0; pos--) {  myServo.write(pos);  delay(15);}
 }`,
       breakdown:
         'Using the `ESP32Servo` library, we allocate a hardware timer. We attach our servo and invoke `myServo.write(angle)`. The library handles the complex microsecond PWM math to lock the motor at the exact degree.',
@@ -1112,18 +1069,8 @@ void loop() {
 
 Adafruit_SSD1306 display(128, 64, &Wire, -1);
 
-void setup() {
-  Serial.begin(115200);
-  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
-    for(;;); // Halt on error
-  }
-  
-  display.clearDisplay();
-  display.setTextSize(1);
-  display.setTextColor(WHITE);
-  display.setCursor(0, 10);
-  display.println("BFIOT SYSTEM OK");
-  display.display(); // Push buffer to screen
+void setup() {Serial.begin(115200);if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {  for(;;); // Halt on error}
+  display.clearDisplay();display.setTextSize(1);display.setTextColor(WHITE);display.setCursor(0, 10);display.println("BFIOT SYSTEM OK");display.display(); // Push buffer to screen
 }
 
 void loop() {}`,
@@ -1183,29 +1130,13 @@ void loop() {}`,
       snippet: `const int TRIG_PIN = 5;
 const int ECHO_PIN = 18;
 
-void setup() {
-  Serial.begin(115200);
-  pinMode(TRIG_PIN, OUTPUT);
-  pinMode(ECHO_PIN, INPUT);
+void setup() {Serial.begin(115200);pinMode(TRIG_PIN, OUTPUT);pinMode(ECHO_PIN, INPUT);
 }
 
-void loop() {
-  digitalWrite(TRIG_PIN, LOW);
-  delayMicroseconds(2);
-  
-  // Screech for 10us
-  digitalWrite(TRIG_PIN, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(TRIG_PIN, LOW);
-  
-  // Listen for echo
-  long duration = pulseIn(ECHO_PIN, HIGH);
-  float distance = duration * 0.0343 / 2;
-  
-  Serial.print("Distance: ");
-  Serial.print(distance);
-  Serial.println(" cm");
-  delay(200);
+void loop() {digitalWrite(TRIG_PIN, LOW);delayMicroseconds(2);
+  // Screech for 10usdigitalWrite(TRIG_PIN, HIGH);delayMicroseconds(10);digitalWrite(TRIG_PIN, LOW);
+  // Listen for echolong duration = pulseIn(ECHO_PIN, HIGH);float distance = duration * 0.0343 / 2;
+  Serial.print("Distance: ");Serial.print(distance);Serial.println(" cm");delay(200);
 }`,
       breakdown:
         'We use `delayMicroseconds()` for surgical precision. A 10us pulse fires the acoustic screech. `pulseIn()` acts as a stopwatch, measuring how long the ECHO pin stays HIGH. We calculate distance by multiplying the time by the speed of sound and dividing by two for the round trip.',
@@ -1256,17 +1187,11 @@ void loop() {
       filename: 'relay_toggle.ino',
       snippet: `const int RELAY_PIN = 19;
 
-void setup() {
-  pinMode(RELAY_PIN, OUTPUT);
-  digitalWrite(RELAY_PIN, LOW);
+void setup() {pinMode(RELAY_PIN, OUTPUT);digitalWrite(RELAY_PIN, LOW);
 }
 
-void loop() {
-  digitalWrite(RELAY_PIN, HIGH); // Click!
-  delay(3000); 
-  
-  digitalWrite(RELAY_PIN, LOW); // Click!
-  delay(3000); 
+void loop() {digitalWrite(RELAY_PIN, HIGH); // Click!delay(3000); 
+  digitalWrite(RELAY_PIN, LOW); // Click!delay(3000); 
 }`,
       breakdown:
         'Setting the pin HIGH energizes the electromagnet inside the blue box, physically swinging a copper plate closed to bridge the high-power circuit (NO terminal). LOW releases the spring.',
@@ -1321,26 +1246,14 @@ void loop() {
 WebServer server(80);
 const int LED_PIN = 2;
 
-void setup() {
-  Serial.begin(115200);
-  pinMode(LED_PIN, OUTPUT);
-  
-  // Create our own Wi-Fi hotspot
-  WiFi.softAP("BFIOT-Hub", "password123");
-  
-  server.on("/", [](){
-    String html = "<h1>BFIOT Control</h1><a href='/on'>TURN ON</a> <br> <a href='/off'>TURN OFF</a>";
-    server.send(200, "text/html", html);
-  });
-  
-  server.on("/on", [](){ digitalWrite(LED_PIN, HIGH); server.sendHeader("Location","/"); server.send(303); });
-  server.on("/off", [](){ digitalWrite(LED_PIN, LOW); server.sendHeader("Location","/"); server.send(303); });
-  
-  server.begin();
+void setup() {Serial.begin(115200);pinMode(LED_PIN, OUTPUT);
+  // Create our own Wi-Fi hotspotWiFi.softAP("BFIOT-Hub", "password123");
+  server.on("/", [](){  String html = "<h1>BFIOT Control</h1><a href='/on'>TURN ON</a> <br> <a href='/off'>TURN OFF</a>";  server.send(200, "text/html", html);});
+  server.on("/on", [](){ digitalWrite(LED_PIN, HIGH); server.sendHeader("Location","/"); server.send(303); });server.on("/off", [](){ digitalWrite(LED_PIN, LOW); server.sendHeader("Location","/"); server.send(303); });
+  server.begin();
 }
 
-void loop() {
-  server.handleClient(); // Listen for phone requests
+void loop() {server.handleClient(); // Listen for phone requests
 }`,
       breakdown:
         "We boot the ESP32 radio in `softAP` mode. The `server.on` routing intercepts URL requests (like `/on`), triggers `digitalWrite()`, and instantly redirects the user's browser back to the main HTML dashboard.",
@@ -2805,12 +2718,8 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
         code: result.code?.snippet,
       };
 
-      const systemPrompt = `You are the technical mentor from the YouTube channel "BFIOT".
-      You are helping the user assemble the following project. Avoid generic replies.
-      PROJECT WORKBENCH DATA:
-      ${JSON.stringify(projectBrief)}
-
-      Keep your answers helpful, highly brief (max 2-3 sentences), and explain matching the active pinouts.`;
+      const systemPrompt = `You are the technical mentor from the YouTube channel "BFIOT".    You are helping the user assemble the following project. Avoid generic replies.    PROJECT WORKBENCH DATA:    ${JSON.stringify(projectBrief)}
+    Keep your answers helpful, highly brief (max 2-3 sentences), and explain matching the active pinouts.`;
 
       const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
         method: 'POST',
