@@ -4161,17 +4161,7 @@ export default function App() {
     lab: ['Project Lab', 'AI Project Builder'],
   }[page] || ['', ''];
 
-  if (!isAuthenticated) {
-    return (
-      <Login
-        onLogin={() => {
-          setIsAuthenticated(true);
-          localStorage.setItem('bfiot_auth', 'true');
-        }}
-        T={T}
-      />
-    );
-  }
+  // Global auth removed
 
   return (
     <div
@@ -4991,6 +4981,18 @@ export default function App() {
           {' '}
           <div style={{ maxWidth: '100%', margin: '0 auto' }}>
             {' '}
+            {page !== 'gz' && !isAuthenticated && (
+              <div className="fu" style={{ padding: '40px 0', height: '100%', minHeight: 500 }}>
+                <Login
+                  onLogin={() => {
+                    setIsAuthenticated(true);
+                    localStorage.setItem('bfiot_auth', 'true');
+                  }}
+                  onCancel={() => setPage('gz')}
+                  T={T}
+                />
+              </div>
+            )}
             {page === 'gz' && (
               <div className="fu">
                 {' '}
@@ -5918,7 +5920,7 @@ export default function App() {
             {' '}
             {/* If our active page matches an internal Lesson Database key, render the dynamic premium view */}
             {' '}
-            {activeLesson && page !== 'gz' ? (
+            {isAuthenticated && activeLesson && page !== 'gz' ? (
               // FIX: Only render locked screen if user hasn't overridden and it's a phase 1-12 restriction.
               [
                 'm1',
@@ -6593,7 +6595,7 @@ export default function App() {
                 </div>
               )
             ) : // If page is lab, or some other loaded fallback page
-              page === 'lab' ? (
+              isAuthenticated && page === 'lab' ? (
                 <ProjectLabPage
                   T={T}
                   result={result}

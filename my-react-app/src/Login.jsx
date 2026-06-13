@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
 
-export default function Login({ onLogin, T }) {
+export default function Login({ onLogin, onCancel, T }) {
+  const [username, setUsername] = useState('');
   const [passcode, setPasscode] = useState('');
   const [error, setError] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Use import.meta.env for Vite environment variables
-    const secret = import.meta.env.VITE_ACCESS_PASSCODE || 'maker123';
     
-    if (passcode === secret) {
+    let users = {};
+    try {
+      users = JSON.parse(import.meta.env.VITE_USERS || '{"admin":"maker123"}');
+    } catch (e) {
+      users = { "admin": import.meta.env.VITE_ACCESS_PASSCODE || "maker123" };
+    }
+    
+    if (users[username] && users[username] === passcode) {
       setError(false);
       onLogin();
     } else {
@@ -21,7 +27,7 @@ export default function Login({ onLogin, T }) {
   return (
     <div
       style={{
-        height: '100vh',
+        height: '100%',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -66,10 +72,45 @@ export default function Login({ onLogin, T }) {
             </svg>
           </div>
           <h1 style={{ fontSize: 24, fontWeight: 700, margin: '0 0 8px 0', letterSpacing: -0.5 }}>Restricted Access</h1>
-          <p style={{ fontSize: 14, color: T?.textSub || '#4a5a78', margin: 0 }}>Enter the secret passcode to access the workbench.</p>
+          <p style={{ fontSize: 14, color: T?.textSub || '#4a5a78', margin: 0 }}>Enter your student credentials to access the module.</p>
         </div>
 
         <form onSubmit={handleSubmit}>
+          <div style={{ marginBottom: 16 }}>
+            <label 
+              style={{ 
+                display: 'block', 
+                fontSize: 12, 
+                fontWeight: 600, 
+                marginBottom: 8, 
+                color: T?.textMuted || '#1e2d4a',
+                fontFamily: "'JetBrains Mono',monospace",
+                letterSpacing: 1
+              }}
+            >
+              USERNAME
+            </label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="student1"
+              style={{
+                width: '100%',
+                padding: '12px 16px',
+                background: T?.bbBg || '#060c1a',
+                border: `1px solid ${error ? (T?.red || '#ef4444') : (T?.border || '#111d33')}`,
+                borderRadius: 8,
+                color: T?.text || '#e8edf5',
+                fontSize: 16,
+                fontFamily: "'JetBrains Mono',monospace",
+                outline: 'none',
+                transition: 'all 0.2s'
+              }}
+              autoFocus
+            />
+          </div>
+
           <div style={{ marginBottom: 24 }}>
             <label 
               style={{ 
@@ -82,7 +123,7 @@ export default function Login({ onLogin, T }) {
                 letterSpacing: 1
               }}
             >
-              PASSCODE
+              PASSWORD
             </label>
             <input
               type="password"
@@ -105,7 +146,7 @@ export default function Login({ onLogin, T }) {
             />
             {error && (
               <div style={{ color: T?.red || '#ef4444', fontSize: 12, marginTop: 8, fontWeight: 500 }}>
-                Access Denied. Incorrect passcode.
+                Access Denied. Incorrect username or password.
               </div>
             )}
           </div>
@@ -123,13 +164,38 @@ export default function Login({ onLogin, T }) {
               fontWeight: 600,
               cursor: 'pointer',
               transition: 'background 0.2s',
-              fontFamily: "'Plus Jakarta Sans',sans-serif"
+              fontFamily: "'Plus Jakarta Sans',sans-serif",
+              marginBottom: onCancel ? 12 : 0
             }}
             onMouseOver={(e) => e.target.style.opacity = 0.9}
             onMouseOut={(e) => e.target.style.opacity = 1}
           >
             Authenticate
           </button>
+          
+          {onCancel && (
+            <button
+              type="button"
+              onClick={onCancel}
+              style={{
+                width: '100%',
+                padding: '14px',
+                background: 'transparent',
+                color: T?.textSub || '#4a5a78',
+                border: `1px solid ${T?.border || '#111d33'}`,
+                borderRadius: 8,
+                fontSize: 15,
+                fontWeight: 600,
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+                fontFamily: "'Plus Jakarta Sans',sans-serif"
+              }}
+              onMouseOver={(e) => { e.target.style.background = T?.surfaceAlt || '#0c1525'; e.target.style.color = T?.text || '#e8edf5'; }}
+              onMouseOut={(e) => { e.target.style.background = 'transparent'; e.target.style.color = T?.textSub || '#4a5a78'; }}
+            >
+              Return to Home
+            </button>
+          )}
         </form>
       </div>
     </div>
