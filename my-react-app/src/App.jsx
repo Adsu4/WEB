@@ -4105,9 +4105,7 @@ export default function App() {
   useEffect(() => setFaqOpen(false), [page]); // Persistent Maker's Log & Cheat Code states
   const [history, setHistory] = useState([]);
   const [result, setResult] = useState(null);
-  const [unlocked, setUnlocked] = useState(
-    () => localStorage.getItem('bfiot_unlocked') === 'true'
-  );
+  const unlocked = true;
   const [overrideGlitch, setOverrideGlitch] = useState(false);
 
   useEffect(() => {
@@ -4126,9 +4124,6 @@ export default function App() {
     const handleKeyStroke = (e) => {
       strokeSequence = (strokeSequence + e.key).slice(-5).toLowerCase();
       if (strokeSequence === 'bfiot') {
-        setUnlocked(true);
-        // Add this line so the cheat code persists through a refresh!
-        localStorage.setItem('bfiot_unlocked', 'true');
         setOverrideGlitch(true);
         setTimeout(() => setOverrideGlitch(false), 500);
       }
@@ -5921,28 +5916,7 @@ export default function App() {
             {/* If our active page matches an internal Lesson Database key, render the dynamic premium view */}
             {' '}
             {isAuthenticated && activeLesson && page !== 'gz' ? (
-              // FIX: Only render locked screen if user hasn't overridden and it's a phase 1-12 restriction.
-              [
-                'm1',
-                'm2',
-                'm3',
-                'm4',
-                'm5',
-                'm6',
-                'm7',
-                'm8',
-                'm9',
-                'm10',
-                'm11',
-                'm12',
-              ].includes(page) && !unlocked ? (
-                <LockedPage
-                  info={LINFO[page]}
-                  T={T}
-                  unlocked={unlocked}
-                  setUnlocked={setUnlocked}
-                />
-              ) : (
+              (
                 <div
                   className="fu"
                   style={{
