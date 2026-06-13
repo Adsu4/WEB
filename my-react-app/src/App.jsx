@@ -133,11 +133,11 @@ a{text-decoration:none;color:inherit}
 button{font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;}
 
 /* Custom Code Colorizer classes */
-.st-kw{color:#c678dd;font-weight:600;} 
-.st-fn{color:#61afef;} 
-.st-st{color:#98c379;} 
+.st-kw{color:#c678dd;font-weight:600;} 
+.st-fn{color:#61afef;} 
+.st-st{color:#98c379;} 
 .st-cm{color:#7f848e;font-style:italic;}
-.st-num{color:#d19a66;} 
+.st-num{color:#d19a66;} 
 .st-op{color:#56b6c2;}
 
 /* Layout Utilities */
@@ -379,7 +379,7 @@ function LBtn({ id, title, tag, active, locked, onClick, T, special }) {
         transition: 'background 0.15s',
       }}
     >
-           {' '}
+           {' '}
       <div
         style={{
           width: 20,
@@ -399,7 +399,7 @@ function LBtn({ id, title, tag, active, locked, onClick, T, special }) {
           justifyContent: 'center',
         }}
       >
-               {' '}
+               {' '}
         {locked ? (
           <Lock s={9} c={T.textMuted} />
         ) : (
@@ -416,11 +416,11 @@ function LBtn({ id, title, tag, active, locked, onClick, T, special }) {
             }}
           />
         )}
-             {' '}
+             {' '}
       </div>
-           {' '}
+           {' '}
       <div style={{ flex: 1, minWidth: 0 }}>
-               {' '}
+               {' '}
         <div
           style={{
             fontSize: 12.5,
@@ -431,7 +431,7 @@ function LBtn({ id, title, tag, active, locked, onClick, T, special }) {
         >
           {title}
         </div>
-               {' '}
+               {' '}
         {tag && (
           <div
             style={{
@@ -444,9 +444,9 @@ function LBtn({ id, title, tag, active, locked, onClick, T, special }) {
             {tag}
           </div>
         )}
-             {' '}
+             {' '}
       </div>
-         {' '}
+         {' '}
     </button>
   );
 }
@@ -464,7 +464,7 @@ const TToggle = ({ dark, onToggle, T }) => (
       padding: '6px 12px',
     }}
   >
-        {dark ? <Sun s={13} c={T.primary} /> : <Moon s={13} c={T.primary} />}   {' '}
+        {dark ? <Sun s={13} c={T.primary} /> : <Moon s={13} c={T.primary} />}   {' '}
     <span
       style={{
         fontSize: 11,
@@ -475,7 +475,7 @@ const TToggle = ({ dark, onToggle, T }) => (
     >
       {dark ? 'Light' : 'Dark'}
     </span>
-     {' '}
+     {' '}
   </button>
 );
 
@@ -842,7 +842,7 @@ void setup() {pinMode(LED_PIN, OUTPUT);
 }
 
 void loop() {digitalWrite(LED_PIN, HIGH);delay(1000); // Wait 1000ms (1 second)
-  digitalWrite(LED_PIN, LOW);delay(1000); 
+  digitalWrite(LED_PIN, LOW);delay(1000); 
 }`,
       breakdown:
         'This code declares GPIO 2 as an Output. In the loop, `digitalWrite(2, HIGH)` raises voltage to 3.3V, lighting the LED. It waits 1000ms, drops the pin back to 0V (LOW), and repeats.',
@@ -903,7 +903,7 @@ void setup() {Serial.begin(115200);pinMode(BUTTON_PIN, INPUT_PULLUP);pinMode(LED
 }
 
 void loop() {int state = digitalRead(BUTTON_PIN);
-  if (state == LOW) {  digitalWrite(LED_PIN, HIGH);  Serial.println("Button Pressed!");} else {  digitalWrite(LED_PIN, LOW);}delay(50);
+  if (state == LOW) {  digitalWrite(LED_PIN, HIGH);  Serial.println("Button Pressed!");} else {  digitalWrite(LED_PIN, LOW);}delay(50);
 }`,
       breakdown:
         'By setting `INPUT_PULLUP`, the ESP32 feeds 3.3V directly to GPIO 4 internally. Unpressed reads HIGH. Pressing the button pulls it to Ground (LOW). Our conditional `if` captures this switch and flashes the blue LED.',
@@ -959,7 +959,7 @@ const int RESOLUTION = 8; // 0-255
 void setup() {ledcSetup(CHANNEL, FREQ, RESOLUTION);ledcAttachPin(LED_PIN, CHANNEL);
 }
 
-void loop() {for (int duty = 0; duty <= 255; duty++) {  ledcWrite(CHANNEL, duty);  delay(5);}for (int duty = 255; duty >= 0; duty--) {  ledcWrite(CHANNEL, duty);  delay(5);}
+void loop() {for (int duty = 0; duty <= 255; duty++) {  ledcWrite(CHANNEL, duty);  delay(5);}for (int duty = 255; duty >= 0; duty--) {  ledcWrite(CHANNEL, duty);  delay(5);}
 }`,
       breakdown:
         'We configure an internal PWM generator on Channel 0 running at 5000Hz. Using a standard `for` loop, we increment the duty cycle from 0 to 255, producing a smooth breathing effect on the LED.',
@@ -1015,7 +1015,7 @@ const int SERVO_PIN = 13;
 void setup() {ESP32PWM::allocateTimer(0);myServo.setPeriodHertz(50);myServo.attach(SERVO_PIN, 500, 2400);
 }
 
-void loop() {for (int pos = 0; pos <= 180; pos++) {  myServo.write(pos);  delay(15);}for (int pos = 180; pos >= 0; pos--) {  myServo.write(pos);  delay(15);}
+void loop() {for (int pos = 0; pos <= 180; pos++) {  myServo.write(pos);  delay(15);}for (int pos = 180; pos >= 0; pos--) {  myServo.write(pos);  delay(15);}
 }`,
       breakdown:
         'Using the `ESP32Servo` library, we allocate a hardware timer. We attach our servo and invoke `myServo.write(angle)`. The library handles the complex microsecond PWM math to lock the motor at the exact degree.',
@@ -1069,8 +1069,8 @@ void loop() {for (int pos = 0; pos <= 180; pos++) {  myServo.write(pos);  dela
 
 Adafruit_SSD1306 display(128, 64, &Wire, -1);
 
-void setup() {Serial.begin(115200);if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {  for(;;); // Halt on error}
-  display.clearDisplay();display.setTextSize(1);display.setTextColor(WHITE);display.setCursor(0, 10);display.println("BFIOT SYSTEM OK");display.display(); // Push buffer to screen
+void setup() {Serial.begin(115200);if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {  for(;;); // Halt on error}
+  display.clearDisplay();display.setTextSize(1);display.setTextColor(WHITE);display.setCursor(0, 10);display.println("BFIOT SYSTEM OK");display.display(); // Push buffer to screen
 }
 
 void loop() {}`,
@@ -1134,9 +1134,9 @@ void setup() {Serial.begin(115200);pinMode(TRIG_PIN, OUTPUT);pinMode(ECHO_PIN, I
 }
 
 void loop() {digitalWrite(TRIG_PIN, LOW);delayMicroseconds(2);
-  // Screech for 10usdigitalWrite(TRIG_PIN, HIGH);delayMicroseconds(10);digitalWrite(TRIG_PIN, LOW);
-  // Listen for echolong duration = pulseIn(ECHO_PIN, HIGH);float distance = duration * 0.0343 / 2;
-  Serial.print("Distance: ");Serial.print(distance);Serial.println(" cm");delay(200);
+  // Screech for 10usdigitalWrite(TRIG_PIN, HIGH);delayMicroseconds(10);digitalWrite(TRIG_PIN, LOW);
+  // Listen for echolong duration = pulseIn(ECHO_PIN, HIGH);float distance = duration * 0.0343 / 2;
+  Serial.print("Distance: ");Serial.print(distance);Serial.println(" cm");delay(200);
 }`,
       breakdown:
         'We use `delayMicroseconds()` for surgical precision. A 10us pulse fires the acoustic screech. `pulseIn()` acts as a stopwatch, measuring how long the ECHO pin stays HIGH. We calculate distance by multiplying the time by the speed of sound and dividing by two for the round trip.',
@@ -1190,8 +1190,8 @@ void loop() {digitalWrite(TRIG_PIN, LOW);delayMicroseconds(2);
 void setup() {pinMode(RELAY_PIN, OUTPUT);digitalWrite(RELAY_PIN, LOW);
 }
 
-void loop() {digitalWrite(RELAY_PIN, HIGH); // Click!delay(3000); 
-  digitalWrite(RELAY_PIN, LOW); // Click!delay(3000); 
+void loop() {digitalWrite(RELAY_PIN, HIGH); // Click!delay(3000); 
+  digitalWrite(RELAY_PIN, LOW); // Click!delay(3000); 
 }`,
       breakdown:
         'Setting the pin HIGH energizes the electromagnet inside the blue box, physically swinging a copper plate closed to bridge the high-power circuit (NO terminal). LOW releases the spring.',
@@ -1247,10 +1247,10 @@ WebServer server(80);
 const int LED_PIN = 2;
 
 void setup() {Serial.begin(115200);pinMode(LED_PIN, OUTPUT);
-  // Create our own Wi-Fi hotspotWiFi.softAP("BFIOT-Hub", "password123");
-  server.on("/", [](){  String html = "<h1>BFIOT Control</h1><a href='/on'>TURN ON</a> <br> <a href='/off'>TURN OFF</a>";  server.send(200, "text/html", html);});
-  server.on("/on", [](){ digitalWrite(LED_PIN, HIGH); server.sendHeader("Location","/"); server.send(303); });server.on("/off", [](){ digitalWrite(LED_PIN, LOW); server.sendHeader("Location","/"); server.send(303); });
-  server.begin();
+  // Create our own Wi-Fi hotspotWiFi.softAP("BFIOT-Hub", "password123");
+  server.on("/", [](){  String html = "<h1>BFIOT Control</h1><a href='/on'>TURN ON</a> <br> <a href='/off'>TURN OFF</a>";  server.send(200, "text/html", html);});
+  server.on("/on", [](){ digitalWrite(LED_PIN, HIGH); server.sendHeader("Location","/"); server.send(303); });server.on("/off", [](){ digitalWrite(LED_PIN, LOW); server.sendHeader("Location","/"); server.send(303); });
+  server.begin();
 }
 
 void loop() {server.handleClient(); // Listen for phone requests
@@ -1295,7 +1295,7 @@ function BBViz({ T, activeWireState = true }) {
 
   return (
     <div style={{ position: 'relative' }}>
-           {' '}
+           {' '}
       <svg
         width={W}
         height={H}
@@ -1306,7 +1306,7 @@ function BBViz({ T, activeWireState = true }) {
           border: `1px solid ${T.border}`,
         }}
       >
-                         {/* Interactive Power Rails */}       {' '}
+                         {/* Interactive Power Rails */}       {' '}
         {RAILS.map((rail) => {
           const isLit = hov?.id === rail.id;
           return (
@@ -1323,7 +1323,7 @@ function BBViz({ T, activeWireState = true }) {
               }
               onMouseLeave={() => setHov(null)}
             >
-                           {' '}
+                           {' '}
               <rect
                 x={rail.rx}
                 y={SY - 16}
@@ -1340,7 +1340,7 @@ function BBViz({ T, activeWireState = true }) {
                     : '#e0e7ff'
                 }
               />
-                           {' '}
+                           {' '}
               <line
                 x1={rail.cx}
                 y1={SY}
@@ -1349,7 +1349,7 @@ function BBViz({ T, activeWireState = true }) {
                 stroke={isLit ? rail.color : rail.color + '40'}
                 strokeWidth={isLit ? 2 : 1.2}
               />
-                           {' '}
+                           {' '}
               <text
                 x={rail.cx}
                 y={SY - 6}
@@ -1361,7 +1361,7 @@ function BBViz({ T, activeWireState = true }) {
               >
                 {rail.sign}
               </text>
-                           {' '}
+                           {' '}
               {Array.from({ length: R }, (_, i) => i + 1).map((row) => (
                 <circle
                   key={row}
@@ -1373,16 +1373,16 @@ function BBViz({ T, activeWireState = true }) {
                   strokeWidth={1}
                 />
               ))}
-                         {' '}
+                         {' '}
             </g>
           );
         })}
-               {' '}
-        {/* Render physical wire connections if activeWireState is on */}       {' '}
+               {' '}
+        {/* Render physical wire connections if activeWireState is on */}       {' '}
         {activeWireState && (
           <g style={{ pointerEvents: 'none' }}>
-                        {/* 3V3 Jumper (entering from top off-board) */}       
-               {' '}
+                        {/* 3V3 Jumper (entering from top off-board) */}       
+               {' '}
             <path
               d={`M 18 0 L 18 ${ry(1)}`}
               fill="none"
@@ -1390,8 +1390,8 @@ function BBViz({ T, activeWireState = true }) {
               strokeWidth={2.5}
               opacity={0.85}
             />
-                        {/* GND Jumper (entering from top off-board) */}       
-               {' '}
+                        {/* GND Jumper (entering from top off-board) */}       
+               {' '}
             <path
               d={`M 38 0 L 38 ${ry(1)}`}
               fill="none"
@@ -1399,7 +1399,7 @@ function BBViz({ T, activeWireState = true }) {
               strokeWidth={2.5}
               opacity={0.85}
             />
-                        {/* Resistor Jumper */}           {' '}
+                        {/* Resistor Jumper */}           {' '}
             <path
               d={`M 18 ${ry(10)} Q 35 ${ry(8)}, 60 ${ry(10)}`}
               fill="none"
@@ -1407,7 +1407,7 @@ function BBViz({ T, activeWireState = true }) {
               strokeWidth={2.5}
               opacity={0.85}
             />
-                        {/* LED Jumper spanning 10 & 11 */}           {' '}
+                        {/* LED Jumper spanning 10 & 11 */}           {' '}
             <path
               d={`M 78 ${ry(10)} Q 86 ${ry(8)}, 78 ${ry(11)}`}
               fill="none"
@@ -1415,7 +1415,7 @@ function BBViz({ T, activeWireState = true }) {
               strokeWidth={2.5}
               opacity={0.85}
             />
-                        {/* Return loop jumper */}           {' '}
+                        {/* Return loop jumper */}           {' '}
             <path
               d={`M 132 ${ry(11)} Q 90 ${ry(14)}, 38 ${ry(11)}`}
               fill="none"
@@ -1423,10 +1423,10 @@ function BBViz({ T, activeWireState = true }) {
               strokeWidth={2.5}
               opacity={0.85}
             />
-                     {' '}
+                     {' '}
           </g>
         )}
-                {/* Center Grid Elements */}       {' '}
+                {/* Center Grid Elements */}       {' '}
         {[...LC, ...RC].map((c) => (
           <text
             key={c}
@@ -1440,7 +1440,7 @@ function BBViz({ T, activeWireState = true }) {
             {c}
           </text>
         ))}
-               {' '}
+               {' '}
         <rect
           x={142}
           y={SY - 8}
@@ -1449,10 +1449,10 @@ function BBViz({ T, activeWireState = true }) {
           fill={T.bg}
           opacity={0.9}
         />
-                        {' '}
+                        {' '}
         {Array.from({ length: R }, (_, i) => i + 1).map((row) => (
           <g key={row}>
-                       {' '}
+                       {' '}
             <text
               x={144}
               y={ry(row) + 3}
@@ -1463,7 +1463,7 @@ function BBViz({ T, activeWireState = true }) {
             >
               {row}
             </text>
-                                    {' '}
+                                    {' '}
             {LC.map((c) => {
               const isLit =
                 hov?.type === 'row' && hov.r === row && hov.s === 'l';
@@ -1482,7 +1482,7 @@ function BBViz({ T, activeWireState = true }) {
                 />
               );
             })}
-                                    {' '}
+                                    {' '}
             {RC.map((c) => {
               const isLit =
                 hov?.type === 'row' && hov.r === row && hov.s === 'r';
@@ -1501,12 +1501,12 @@ function BBViz({ T, activeWireState = true }) {
                 />
               );
             })}
-                     {' '}
+                     {' '}
           </g>
         ))}
-             {' '}
+             {' '}
       </svg>
-                  {' '}
+                  {' '}
       <div
         style={{
           height: 30,
@@ -1515,7 +1515,7 @@ function BBViz({ T, activeWireState = true }) {
           marginTop: 8,
         }}
       >
-               {' '}
+               {' '}
         {hov?.type === 'rail' ? (
           <span
             style={{
@@ -1551,9 +1551,9 @@ function BBViz({ T, activeWireState = true }) {
             ↑ Hover any hole to see the copper strip underneath it
           </span>
         )}
-             {' '}
+             {' '}
       </div>
-            {/* Physics Tooltip Overlay for Module 1 */}     {' '}
+            {/* Physics Tooltip Overlay for Module 1 */}     {' '}
       {activeWireState && (
         <div
           style={{
@@ -1569,14 +1569,14 @@ function BBViz({ T, activeWireState = true }) {
             fontSize: 11,
           }}
         >
-                   {' '}
+                   {' '}
           <div
             style={{ color: T.primary, fontWeight: 'bold', marginBottom: 4 }}
           >
             Ohm's Law: LED Circuit
           </div>
-                    <div style={{ color: T.textSub }}>V_source: 3.3V</div>     
-              <div style={{ color: T.textSub }}>V_led: ~2.0V</div>         {' '}
+                    <div style={{ color: T.textSub }}>V_source: 3.3V</div>     
+              <div style={{ color: T.textSub }}>V_led: ~2.0V</div>         {' '}
           <div
             style={{
               color: T.textSub,
@@ -1587,14 +1587,14 @@ function BBViz({ T, activeWireState = true }) {
           >
             V_drop (R): 1.3V
           </div>
-                   {' '}
+                   {' '}
           <div style={{ color: T.green, fontWeight: 'bold' }}>
             I = 1.3V / 220Ω ≈ 6mA
           </div>
-                 {' '}
+                 {' '}
         </div>
       )}
-         {' '}
+         {' '}
     </div>
   );
 }
@@ -1666,7 +1666,7 @@ function LessonSimulator({ pageId, T }) {
         boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
       }}
     >
-           {' '}
+           {' '}
       <div
         style={{
           display: 'flex',
@@ -1677,7 +1677,7 @@ function LessonSimulator({ pageId, T }) {
           marginBottom: 16,
         }}
       >
-               {' '}
+               {' '}
         <div
           style={{
             width: 8,
@@ -1687,7 +1687,7 @@ function LessonSimulator({ pageId, T }) {
           }}
           className="pulse"
         />
-               {' '}
+               {' '}
         <span
           style={{
             fontSize: 11,
@@ -1698,17 +1698,17 @@ function LessonSimulator({ pageId, T }) {
         >
           VIRTUAL MAKE LAB // LIVE SIMULATION
         </span>
-             {' '}
+             {' '}
       </div>
-           {' '}
+           {' '}
       {pageId === 'm1' && (
         <div>
-                   {' '}
+                   {' '}
           <p style={{ fontSize: 13, color: T.textSub, marginBottom: 16 }}>
             Simulate the jumper connection. Moving the ground wire from Row 11
             to a separate row breaks the physical loop.
           </p>
-                   {' '}
+                   {' '}
           <div
             style={{
               display: 'flex',
@@ -1721,11 +1721,11 @@ function LessonSimulator({ pageId, T }) {
               marginBottom: 16,
             }}
           >
-                       {' '}
+                       {' '}
             <span style={{ fontSize: 13, fontWeight: 600 }}>
               Jumper Terminal Route:
             </span>
-                       {' '}
+                       {' '}
             <button
               onClick={() => setWireOnE11(!wireOnE11)}
               style={{
@@ -1739,13 +1739,13 @@ function LessonSimulator({ pageId, T }) {
                 cursor: 'pointer',
               }}
             >
-                           {' '}
-              {wireOnE11 ? 'Hooked to E11 (ON)' : 'Moved to E12 (OFF)'}         
-               {' '}
+                           {' '}
+              {wireOnE11 ? 'Hooked to E11 (ON)' : 'Moved to E12 (OFF)'}         
+               {' '}
             </button>
-                     {' '}
+                     {' '}
           </div>
-                   {' '}
+                   {' '}
           <div
             style={{
               display: 'flex',
@@ -1757,9 +1757,9 @@ function LessonSimulator({ pageId, T }) {
               border: `1px solid ${T.border}`,
             }}
           >
-                       {' '}
+                       {' '}
             <div style={{ textAlign: 'center' }}>
-                           {' '}
+                           {' '}
               <div
                 style={{
                   fontSize: 42,
@@ -1770,28 +1770,28 @@ function LessonSimulator({ pageId, T }) {
               >
                 🔴
               </div>
-                           {' '}
+                           {' '}
               <span
                 style={{ fontSize: 11, fontWeight: 700, color: T.textMuted }}
               >
                 CIRCUIT STATE: {wireOnE11 ? 'CLOSED LOOP' : 'BROKEN LOOP'}
               </span>
-                         {' '}
+                         {' '}
             </div>
-                     {' '}
+                     {' '}
           </div>
-                 {' '}
+                 {' '}
         </div>
       )}
-           {' '}
+           {' '}
       {pageId === 'm2' && (
         <div>
-                   {' '}
+                   {' '}
           <p style={{ fontSize: 13, color: T.textSub, marginBottom: 16 }}>
             Rotate the dial of your physical potentiometer. Observe the LED
             fading proportionally as resistance drops.
           </p>
-                              {' '}
+                              {' '}
           <div
             style={{
               display: 'flex',
@@ -1799,7 +1799,7 @@ function LessonSimulator({ pageId, T }) {
               marginBottom: 20,
             }}
           >
-                        {/* Circular Potentiometer Dial */}           {' '}
+                        {/* Circular Potentiometer Dial */}           {' '}
             <svg
               ref={svgRef}
               width="160"
@@ -1810,7 +1810,7 @@ function LessonSimulator({ pageId, T }) {
               }}
               style={{ cursor: 'pointer' }}
             >
-                           {' '}
+                           {' '}
               <circle
                 cx="80"
                 cy="80"
@@ -1819,7 +1819,7 @@ function LessonSimulator({ pageId, T }) {
                 stroke={T.border}
                 strokeWidth="4"
               />
-                            {/* Notches */}             {' '}
+                            {/* Notches */}             {' '}
               {[30, 90, 150, 210, 270, 330].map((a) => (
                 <line
                   key={a}
@@ -1831,7 +1831,7 @@ function LessonSimulator({ pageId, T }) {
                   strokeWidth="2"
                 />
               ))}
-                            {/* Dial Indicator */}             {' '}
+                            {/* Dial Indicator */}             {' '}
               <line
                 x1="80"
                 y1="80"
@@ -1841,12 +1841,12 @@ function LessonSimulator({ pageId, T }) {
                 strokeWidth="6"
                 strokeLinecap="round"
               />
-                            <circle cx="80" cy="80" r="15" fill={T.amber} />   
-                     {' '}
+                            <circle cx="80" cy="80" r="15" fill={T.amber} />   
+                     {' '}
             </svg>
-                     {' '}
+                     {' '}
           </div>
-                              {' '}
+                              {' '}
           <div
             style={{
               display: 'flex',
@@ -1858,9 +1858,9 @@ function LessonSimulator({ pageId, T }) {
               border: `1px solid ${T.border}`,
             }}
           >
-                       {' '}
+                       {' '}
             <div style={{ textAlign: 'center' }}>
-                           {' '}
+                           {' '}
               <div
                 style={{
                   fontSize: 42,
@@ -1871,30 +1871,30 @@ function LessonSimulator({ pageId, T }) {
               >
                 💡
               </div>
-                           {' '}
+                           {' '}
               <span
                 style={{ fontSize: 11, fontWeight: 700, color: T.textMuted }}
               >
                 LED INTENSITY: {potVal}%
               </span>
-                         {' '}
+                         {' '}
             </div>
-                     {' '}
+                     {' '}
           </div>
-                 {' '}
+                 {' '}
         </div>
       )}
-           {' '}
+           {' '}
       {pageId === 'm3' && (
         <div>
-                   {' '}
+                   {' '}
           <p style={{ fontSize: 13, color: T.textSub, marginBottom: 16 }}>
             Click the buttons to toggle their mechanical states. Observe the
             Boolean logic applied to the LED output.
           </p>
-                   {' '}
+                   {' '}
           <div style={{ display: 'flex', gap: 10, marginBottom: 16 }}>
-                        {/* Click-to-Toggle Mechanical Buttons */}           {' '}
+                        {/* Click-to-Toggle Mechanical Buttons */}           {' '}
             <button
               onClick={() => setToggleStateA(!toggleStateA)}
               style={{
@@ -1914,9 +1914,9 @@ function LessonSimulator({ pageId, T }) {
                 transform: toggleStateA ? 'translateY(4px)' : 'none',
               }}
             >
-                            BUTTON A            {' '}
+                            BUTTON A            {' '}
             </button>
-                       {' '}
+                       {' '}
             <button
               onClick={() => setToggleStateB(!toggleStateB)}
               style={{
@@ -1936,11 +1936,11 @@ function LessonSimulator({ pageId, T }) {
                 transform: toggleStateB ? 'translateY(4px)' : 'none',
               }}
             >
-                            BUTTON B            {' '}
+                            BUTTON B            {' '}
             </button>
-                     {' '}
+                     {' '}
           </div>
-                              {' '}
+                              {' '}
           <div
             style={{
               background: T.surfaceAlt,
@@ -1951,7 +1951,7 @@ function LessonSimulator({ pageId, T }) {
               marginBottom: 12,
             }}
           >
-                         
+                         
             <div
               style={{
                 fontSize: 11,
@@ -1963,7 +1963,7 @@ function LessonSimulator({ pageId, T }) {
             >
               AND GATE LOGIC (SERIES)
             </div>
-                         
+                         
             <div
               style={{
                 fontSize: 32,
@@ -1977,9 +1977,9 @@ function LessonSimulator({ pageId, T }) {
             >
               🔴
             </div>
-                     {' '}
+                     {' '}
           </div>
-                   {' '}
+                   {' '}
           <div
             style={{
               background: T.surfaceAlt,
@@ -1989,7 +1989,7 @@ function LessonSimulator({ pageId, T }) {
               textAlign: 'center',
             }}
           >
-                         
+                         
             <div
               style={{
                 fontSize: 11,
@@ -2001,7 +2001,7 @@ function LessonSimulator({ pageId, T }) {
             >
               OR GATE LOGIC (PARALLEL)
             </div>
-                         
+                         
             <div
               style={{
                 fontSize: 32,
@@ -2015,20 +2015,20 @@ function LessonSimulator({ pageId, T }) {
             >
               💡
             </div>
-                     {' '}
+                     {' '}
           </div>
-                 {' '}
+                 {' '}
         </div>
       )}
-           {' '}
+           {' '}
       {pageId === 'm4' && (
         <div>
-                   {' '}
+                   {' '}
           <p style={{ fontSize: 13, color: T.textSub, marginBottom: 16 }}>
             Slide the ambient light level to affect the LDR module. Observe how
             the module's Digital Out triggers the LED when darkness falls.
           </p>
-                   {' '}
+                   {' '}
           <div
             style={{
               display: 'flex',
@@ -2036,8 +2036,8 @@ function LessonSimulator({ pageId, T }) {
               marginBottom: 20,
             }}
           >
-                        {/* Circular Dial acting as Ambient Light proxy */}     
-                 {' '}
+                        {/* Circular Dial acting as Ambient Light proxy */}     
+                 {' '}
             <svg
               ref={svgRef}
               width="160"
@@ -2048,7 +2048,7 @@ function LessonSimulator({ pageId, T }) {
               }}
               style={{ cursor: 'pointer' }}
             >
-                           {' '}
+                           {' '}
               <circle
                 cx="80"
                 cy="80"
@@ -2057,7 +2057,7 @@ function LessonSimulator({ pageId, T }) {
                 stroke={T.border}
                 strokeWidth="4"
               />
-                           {' '}
+                           {' '}
               {[30, 90, 150, 210, 270, 330].map((a) => (
                 <line
                   key={a}
@@ -2069,7 +2069,7 @@ function LessonSimulator({ pageId, T }) {
                   strokeWidth="2"
                 />
               ))}
-                           {' '}
+                           {' '}
               <line
                 x1="80"
                 y1="80"
@@ -2079,12 +2079,12 @@ function LessonSimulator({ pageId, T }) {
                 strokeWidth="6"
                 strokeLinecap="round"
               />
-                           {' '}
-              <circle cx="80" cy="80" r="15" fill={T.primaryLight} />           {' '}
+                           {' '}
+              <circle cx="80" cy="80" r="15" fill={T.primaryLight} />           {' '}
             </svg>
-                     {' '}
+                     {' '}
           </div>
-                   {' '}
+                   {' '}
           <div
             style={{
               textAlign: 'center',
@@ -2096,7 +2096,7 @@ function LessonSimulator({ pageId, T }) {
           >
             AMBIENT LIGHT (LDR) ({potVal}%)
           </div>
-                   {' '}
+                   {' '}
           <div
             style={{
               display: 'flex',
@@ -2108,9 +2108,9 @@ function LessonSimulator({ pageId, T }) {
               border: `1px solid ${T.border}`,
             }}
           >
-                       {' '}
+                       {' '}
             <div style={{ textAlign: 'center' }}>
-                           {' '}
+                           {' '}
               <div
                 style={{
                   fontSize: 12,
@@ -2121,7 +2121,7 @@ function LessonSimulator({ pageId, T }) {
               >
                 LDR MODULE DIGITAL OUT: {potVal < 50 ? 'HIGH' : 'LOW'}
               </div>
-                           {' '}
+                           {' '}
               <div
                 style={{
                   fontSize: 42,
@@ -2132,22 +2132,22 @@ function LessonSimulator({ pageId, T }) {
               >
                 💡
               </div>
-                         {' '}
+                         {' '}
             </div>
-                     {' '}
+                     {' '}
           </div>
-                 {' '}
+                 {' '}
         </div>
       )}
-           {' '}
+           {' '}
       {pageId === 'm5' && (
         <div>
-                   {' '}
+                   {' '}
           <p style={{ fontSize: 13, color: T.textSub, marginBottom: 16 }}>
             Modulate the precise millisecond delay metrics inside setup and loop
             parameters and watch the simulated onboard LED timing.
           </p>
-                   {' '}
+                   {' '}
           <div
             style={{
               display: 'flex',
@@ -2156,9 +2156,9 @@ function LessonSimulator({ pageId, T }) {
               marginBottom: 16,
             }}
           >
-                       {' '}
+                       {' '}
             <div style={{ flex: 1 }}>
-                           {' '}
+                           {' '}
               <label
                 style={{
                   fontSize: 11,
@@ -2169,7 +2169,7 @@ function LessonSimulator({ pageId, T }) {
               >
                 delay(ON_ms)
               </label>
-                           {' '}
+                           {' '}
               <input
                 type="number"
                 value={onDelay}
@@ -2184,11 +2184,11 @@ function LessonSimulator({ pageId, T }) {
                   fontSize: 13,
                 }}
               />
-                         {' '}
+                         {' '}
             </div>
-                       {' '}
+                       {' '}
             <div style={{ flex: 1 }}>
-                           {' '}
+                           {' '}
               <label
                 style={{
                   fontSize: 11,
@@ -2199,7 +2199,7 @@ function LessonSimulator({ pageId, T }) {
               >
                 delay(OFF_ms)
               </label>
-                           {' '}
+                           {' '}
               <input
                 type="number"
                 value={offDelay}
@@ -2214,11 +2214,11 @@ function LessonSimulator({ pageId, T }) {
                   fontSize: 13,
                 }}
               />
-                         {' '}
+                         {' '}
             </div>
-                     {' '}
+                     {' '}
           </div>
-                   {' '}
+                   {' '}
           <div
             style={{
               display: 'flex',
@@ -2230,9 +2230,9 @@ function LessonSimulator({ pageId, T }) {
               border: `1px solid ${T.border}`,
             }}
           >
-                       {' '}
+                       {' '}
             <div style={{ textAlign: 'center' }}>
-                           {' '}
+                           {' '}
               <div
                 style={{
                   width: 20,
@@ -2244,7 +2244,7 @@ function LessonSimulator({ pageId, T }) {
                   transition: 'all 0.05s',
                 }}
               />
-                           {' '}
+                           {' '}
               <span
                 style={{
                   fontSize: 11,
@@ -2254,22 +2254,22 @@ function LessonSimulator({ pageId, T }) {
               >
                 ESP32 ONBOARD GPIO_2 LED
               </span>
-                         {' '}
+                         {' '}
             </div>
-                     {' '}
+                     {' '}
           </div>
-                 {' '}
+                 {' '}
         </div>
       )}
-           {' '}
+           {' '}
       {pageId === 'm6' && (
         <div>
-                   {' '}
+                   {' '}
           <p style={{ fontSize: 13, color: T.textSub, marginBottom: 16 }}>
             Click the button to toggle its mechanical state. The INPUT_PULLUP
             logic in code flips the LED output.
           </p>
-                   {' '}
+                   {' '}
           <button
             onClick={() => setToggleStateA(!toggleStateA)}
             style={{
@@ -2290,11 +2290,11 @@ function LessonSimulator({ pageId, T }) {
               marginBottom: 16,
             }}
           >
-                       {' '}
-            {toggleStateA ? 'BUTTON PRESSED (LOW)' : 'BUTTON RELEASED (HIGH)'} 
-                   {' '}
+                       {' '}
+            {toggleStateA ? 'BUTTON PRESSED (LOW)' : 'BUTTON RELEASED (HIGH)'} 
+                   {' '}
           </button>
-                              {' '}
+                              {' '}
           <div
             style={{
               background: T.surfaceAlt,
@@ -2305,7 +2305,7 @@ function LessonSimulator({ pageId, T }) {
               marginBottom: 12,
             }}
           >
-                         
+                         
             <div
               style={{
                 fontSize: 11,
@@ -2317,7 +2317,7 @@ function LessonSimulator({ pageId, T }) {
             >
               LED STATE
             </div>
-                         
+                         
             <div
               style={{
                 fontSize: 32,
@@ -2330,27 +2330,27 @@ function LessonSimulator({ pageId, T }) {
             >
               🔴
             </div>
-                     {' '}
+                     {' '}
           </div>
-                 {' '}
+                 {' '}
         </div>
       )}
-                   {/* Fallback for Phase 3/4 modules */}     {' '}
+                   {/* Fallback for Phase 3/4 modules */}     {' '}
       {['m7', 'm8', 'm9', 'm10', 'm11', 'm12'].includes(pageId) && (
         <div style={{ padding: 20, textAlign: 'center' }}>
-                     <div style={{ fontSize: 40, marginBottom: 10 }}>🚀</div>   
-                 
+                     <div style={{ fontSize: 40, marginBottom: 10 }}>🚀</div>   
+                 
           <h3 style={{ fontSize: 16, fontWeight: 700, color: T.text }}>
             Simulator Online
           </h3>
-                     
+                     
           <p style={{ fontSize: 13, color: T.textSub }}>
             Advanced Phase hardware parameters loaded into memory.
           </p>
-                 {' '}
+                 {' '}
         </div>
       )}
-         {' '}
+         {' '}
     </div>
   );
 }
@@ -2379,9 +2379,9 @@ function SafetyAlert({ result, T }) {
       }}
       className="fu"
     >
-            <span style={{ fontSize: 24 }}>⚡</span>     {' '}
+            <span style={{ fontSize: 24 }}>⚡</span>     {' '}
       <div>
-               {' '}
+               {' '}
         <div
           style={{
             fontSize: 14,
@@ -2392,16 +2392,16 @@ function SafetyAlert({ result, T }) {
         >
           ⚠️ HIGH VOLTAGE WORKBENCH WARNING
         </div>
-               {' '}
+               {' '}
         <p style={{ fontSize: 13, color: T.textSub, lineHeight: 1.8 }}>
-                    I detected references to high-voltage AC mains components.
+                    I detected references to high-voltage AC mains components.
           Never work on alternating current components while they are connected
           to a wall socket. Complete your breadboard and low-voltage connections
-          first, and verify safe isolation parameters.        {' '}
+          first, and verify safe isolation parameters.        {' '}
         </p>
-             {' '}
+             {' '}
       </div>
-         {' '}
+         {' '}
     </div>
   );
 }
@@ -2437,7 +2437,7 @@ function Referral({ T, onClose }) {
       }}
       onClick={onClose}
     >
-           {' '}
+           {' '}
       <div
         style={{
           width: '100%',
@@ -2450,7 +2450,7 @@ function Referral({ T, onClose }) {
         }}
         onClick={(e) => e.stopPropagation()}
       >
-               {' '}
+               {' '}
         <div
           style={{
             padding: '20px 24px',
@@ -2460,7 +2460,7 @@ function Referral({ T, onClose }) {
             justifyContent: 'space-between',
           }}
         >
-                   {' '}
+                   {' '}
           <div>
             <div
               style={{
@@ -2476,7 +2476,7 @@ function Referral({ T, onClose }) {
               Generate your referral card
             </div>
           </div>
-                   {' '}
+                   {' '}
           <button
             onClick={onClose}
             style={{
@@ -2490,11 +2490,11 @@ function Referral({ T, onClose }) {
           >
             ×
           </button>
-                 {' '}
+                 {' '}
         </div>
-               {' '}
+               {' '}
         <div style={{ padding: '20px 24px' }}>
-                   {' '}
+                   {' '}
           <label
             style={{
               fontSize: 10,
@@ -2508,7 +2508,7 @@ function Referral({ T, onClose }) {
           >
             YOUR NAME
           </label>
-                   {' '}
+                   {' '}
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -2525,7 +2525,7 @@ function Referral({ T, onClose }) {
               display: 'block',
             }}
           />
-                   {' '}
+                   {' '}
           <div
             style={{
               background: T.bg,
@@ -2535,7 +2535,7 @@ function Referral({ T, onClose }) {
               marginBottom: 14,
             }}
           >
-                       {' '}
+                       {' '}
             <div
               style={{
                 fontSize: 9,
@@ -2547,7 +2547,7 @@ function Referral({ T, onClose }) {
             >
               PREVIEW
             </div>
-                       {' '}
+                       {' '}
             <p
               style={{
                 fontSize: 13,
@@ -2559,9 +2559,9 @@ function Referral({ T, onClose }) {
             >
               {txt}
             </p>
-                     {' '}
+                     {' '}
           </div>
-                   {' '}
+                   {' '}
           <button
             onClick={copy}
             style={{
@@ -2578,11 +2578,11 @@ function Referral({ T, onClose }) {
           >
             {ok ? '✓ Copied!' : 'Copy to Clipboard'}
           </button>
-                 {' '}
+                 {' '}
         </div>
-             {' '}
+             {' '}
       </div>
-         {' '}
+         {' '}
     </div>
   );
 }
@@ -2718,8 +2718,8 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
         code: result.code?.snippet,
       };
 
-      const systemPrompt = `You are the technical mentor from the YouTube channel "BFIOT".    You are helping the user assemble the following project. Avoid generic replies.    PROJECT WORKBENCH DATA:    ${JSON.stringify(projectBrief)}
-    Keep your answers helpful, highly brief (max 2-3 sentences), and explain matching the active pinouts.`;
+      const systemPrompt = `You are the technical mentor from the YouTube channel "BFIOT".    You are helping the user assemble the following project. Avoid generic replies.    PROJECT WORKBENCH DATA:    ${JSON.stringify(projectBrief)}
+    Keep your answers helpful, highly brief (max 2-3 sentences), and explain matching the active pinouts.`;
 
       const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
         method: 'POST',
@@ -2794,9 +2794,9 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
 
   return (
     <div style={{ maxWidth: '100%', margin: '0 auto', position: 'relative' }}>
-            {/* Header */}     {' '}
+            {/* Header */}     {' '}
       <div style={{ marginBottom: 36 }}>
-               {' '}
+               {' '}
         <div
           style={{
             display: 'inline-flex',
@@ -2809,7 +2809,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
             marginBottom: 18,
           }}
         >
-                    <Beaker s={12} c={T.green} />
+                    <Beaker s={12} c={T.green} />
           <span
             style={{
               fontSize: 11,
@@ -2820,9 +2820,9 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
           >
             AI PROJECT LAB
           </span>
-                 {' '}
+                 {' '}
         </div>
-               {' '}
+               {' '}
         <h1
           style={{
             fontSize: 34,
@@ -2832,11 +2832,11 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
             marginBottom: 14,
           }}
         >
-                    Tell me what you want to build.
+                    Tell me what you want to build.
           <br />
-          <span style={{ color: T.primary }}>I'll handle the rest.</span>       {' '}
+          <span style={{ color: T.primary }}>I'll handle the rest.</span>       {' '}
         </h1>
-               {' '}
+               {' '}
         <p
           style={{
             fontSize: 15,
@@ -2845,15 +2845,15 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
             maxWidth: 580,
           }}
         >
-                    Enter any IoT concept or component combination. I'll
+                    Enter any IoT concept or component combination. I'll
           construct a centered, clean blueprint with active breadboard steps,
-          categorised parts, and commented C++ code.        {' '}
+          categorised parts, and commented C++ code.        {' '}
         </p>
-             {' '}
+             {' '}
       </div>
-            {/* Input */}     {' '}
+            {/* Input */}     {' '}
       <Cd T={T} style={{ padding: 24, marginBottom: 20 }}>
-               {' '}
+               {' '}
         <textarea
           value={idea}
           onChange={(e) => setIdea(e.target.value)}
@@ -2876,7 +2876,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
             display: 'block',
           }}
         />
-               {' '}
+               {' '}
         <div
           style={{
             display: 'flex',
@@ -2889,7 +2889,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
             gap: 12,
           }}
         >
-                   {' '}
+                   {' '}
           <span
             style={{
               fontSize: 11,
@@ -2899,7 +2899,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
           >
             ↵ Enter to generate · Shift+Enter for new line
           </span>
-                   {' '}
+                   {' '}
           <button
             onClick={generate}
             disabled={!idea.trim() || loading}
@@ -2916,18 +2916,18 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
               opacity: loading ? 0.7 : 1,
             }}
           >
-                       {' '}
-            {loading ? 'Assembling Framework...' : 'Generate Project →'}       
-             {' '}
+                       {' '}
+            {loading ? 'Assembling Framework...' : 'Generate Project →'}       
+             {' '}
           </button>
-                 {' '}
+                 {' '}
         </div>
-             {' '}
+             {' '}
       </Cd>
-            {/* Suggested Quick Starts */}     {' '}
+            {/* Suggested Quick Starts */}     {' '}
       {!result && !loading && (
         <div style={{ marginBottom: 32 }}>
-                   {' '}
+                   {' '}
           <div
             style={{
               fontSize: 11,
@@ -2938,9 +2938,9 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
           >
             QUICK BENCHMARK STARTS
           </div>
-                   {' '}
+                   {' '}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-                       {' '}
+                       {' '}
             {EXAMPLES.map((e) => (
               <button
                 key={e}
@@ -2955,15 +2955,15 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                   transition: 'all 0.15s',
                 }}
               >
-                                {e}             {' '}
+                                {e}             {' '}
               </button>
             ))}
-                     {' '}
+                     {' '}
           </div>
-                 {' '}
+                 {' '}
         </div>
       )}
-            {/* Loading state indicator */}     {' '}
+            {/* Loading state indicator */}     {' '}
       {loading && (
         <Cd
           T={T}
@@ -2977,7 +2977,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
             marginBottom: 20,
           }}
         >
-                   {' '}
+                   {' '}
           <div
             className="spin"
             style={{
@@ -2989,7 +2989,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
               marginBottom: 20,
             }}
           />
-                   {' '}
+                   {' '}
           <div
             className="shim"
             style={{
@@ -3002,10 +3002,10 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
           >
             {LOAD_MSGS[loadMsg]}
           </div>
-                 {' '}
+                 {' '}
         </Cd>
       )}
-           {' '}
+           {' '}
       {error && (
         <div
           style={{
@@ -3016,16 +3016,16 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
             marginBottom: 20,
           }}
         >
-                    <p style={{ fontSize: 13.5, color: T.amber }}>{error}</p>   
-             {' '}
+                    <p style={{ fontSize: 13.5, color: T.amber }}>{error}</p>   
+             {' '}
         </div>
       )}
-            {/* Results Section */}     {' '}
+            {/* Results Section */}     {' '}
       {result && (
         <div className="fu">
-                    {/* Dynamic Safety Checker */}
-                    <SafetyAlert result={result} T={T} />         {' '}
-          {/* Action Tabs and Export Toolbar */}         {' '}
+                    {/* Dynamic Safety Checker */}
+                    <SafetyAlert result={result} T={T} />         {' '}
+          {/* Action Tabs and Export Toolbar */}         {' '}
           <div
             style={{
               display: 'flex',
@@ -3036,7 +3036,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
               gap: 12,
             }}
           >
-                       {' '}
+                       {' '}
             <div
               style={{
                 display: 'flex',
@@ -3049,7 +3049,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                 maxWidth: 400,
               }}
             >
-                           {' '}
+                           {' '}
               {[
                 { id: 'overview', l: 'Overview' },
                 { id: 'parts', l: 'Parts' },
@@ -3073,14 +3073,14 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                       tab === t.id ? `0 1px 3px rgba(0,0,0,0.1)` : 'none',
                   }}
                 >
-                                    {t.l}               {' '}
+                                    {t.l}               {' '}
                 </button>
               ))}
-                         {' '}
+                         {' '}
             </div>
-                       {' '}
+                       {' '}
             <div style={{ display: 'flex', gap: 10 }}>
-                           {' '}
+                           {' '}
               <button
                 onClick={() => setChatOpen(true)}
                 style={{
@@ -3098,7 +3098,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
               >
                 💬 Mentoring Chat
               </button>
-                           {' '}
+                           {' '}
               <button
                 onClick={exportMarkdown}
                 style={{
@@ -3113,14 +3113,14 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
               >
                 ↓ Save Blueprint (.md)
               </button>
-                         {' '}
+                         {' '}
             </div>
-                     {' '}
+                     {' '}
           </div>
-                    {/* Overview Tab Content */}         {' '}
+                    {/* Overview Tab Content */}         {' '}
           {tab === 'overview' && (
             <div>
-                           {' '}
+                           {' '}
               <div
                 style={{
                   background: `linear-gradient(135deg,${T.primaryBg},${T.greenBg})`,
@@ -3130,7 +3130,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                   marginBottom: 20,
                 }}
               >
-                               {' '}
+                               {' '}
                 <p
                   style={{
                     fontSize: 17,
@@ -3142,17 +3142,17 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                 >
                   {result.overview?.hook}
                 </p>
-                               {' '}
+                               {' '}
                 <p
                   style={{ fontSize: 14.5, lineHeight: 1.9, color: T.textSub }}
                 >
                   {result.overview?.concept}
                 </p>
-                             {' '}
+                             {' '}
               </div>
-                           {' '}
+                           {' '}
               <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-                               {' '}
+                               {' '}
                 <div
                   style={{
                     background: T.surface,
@@ -3163,7 +3163,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                     minWidth: 140,
                   }}
                 >
-                                   {' '}
+                                   {' '}
                   <div
                     style={{
                       fontSize: 10,
@@ -3174,15 +3174,15 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                   >
                     DIFFICULTY
                   </div>
-                                   {' '}
+                                   {' '}
                   <div
                     style={{ fontSize: 14, fontWeight: 700, color: T.green }}
                   >
                     {result.overview?.difficulty}
                   </div>
-                                 {' '}
+                                 {' '}
                 </div>
-                               {' '}
+                               {' '}
                 <div
                   style={{
                     background: T.surface,
@@ -3193,7 +3193,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                     minWidth: 140,
                   }}
                 >
-                                   {' '}
+                                   {' '}
                   <div
                     style={{
                       fontSize: 10,
@@ -3204,13 +3204,13 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                   >
                     BUILD TIME
                   </div>
-                                   {' '}
+                                   {' '}
                   <div style={{ fontSize: 14, fontWeight: 700, color: T.text }}>
                     {result.overview?.buildTime}
                   </div>
-                                 {' '}
+                                 {' '}
                 </div>
-                               {' '}
+                               {' '}
                 <div
                   style={{
                     background: T.primaryBg,
@@ -3221,7 +3221,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                     minWidth: 140,
                   }}
                 >
-                                   {' '}
+                                   {' '}
                   <div
                     style={{
                       fontSize: 10,
@@ -3232,23 +3232,23 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                   >
                     MICROCONTROLLER
                   </div>
-                                   {' '}
+                                   {' '}
                   <div
                     style={{ fontSize: 14, fontWeight: 700, color: T.primary }}
                   >
                     ESP32 Dev Board
                   </div>
-                                 {' '}
+                                 {' '}
                 </div>
-                             {' '}
+                             {' '}
               </div>
-                         {' '}
+                         {' '}
             </div>
           )}
-                    {/* Parts Tab Content */}         {' '}
+                    {/* Parts Tab Content */}         {' '}
           {tab === 'parts' && (
             <div>
-                           {' '}
+                           {' '}
               {Object.entries(
                 (result.parts || []).reduce((acc, p) => {
                   (acc[p.category] = acc[p.category] || []).push(p);
@@ -3256,7 +3256,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                 }, {})
               ).map(([cat, items]) => (
                 <div key={cat} style={{ marginBottom: 20 }}>
-                                   {' '}
+                                   {' '}
                   <div
                     style={{
                       fontSize: 10,
@@ -3270,9 +3270,9 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                   >
                     {cat.toUpperCase()}
                   </div>
-                                   {' '}
+                                   {' '}
                   <Cd T={T} style={{ overflow: 'hidden' }}>
-                                       {' '}
+                                       {' '}
                     {items.map((p, i) => (
                       <div
                         key={p.name}
@@ -3287,7 +3287,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                           alignItems: 'flex-start',
                         }}
                       >
-                                               {' '}
+                                               {' '}
                         <div
                           style={{
                             width: 28,
@@ -3307,9 +3307,9 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                         >
                           ×{p.quantity}
                         </div>
-                                               {' '}
+                                               {' '}
                         <div style={{ flex: 1 }}>
-                                                   {' '}
+                                                   {' '}
                           <div
                             style={{
                               fontSize: 14,
@@ -3320,7 +3320,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                           >
                             {p.name}
                           </div>
-                                                   {' '}
+                                                   {' '}
                           <p
                             style={{
                               fontSize: 13,
@@ -3330,23 +3330,23 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                           >
                             {p.why}
                           </p>
-                                                 {' '}
+                                                 {' '}
                         </div>
-                                             {' '}
+                                             {' '}
                       </div>
                     ))}
-                                     {' '}
+                                     {' '}
                   </Cd>
-                                 {' '}
+                                 {' '}
                 </div>
               ))}
-                         {' '}
+                         {' '}
             </div>
           )}
-                    {/* Steps Tab Content */}         {' '}
+                    {/* Steps Tab Content */}         {' '}
           {tab === 'steps' && (
             <div>
-                           {' '}
+                           {' '}
               {Object.entries(
                 (result.steps || []).reduce((acc, s) => {
                   (acc[s.phase] = acc[s.phase] || []).push(s);
@@ -3354,7 +3354,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                 }, {})
               ).map(([phase, steps]) => (
                 <div key={phase} style={{ marginBottom: 24 }}>
-                                   {' '}
+                                   {' '}
                   <div
                     style={{
                       display: 'flex',
@@ -3363,9 +3363,9 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                       marginBottom: 12,
                     }}
                   >
-                                       {' '}
+                                       {' '}
                     <div style={{ height: 1, flex: 1, background: T.border }} />
-                                       {' '}
+                                       {' '}
                     <span
                       style={{
                         fontSize: 10,
@@ -3378,13 +3378,13 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                     >
                       {phase.toUpperCase()}
                     </span>
-                                       {' '}
+                                       {' '}
                     <div style={{ height: 1, flex: 1, background: T.border }} />
-                                     {' '}
+                                     {' '}
                   </div>
-                                   {' '}
+                                   {' '}
                   <Cd T={T} style={{ overflow: 'hidden' }}>
-                                       {' '}
+                                       {' '}
                     {steps.map((s, i) => (
                       <div
                         key={s.number}
@@ -3396,7 +3396,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                               : 'none',
                         }}
                       >
-                                               {' '}
+                                               {' '}
                         <div
                           style={{
                             display: 'flex',
@@ -3404,7 +3404,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                             marginBottom: s.sanityCheck || s.proTip ? 12 : 0,
                           }}
                         >
-                                                   {' '}
+                                                   {' '}
                           <div
                             style={{
                               width: 26,
@@ -3425,9 +3425,9 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                           >
                             {String(s.number).padStart(2, '0')}
                           </div>
-                                                   {' '}
+                                                   {' '}
                           <div style={{ flex: 1 }}>
-                                                       {' '}
+                                                       {' '}
                             <div
                               style={{
                                 fontSize: 14,
@@ -3438,7 +3438,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                             >
                               {s.title}
                             </div>
-                                                       {' '}
+                                                       {' '}
                             <p
                               style={{
                                 fontSize: 13.5,
@@ -3448,11 +3448,11 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                             >
                               {s.instruction}
                             </p>
-                                                     {' '}
+                                                     {' '}
                           </div>
-                                                 {' '}
+                                                 {' '}
                         </div>
-                                               {' '}
+                                               {' '}
                         {s.sanityCheck && (
                           <div
                             style={{
@@ -3464,7 +3464,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                               marginBottom: s.proTip ? 8 : 0,
                             }}
                           >
-                                                     {' '}
+                                                     {' '}
                             <span
                               style={{
                                 fontSize: 10,
@@ -3476,14 +3476,14 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                             >
                               ✓ SANITY CHECK
                             </span>
-                                                     {' '}
+                                                     {' '}
                             <span style={{ fontSize: 12.5, color: T.textSub }}>
                               {s.sanityCheck}
                             </span>
-                                                   {' '}
+                                                   {' '}
                           </div>
                         )}
-                                               {' '}
+                                               {' '}
                         {s.proTip && (
                           <div
                             style={{
@@ -3494,7 +3494,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                               padding: '9px 14px',
                             }}
                           >
-                                                     {' '}
+                                                     {' '}
                             <span
                               style={{
                                 fontSize: 10,
@@ -3506,31 +3506,31 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                             >
                               ⚠️ PRO TIP
                             </span>
-                                                     {' '}
+                                                     {' '}
                             <span style={{ fontSize: 12.5, color: T.textSub }}>
                               {s.proTip}
                             </span>
-                                                   {' '}
+                                                   {' '}
                           </div>
                         )}
-                                             {' '}
+                                             {' '}
                       </div>
                     ))}
-                                     {' '}
+                                     {' '}
                   </Cd>
-                                 {' '}
+                                 {' '}
                 </div>
               ))}
-                         {' '}
+                         {' '}
             </div>
           )}
-                    {/* Code Tab Content */}         {' '}
+                    {/* Code Tab Content */}         {' '}
           {tab === 'code' && (
             <div>
-                           {' '}
+                           {' '}
               {result.code ? (
                 <>
-                                   {' '}
+                                   {' '}
                   <div
                     style={{
                       background: T.codeBg,
@@ -3540,7 +3540,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                       marginBottom: 20,
                     }}
                   >
-                                       {' '}
+                                       {' '}
                     <div
                       style={{
                         display: 'flex',
@@ -3551,7 +3551,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                         background: 'rgba(0,0,0,0.15)',
                       }}
                     >
-                                           {' '}
+                                           {' '}
                       <div
                         style={{
                           display: 'flex',
@@ -3559,7 +3559,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                           gap: 8,
                         }}
                       >
-                                               {' '}
+                                               {' '}
                         {['#ef4444', '#f59e0b', '#22c55e'].map((c) => (
                           <div
                             key={c}
@@ -3571,7 +3571,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                             }}
                           />
                         ))}
-                                               {' '}
+                                               {' '}
                         <span
                           style={{
                             fontFamily: "'JetBrains Mono',monospace",
@@ -3582,9 +3582,9 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                         >
                           {result.code.filename}
                         </span>
-                                             {' '}
+                                             {' '}
                       </div>
-                                           {' '}
+                                           {' '}
                       <button
                         onClick={copyCode}
                         style={{
@@ -3597,11 +3597,11 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                           fontFamily: "'JetBrains Mono',monospace",
                         }}
                       >
-                                                Copy                      {' '}
+                                                Copy                      {' '}
                       </button>
-                                         {' '}
+                                         {' '}
                     </div>
-                                       {' '}
+                                       {' '}
                     <pre
                       style={{
                         padding: '20px 22px',
@@ -3609,7 +3609,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                         margin: 0,
                       }}
                     >
-                                           {' '}
+                                           {' '}
                       <code
                         dangerouslySetInnerHTML={codeLight(result.code.snippet)}
                         style={{
@@ -3619,11 +3619,11 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                           display: 'block',
                         }}
                       />
-                                         {' '}
+                                         {' '}
                     </pre>
-                                     {' '}
+                                     {' '}
                   </div>
-                                   {' '}
+                                   {' '}
                   <div
                     style={{
                       background: T.primaryBg,
@@ -3633,7 +3633,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                       marginBottom: 40,
                     }}
                   >
-                                       {' '}
+                                       {' '}
                     <div
                       style={{
                         fontSize: 10,
@@ -3645,7 +3645,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                     >
                       🧠 LOGIC BREAKDOWN
                     </div>
-                                       {' '}
+                                       {' '}
                     <p
                       style={{
                         fontSize: 14,
@@ -3655,9 +3655,9 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                     >
                       {result.code.breakdown}
                     </p>
-                                     {' '}
+                                     {' '}
                   </div>
-                                 {' '}
+                                 {' '}
                 </>
               ) : (
                 <div
@@ -3669,9 +3669,9 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                     border: `1px dashed ${T.border}`,
                   }}
                 >
-                                   {' '}
-                  <div style={{ fontSize: 32, marginBottom: 12 }}>⚙️</div>     
-                             {' '}
+                                   {' '}
+                  <div style={{ fontSize: 32, marginBottom: 12 }}>⚙️</div>     
+                             {' '}
                   <div
                     style={{
                       fontSize: 16,
@@ -3682,17 +3682,17 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                   >
                     Hardware Only Project
                   </div>
-                                   {' '}
+                                   {' '}
                   <p style={{ fontSize: 14, color: T.textSub }}>
                     This phase requires no software compilation. Pure physics!
                   </p>
-                                 {' '}
+                                 {' '}
                 </div>
               )}
-                         {' '}
+                         {' '}
             </div>
           )}
-                    {/* Rebuild Reset */}         {' '}
+                    {/* Rebuild Reset */}         {' '}
           <button
             onClick={() => {
               setResult(null);
@@ -3710,12 +3710,12 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
               display: 'block',
             }}
           >
-                        ← Build a different project          {' '}
+                        ← Build a different project          {' '}
           </button>
-                 {' '}
+                 {' '}
         </div>
       )}
-            {/* Floating Glassmorphic Mentor Chat Panel */}     {' '}
+            {/* Floating Glassmorphic Mentor Chat Panel */}     {' '}
       {chatOpen && result && (
         <div
           style={{
@@ -3738,7 +3738,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
           }}
           className="fu"
         >
-                   {' '}
+                   {' '}
           <div
             style={{
               padding: '14px 18px',
@@ -3748,9 +3748,9 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
               alignItems: 'center',
             }}
           >
-                       {' '}
+                       {' '}
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                           {' '}
+                           {' '}
               <div
                 style={{
                   width: 8,
@@ -3760,13 +3760,13 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                 }}
                 className="pulse"
               />
-                           {' '}
+                           {' '}
               <span style={{ fontSize: 13, fontWeight: 700, color: T.text }}>
                 AI Project Mentor
               </span>
-                         {' '}
+                         {' '}
             </div>
-                       {' '}
+                       {' '}
             <button
               onClick={() => setChatOpen(false)}
               style={{
@@ -3778,9 +3778,9 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
             >
               <CloseIcon s={18} />
             </button>
-                     {' '}
+                     {' '}
           </div>
-                   {' '}
+                   {' '}
           <div
             style={{
               flex: 1,
@@ -3791,7 +3791,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
               gap: 12,
             }}
           >
-                       {' '}
+                       {' '}
             {chatLog.map((log, i) => (
               <div
                 key={i}
@@ -3807,10 +3807,10 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                   border: log.r === 'user' ? 'none' : `1px solid ${T.border}`,
                 }}
               >
-                                {log.m}             {' '}
+                                {log.m}             {' '}
               </div>
             ))}
-                       {' '}
+                       {' '}
             {chatLoad && (
               <div
                 style={{
@@ -3824,11 +3824,11 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                 Formulating feedback...
               </div>
             )}
-                        <div ref={chatEndRef} />         {' '}
+                        <div ref={chatEndRef} />         {' '}
           </div>
-                   {' '}
+                   {' '}
           <div style={{ padding: 12, borderTop: `1px solid ${T.border}` }}>
-                       {' '}
+                       {' '}
             <input
               value={chatIn}
               onChange={(e) => setChatIn(e.target.value)}
@@ -3844,12 +3844,12 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                 color: T.text,
               }}
             />
-                     {' '}
+                     {' '}
           </div>
-                 {' '}
+                 {' '}
         </div>
       )}
-         {' '}
+         {' '}
     </div>
   );
 }
@@ -4179,12 +4179,12 @@ export default function App() {
         transition: 'background 0.25s,color 0.25s',
       }}
     >
-            <style>{CSS}</style>      {/* Hamburger Overlay for Mobile */}     {' '}
+            <style>{CSS}</style>      {/* Hamburger Overlay for Mobile */}     {' '}
       <div
         className={`overlay ${menuOpen ? 'open' : ''}`}
         onClick={() => setMenuOpen(false)}
       />
-            {/* SIDEBAR NAVIGATION */}     {' '}
+            {/* SIDEBAR NAVIGATION */}     {' '}
       <aside
         className={`sidebar ${menuOpen ? 'open' : ''}`}
         style={{
@@ -4196,14 +4196,14 @@ export default function App() {
           overflow: 'hidden',
         }}
       >
-               {' '}
+               {' '}
         <div
           style={{
             padding: '18px 16px',
             borderBottom: `1px solid ${T.border}`,
           }}
         >
-                   {' '}
+                   {' '}
           <div
             style={{
               display: 'flex',
@@ -4212,7 +4212,7 @@ export default function App() {
               marginBottom: 12,
             }}
           >
-                       {' '}
+                       {' '}
             <div
               style={{
                 width: 36,
@@ -4226,7 +4226,7 @@ export default function App() {
                 flexShrink: 0,
               }}
             >
-                           {' '}
+                           {' '}
               <svg width={18} height={18} viewBox="0 0 18 18" fill="none">
                 <rect
                   x={1}
@@ -4277,11 +4277,11 @@ export default function App() {
                   strokeWidth={1}
                 />
               </svg>
-                         {' '}
+                         {' '}
             </div>
-                       {' '}
+                       {' '}
             <div>
-                           {' '}
+                           {' '}
               <div
                 style={{
                   fontFamily: "'JetBrains Mono',monospace",
@@ -4293,7 +4293,7 @@ export default function App() {
               >
                 BFIOT
               </div>
-                           {' '}
+                           {' '}
               <div
                 style={{
                   fontSize: 9,
@@ -4304,11 +4304,11 @@ export default function App() {
               >
                 LEARN · BUILD · INNOVATE
               </div>
-                         {' '}
+                         {' '}
             </div>
-                     {' '}
+                     {' '}
           </div>
-                   {' '}
+                   {' '}
           <div
             style={{
               display: 'flex',
@@ -4320,7 +4320,7 @@ export default function App() {
               padding: '5px 10px',
             }}
           >
-                       {' '}
+                       {' '}
             <div
               className="pulse"
               style={{
@@ -4330,7 +4330,7 @@ export default function App() {
                 background: T.green,
               }}
             />
-                       {' '}
+                       {' '}
             <span
               style={{
                 fontSize: 10,
@@ -4341,13 +4341,13 @@ export default function App() {
             >
               Workbench System Live
             </span>
-                     {' '}
+                     {' '}
           </div>
-                 {' '}
+                 {' '}
         </div>
-               {' '}
+               {' '}
         <nav style={{ flex: 1, overflowY: 'auto', padding: '10px 8px' }}>
-                   {' '}
+                   {' '}
           <div
             style={{
               fontSize: 9,
@@ -4360,7 +4360,7 @@ export default function App() {
           >
             STARTING GATE
           </div>
-                   {' '}
+                   {' '}
           <LBtn
             id="gz"
             title="Before You Build"
@@ -4370,8 +4370,8 @@ export default function App() {
             onClick={go}
             T={T}
           />
-                    <div style={{ height: 8 }} />         {' '}
-          {/* Phase 1 Collapsible */}         {' '}
+                    <div style={{ height: 8 }} />         {' '}
+          {/* Phase 1 Collapsible */}         {' '}
           <button
             onClick={() => setP1(!p1)}
             style={{
@@ -4386,9 +4386,9 @@ export default function App() {
               marginBottom: 4,
             }}
           >
-                       {' '}
+                       {' '}
             <div style={{ textAlign: 'left' }}>
-                           {' '}
+                           {' '}
               <div
                 style={{
                   fontSize: 9,
@@ -4400,7 +4400,7 @@ export default function App() {
               >
                 PHASE 1
               </div>
-                           {' '}
+                           {' '}
               <div
                 style={{
                   fontSize: 12,
@@ -4411,9 +4411,9 @@ export default function App() {
               >
                 Pure Hardware
               </div>
-                         {' '}
+                         {' '}
             </div>
-                       {' '}
+                       {' '}
             <div
               style={{
                 transform: p1 ? 'rotate(0)' : 'rotate(-90deg)',
@@ -4422,12 +4422,12 @@ export default function App() {
             >
               <ChevD s={14} c={T.textMuted} />
             </div>
-                     {' '}
+                     {' '}
           </button>
-                   {' '}
+                   {' '}
           {p1 && (
             <div style={{ paddingLeft: 2 }}>
-                         {' '}
+                         {' '}
               <LBtn
                 id="m1"
                 title="Module 1"
@@ -4437,7 +4437,7 @@ export default function App() {
                 onClick={go}
                 T={T}
               />
-                         {' '}
+                         {' '}
               <LBtn
                 id="m2"
                 title="Module 2"
@@ -4447,7 +4447,7 @@ export default function App() {
                 onClick={go}
                 T={T}
               />
-                         {' '}
+                         {' '}
               <LBtn
                 id="m3"
                 title="Module 3"
@@ -4457,7 +4457,7 @@ export default function App() {
                 onClick={go}
                 T={T}
               />
-                         {' '}
+                         {' '}
               <LBtn
                 id="m4"
                 title="Module 4"
@@ -4467,11 +4467,11 @@ export default function App() {
                 onClick={go}
                 T={T}
               />
-                       {' '}
+                       {' '}
             </div>
           )}
-                    {/* Phase 2 Collapsible */}
-                    <div style={{ height: 8 }} />         {' '}
+                    {/* Phase 2 Collapsible */}
+                    <div style={{ height: 8 }} />         {' '}
           <button
             onClick={() => setP2(!p2)}
             style={{
@@ -4486,9 +4486,9 @@ export default function App() {
               marginBottom: 4,
             }}
           >
-                       {' '}
+                       {' '}
             <div style={{ textAlign: 'left' }}>
-                           {' '}
+                           {' '}
               <div
                 style={{
                   fontSize: 9,
@@ -4500,7 +4500,7 @@ export default function App() {
               >
                 PHASE 2
               </div>
-                           {' '}
+                           {' '}
               <div
                 style={{
                   fontSize: 12,
@@ -4511,9 +4511,9 @@ export default function App() {
               >
                 Software Gatekeeper
               </div>
-                         {' '}
+                         {' '}
             </div>
-                       {' '}
+                       {' '}
             <div
               style={{
                 transform: p2 ? 'rotate(0)' : 'rotate(-90deg)',
@@ -4522,12 +4522,12 @@ export default function App() {
             >
               <ChevD s={14} c={T.textMuted} />
             </div>
-                     {' '}
+                     {' '}
           </button>
-                   {' '}
+                   {' '}
           {p2 && (
             <div style={{ paddingLeft: 2 }}>
-                         {' '}
+                         {' '}
               <LBtn
                 id="m5"
                 title="Module 5"
@@ -4537,7 +4537,7 @@ export default function App() {
                 onClick={go}
                 T={T}
               />
-                         {' '}
+                         {' '}
               <LBtn
                 id="m6"
                 title="Module 6"
@@ -4547,11 +4547,11 @@ export default function App() {
                 onClick={go}
                 T={T}
               />
-                       {' '}
+                       {' '}
             </div>
           )}
-                    {/* Phase 3 Collapsible */}
-                    <div style={{ height: 8 }} />         {' '}
+                    {/* Phase 3 Collapsible */}
+                    <div style={{ height: 8 }} />         {' '}
           <button
             onClick={() => setP3(!p3)}
             style={{
@@ -4566,9 +4566,9 @@ export default function App() {
               marginBottom: 4,
             }}
           >
-                       {' '}
+                       {' '}
             <div style={{ textAlign: 'left' }}>
-                           {' '}
+                           {' '}
               <div
                 style={{
                   fontSize: 9,
@@ -4580,7 +4580,7 @@ export default function App() {
               >
                 PHASE 3
               </div>
-                           {' '}
+                           {' '}
               <div
                 style={{
                   fontSize: 12,
@@ -4591,9 +4591,9 @@ export default function App() {
               >
                 Actuation & Sensors
               </div>
-                         {' '}
+                         {' '}
             </div>
-                       {' '}
+                       {' '}
             <div
               style={{
                 transform: p3 ? 'rotate(0)' : 'rotate(-90deg)',
@@ -4602,12 +4602,12 @@ export default function App() {
             >
               <ChevD s={14} c={T.textMuted} />
             </div>
-                     {' '}
+                     {' '}
           </button>
-                   {' '}
+                   {' '}
           {p3 && (
             <div style={{ paddingLeft: 2 }}>
-                         {' '}
+                         {' '}
               <LBtn
                 id="m7"
                 title="Module 7"
@@ -4617,7 +4617,7 @@ export default function App() {
                 onClick={go}
                 T={T}
               />
-                         {' '}
+                         {' '}
               <LBtn
                 id="m8"
                 title="Module 8"
@@ -4627,7 +4627,7 @@ export default function App() {
                 onClick={go}
                 T={T}
               />
-                         {' '}
+                         {' '}
               <LBtn
                 id="m9"
                 title="Module 9"
@@ -4637,7 +4637,7 @@ export default function App() {
                 onClick={go}
                 T={T}
               />
-                         {' '}
+                         {' '}
               <LBtn
                 id="m10"
                 title="Module 10"
@@ -4647,7 +4647,7 @@ export default function App() {
                 onClick={go}
                 T={T}
               />
-                         {' '}
+                         {' '}
               <LBtn
                 id="m11"
                 title="Module 11"
@@ -4657,11 +4657,11 @@ export default function App() {
                 onClick={go}
                 T={T}
               />
-                       {' '}
+                       {' '}
             </div>
           )}
-                    {/* Phase 4 Collapsible */}
-                    <div style={{ height: 8 }} />         {' '}
+                    {/* Phase 4 Collapsible */}
+                    <div style={{ height: 8 }} />         {' '}
           <button
             onClick={() => setP4(!p4)}
             style={{
@@ -4676,9 +4676,9 @@ export default function App() {
               marginBottom: 4,
             }}
           >
-                       {' '}
+                       {' '}
             <div style={{ textAlign: 'left' }}>
-                           {' '}
+                           {' '}
               <div
                 style={{
                   fontSize: 9,
@@ -4690,7 +4690,7 @@ export default function App() {
               >
                 PHASE 4
               </div>
-                           {' '}
+                           {' '}
               <div
                 style={{
                   fontSize: 12,
@@ -4701,9 +4701,9 @@ export default function App() {
               >
                 Connected IoT
               </div>
-                         {' '}
+                         {' '}
             </div>
-                       {' '}
+                       {' '}
             <div
               style={{
                 transform: p4 ? 'rotate(0)' : 'rotate(-90deg)',
@@ -4712,12 +4712,12 @@ export default function App() {
             >
               <ChevD s={14} c={T.textMuted} />
             </div>
-                     {' '}
+                     {' '}
           </button>
-                   {' '}
+                   {' '}
           {p4 && (
             <div style={{ paddingLeft: 2 }}>
-                         {' '}
+                         {' '}
               <LBtn
                 id="m12"
                 title="Module 12"
@@ -4727,13 +4727,13 @@ export default function App() {
                 onClick={go}
                 T={T}
               />
-                       {' '}
+                       {' '}
             </div>
           )}
-                    {/* Maker's Log persistence timeline */}         {' '}
+                    {/* Maker's Log persistence timeline */}         {' '}
           {history.length > 0 && (
             <div style={{ marginTop: 20, padding: '0 10px' }}>
-                           {' '}
+                           {' '}
               <div
                 style={{
                   fontSize: 9,
@@ -4745,9 +4745,9 @@ export default function App() {
               >
                 MAKER'S PERSISTENT LOG
               </div>
-                           {' '}
+                           {' '}
               <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                               {' '}
+                               {' '}
                 {history.map((item) => (
                   <button
                     key={item.id}
@@ -4772,15 +4772,15 @@ export default function App() {
                       borderLeft: `2px solid ${T.primary}`,
                     }}
                   >
-                                        {item.name}                 {' '}
+                                        {item.name}                 {' '}
                   </button>
                 ))}
-                             {' '}
+                             {' '}
               </div>
-                         {' '}
+                         {' '}
             </div>
           )}
-                    <div style={{ height: 12 }} />         {' '}
+                    <div style={{ height: 12 }} />         {' '}
           <div
             style={{
               margin: '0 4px',
@@ -4790,7 +4790,7 @@ export default function App() {
               overflow: 'hidden',
             }}
           >
-                       {' '}
+                       {' '}
             <div
               style={{
                 padding: '8px 12px 4px',
@@ -4799,7 +4799,7 @@ export default function App() {
                 gap: 6,
               }}
             >
-                            <Beaker s={11} c={T.green} />             {' '}
+                            <Beaker s={11} c={T.green} />             {' '}
               <span
                 style={{
                   fontSize: 9,
@@ -4811,7 +4811,7 @@ export default function App() {
               >
                 AI PROJECT LAB
               </span>
-                           {' '}
+                           {' '}
               <span
                 style={{
                   fontSize: 8,
@@ -4825,9 +4825,9 @@ export default function App() {
               >
                 V3
               </span>
-                         {' '}
+                         {' '}
             </div>
-                       {' '}
+                       {' '}
             <LBtn
               id="lab"
               title="Project Builder"
@@ -4838,13 +4838,13 @@ export default function App() {
               T={T}
               special={true}
             />
-                     {' '}
+                     {' '}
           </div>
-                 {' '}
+                 {' '}
         </nav>
-               {' '}
+               {' '}
         <div style={{ padding: 12, borderTop: `1px solid ${T.border}` }}>
-                   {' '}
+                   {' '}
           <button
             onClick={() => setModal(true)}
             style={{
@@ -4863,7 +4863,7 @@ export default function App() {
               cursor: 'pointer',
             }}
           >
-                       {' '}
+                       {' '}
             <svg width={14} height={14} viewBox="0 0 14 14" fill="none">
               <circle
                 cx={11}
@@ -4893,13 +4893,13 @@ export default function App() {
                 strokeLinecap="round"
               />
             </svg>
-                        Share Workbench          {' '}
+                        Share Workbench          {' '}
           </button>
-                 {' '}
+                 {' '}
         </div>
-             {' '}
+             {' '}
       </aside>
-            {/* MAIN CONTENT AREA */}     {' '}
+            {/* MAIN CONTENT AREA */}     {' '}
       <div
         style={{
           flex: 1,
@@ -4908,7 +4908,7 @@ export default function App() {
           overflow: 'hidden',
         }}
       >
-                {/* Top Header Block */}       {' '}
+                {/* Top Header Block */}       {' '}
         <header
           style={{
             height: 52,
@@ -4922,9 +4922,9 @@ export default function App() {
             transition: 'background 0.25s',
           }}
         >
-                   {' '}
+                   {' '}
           <div style={{ display: 'flex', alignItems: 'center' }}>
-                       {' '}
+                       {' '}
             <button
               className="menu-btn"
               onClick={() => setMenuOpen(true)}
@@ -4932,7 +4932,7 @@ export default function App() {
             >
               <MenuIcon s={20} />
             </button>
-                       {' '}
+                       {' '}
             <div
               style={{
                 display: 'flex',
@@ -4942,19 +4942,19 @@ export default function App() {
                 fontSize: 11,
               }}
             >
-                            <span style={{ color: T.textMuted }}>bfiot</span>
-              <span style={{ color: T.textMuted }}>/</span>             {' '}
+                            <span style={{ color: T.textMuted }}>bfiot</span>
+              <span style={{ color: T.textMuted }}>/</span>             {' '}
               <span style={{ color: T.textSub }}>{crumb[0]}</span>
-              <span style={{ color: T.textMuted }}>/</span>             {' '}
-              <span style={{ color: T.primary }}>{crumb[1]}</span>           {' '}
+              <span style={{ color: T.textMuted }}>/</span>             {' '}
+              <span style={{ color: T.primary }}>{crumb[1]}</span>           {' '}
             </div>
-                     {' '}
+                     {' '}
           </div>
-                   {' '}
+                   {' '}
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                       {' '}
-            <TToggle dark={dark} onToggle={() => setDark((d) => !d)} T={T} />   
-                   {' '}
+                       {' '}
+            <TToggle dark={dark} onToggle={() => setDark((d) => !d)} T={T} />   
+                   {' '}
             <a
               href="https://forms.gle/FLKkVrgrYy6tQxm16"
               target="_blank"
@@ -4971,24 +4971,24 @@ export default function App() {
             >
               Pre-order Kit
             </a>
-                     {' '}
+                     {' '}
           </div>
-                 {' '}
+                 {' '}
         </header>
-                {/* Page Container */}       {' '}
+                {/* Page Container */}       {' '}
         <div
           className="main-pad"
           style={{ flex: 1, overflowY: 'auto' }}
           key={k}
         >
-                   {' '}
+                   {' '}
           <div style={{ maxWidth: '100%', margin: '0 auto' }}>
-                       {' '}
+                       {' '}
             {page === 'gz' && (
               <div className="fu">
-                               {' '}
+                               {' '}
                 <div style={{ marginBottom: 48 }}>
-                                   {' '}
+                                   {' '}
                   <div
                     style={{
                       display: 'inline-flex',
@@ -5001,7 +5001,7 @@ export default function App() {
                       marginBottom: 18,
                     }}
                   >
-                                       {' '}
+                                       {' '}
                     <div
                       className="pulse"
                       style={{
@@ -5011,7 +5011,7 @@ export default function App() {
                         background: T.green,
                       }}
                     />
-                                       {' '}
+                                       {' '}
                     <span
                       style={{
                         fontSize: 11,
@@ -5022,9 +5022,9 @@ export default function App() {
                     >
                       START HERE
                     </span>
-                                     {' '}
+                                     {' '}
                   </div>
-                                   {' '}
+                                   {' '}
                   <h1
                     style={{
                       fontSize: 38,
@@ -5034,13 +5034,13 @@ export default function App() {
                       marginBottom: 16,
                     }}
                   >
-                                        Alright — before we plug
+                                        Alright — before we plug
                     <br />
                     anything in,{' '}
-                    <span style={{ color: T.primary }}>read this first.</span> 
-                                   {' '}
+                    <span style={{ color: T.primary }}>read this first.</span> 
+                                   {' '}
                   </h1>
-                                   {' '}
+                                   {' '}
                   <p
                     style={{
                       fontSize: 16,
@@ -5049,18 +5049,18 @@ export default function App() {
                       maxWidth: 600,
                     }}
                   >
-                                        I've watched a lot of students fry their
+                                        I've watched a lot of students fry their
                     first LED in the first 10 minutes of a lab session. Not
                     because they weren't smart — because nobody pulled them
                     aside beforehand and said{' '}
                     <em style={{ color: T.text }}>
                       "here's what the textbook skips."
                     </em>{' '}
-                    That's what this page is.                  {' '}
+                    That's what this page is.                  {' '}
                   </p>
-                                 {' '}
+                                 {' '}
                 </div>
-                               {' '}
+                               {' '}
                 <div
                   style={{
                     background: T.amberBg,
@@ -5071,28 +5071,28 @@ export default function App() {
                     marginBottom: 52,
                   }}
                 >
-                                   {' '}
+                                   {' '}
                   <p
                     style={{ fontSize: 14, lineHeight: 1.85, color: T.textSub }}
                   >
-                                       {' '}
+                                       {' '}
                     <span style={{ color: T.amber, fontWeight: 700 }}>
                       Already touched a circuit board before?
                     </span>{' '}
                     Skim through, make sure your mental model lines up with
                     ours, then jump straight to Module 1. But if you're the kind
                     of person who just stared at a breadboard wondering what
-                    those holes even do —                    {' '}
+                    those holes even do —                    {' '}
                     <strong style={{ color: T.text }}>
                       you're exactly who this was written for. Don't skip it.
                     </strong>
-                                     {' '}
+                                     {' '}
                   </p>
-                                 {' '}
+                                 {' '}
                 </div>
-                               {' '}
+                               {' '}
                 <section style={{ marginBottom: 52 }}>
-                                   {' '}
+                                   {' '}
                   <div
                     style={{
                       display: 'flex',
@@ -5101,15 +5101,15 @@ export default function App() {
                       marginBottom: 20,
                     }}
                   >
-                                        <SN n="01" T={T} />
+                                        <SN n="01" T={T} />
                     <h2
                       style={{ fontSize: 21, fontWeight: 700, color: T.text }}
                     >
                       The Language of Electricity
                     </h2>
-                                     {' '}
+                                     {' '}
                   </div>
-                                   {' '}
+                                   {' '}
                   <p
                     style={{
                       fontSize: 15,
@@ -5119,11 +5119,11 @@ export default function App() {
                       maxWidth: 660,
                     }}
                   >
-                                        Think of electricity not as a scary
+                                        Think of electricity not as a scary
                     invisible force, but as water flowing in your home plumbing.
-                                     {' '}
+                                     {' '}
                   </p>
-                                   {' '}
+                                   {' '}
                   <div
                     style={{
                       display: 'grid',
@@ -5133,7 +5133,7 @@ export default function App() {
                       marginBottom: 22,
                     }}
                   >
-                                       {' '}
+                                       {' '}
                     {[
                       {
                         sym: 'V',
@@ -5170,7 +5170,7 @@ export default function App() {
                           padding: 20,
                         }}
                       >
-                                               {' '}
+                                               {' '}
                         <div
                           style={{
                             display: 'flex',
@@ -5179,7 +5179,7 @@ export default function App() {
                             marginBottom: 14,
                           }}
                         >
-                                                   {' '}
+                                                   {' '}
                           <div
                             style={{
                               fontFamily: "'JetBrains Mono',monospace",
@@ -5190,7 +5190,7 @@ export default function App() {
                           >
                             {c.sym}
                           </div>
-                                                   {' '}
+                                                   {' '}
                           <div
                             style={{
                               fontSize: 10,
@@ -5201,9 +5201,9 @@ export default function App() {
                           >
                             = {c.simple}
                           </div>
-                                                 {' '}
+                                                 {' '}
                         </div>
-                                               {' '}
+                                               {' '}
                         <div
                           style={{
                             fontSize: 14,
@@ -5214,7 +5214,7 @@ export default function App() {
                         >
                           {c.name}
                         </div>
-                                               {' '}
+                                               {' '}
                         <div
                           style={{
                             fontSize: 10,
@@ -5225,7 +5225,7 @@ export default function App() {
                         >
                           {c.unit}
                         </div>
-                                               {' '}
+                                               {' '}
                         <p
                           style={{
                             fontSize: 13,
@@ -5235,13 +5235,13 @@ export default function App() {
                         >
                           {c.desc}
                         </p>
-                                             {' '}
+                                             {' '}
                       </div>
                     ))}
-                                     {' '}
+                                     {' '}
                   </div>
-                                                      {' '}
-                  {/* Physics Ohm's Law block */}                 {' '}
+                                                      {' '}
+                  {/* Physics Ohm's Law block */}                 {' '}
                   <div
                     style={{
                       background: T.codeBg,
@@ -5250,7 +5250,7 @@ export default function App() {
                       padding: '18px 24px',
                     }}
                   >
-                                       {' '}
+                                       {' '}
                     <div
                       style={{
                         fontSize: 11,
@@ -5263,7 +5263,7 @@ export default function App() {
                     >
                       PHYSICS NOTE: OHM'S LAW
                     </div>
-                                       {' '}
+                                       {' '}
                     <p
                       style={{
                         fontSize: 14,
@@ -5271,10 +5271,10 @@ export default function App() {
                         lineHeight: 1.8,
                       }}
                     >
-                                            To calculate the perfect resistor
+                                            To calculate the perfect resistor
                       value for an LED, we subtract the LED's forward voltage
                       from the source, and divide by the desired current: <br />
-                                           {' '}
+                                           {' '}
                       <code
                         style={{
                           color: T.primary,
@@ -5285,15 +5285,15 @@ export default function App() {
                       >
                         R = (V_source - V_led) / I_target
                       </code>
-                                         {' '}
+                                         {' '}
                     </p>
-                                     {' '}
+                                     {' '}
                   </div>
-                                 {' '}
+                                 {' '}
                 </section>
-                               {' '}
+                               {' '}
                 <section style={{ marginBottom: 52 }}>
-                                   {' '}
+                                   {' '}
                   <div
                     style={{
                       display: 'flex',
@@ -5302,15 +5302,15 @@ export default function App() {
                       marginBottom: 20,
                     }}
                   >
-                                        <SN n="02" T={T} />
+                                        <SN n="02" T={T} />
                     <h2
                       style={{ fontSize: 21, fontWeight: 700, color: T.text }}
                     >
                       Breadboard Internal Mechanics
                     </h2>
-                                     {' '}
+                                     {' '}
                   </div>
-                                   {' '}
+                                   {' '}
                   <p
                     style={{
                       fontSize: 15,
@@ -5320,13 +5320,13 @@ export default function App() {
                       maxWidth: 660,
                     }}
                   >
-                                        Most beginners treat the breadboard like
+                                        Most beginners treat the breadboard like
                     a magic grid where everything connects to everything. That's
                     the wrong mental model, and it's exactly why circuits fail
                     in ways that make no sense. Hover over the holes below to
-                    see the hidden copper strips underneath.                  {' '}
+                    see the hidden copper strips underneath.                  {' '}
                   </p>
-                                                      {' '}
+                                                      {' '}
                   <div
                     style={{
                       display: 'flex',
@@ -5335,14 +5335,14 @@ export default function App() {
                       flexWrap: 'wrap',
                     }}
                   >
-                                       {' '}
+                                       {' '}
                     <div className="bb-wrap">
-                                           {' '}
-                      <BBViz T={T} activeWireState={false} />                   {' '}
+                                           {' '}
+                      <BBViz T={T} activeWireState={false} />                   {' '}
                     </div>
-                                       {' '}
+                                       {' '}
                     <div style={{ flex: 1, minWidth: 200 }}>
-                                           {' '}
+                                           {' '}
                       <div
                         style={{
                           background: T.primaryBg,
@@ -5352,7 +5352,7 @@ export default function App() {
                           marginBottom: 12,
                         }}
                       >
-                                               {' '}
+                                               {' '}
                         <div
                           style={{
                             fontSize: 11,
@@ -5364,7 +5364,7 @@ export default function App() {
                         >
                           THE SECRET OF "UNDERGROUND" LINKS
                         </div>
-                                               {' '}
+                                               {' '}
                         <p
                           style={{
                             fontSize: 13.5,
@@ -5378,11 +5378,11 @@ export default function App() {
                           linked underground. This is how we prototype without
                           soldering.
                         </p>
-                                             {' '}
+                                             {' '}
                       </div>
-                                           {' '}
+                                           {' '}
                       <Cd T={T} style={{ padding: 16 }}>
-                                               {' '}
+                                               {' '}
                         <div
                           style={{
                             fontSize: 10,
@@ -5394,7 +5394,7 @@ export default function App() {
                         >
                           QUICK BENCH REFERENCE
                         </div>
-                                               {' '}
+                                               {' '}
                         {[
                           {
                             l: '+ Power Rail',
@@ -5435,7 +5435,7 @@ export default function App() {
                                   : 'none',
                             }}
                           >
-                                                       {' '}
+                                                       {' '}
                             <span
                               style={{
                                 fontFamily: "'JetBrains Mono',monospace",
@@ -5445,7 +5445,7 @@ export default function App() {
                             >
                               {t.l}
                             </span>
-                                                       {' '}
+                                                       {' '}
                             <span
                               style={{
                                 fontSize: 12,
@@ -5456,20 +5456,20 @@ export default function App() {
                             >
                               {t.d}
                             </span>
-                                                     {' '}
+                                                     {' '}
                           </div>
                         ))}
-                                             {' '}
+                                             {' '}
                       </Cd>
-                                         {' '}
+                                         {' '}
                     </div>
-                                     {' '}
+                                     {' '}
                   </div>
-                                 {' '}
+                                 {' '}
                 </section>
-                               {' '}
+                               {' '}
                 <section style={{ marginBottom: 52 }}>
-                                   {' '}
+                                   {' '}
                   <div
                     style={{
                       display: 'flex',
@@ -5478,15 +5478,15 @@ export default function App() {
                       marginBottom: 20,
                     }}
                   >
-                                        <SN n="03" T={T} />
+                                        <SN n="03" T={T} />
                     <h2
                       style={{ fontSize: 21, fontWeight: 700, color: T.text }}
                     >
                       Component Anatomy & Tells
                     </h2>
-                                     {' '}
+                                     {' '}
                   </div>
-                                   {' '}
+                                   {' '}
                   <p
                     style={{
                       fontSize: 15,
@@ -5496,13 +5496,13 @@ export default function App() {
                       maxWidth: 660,
                     }}
                   >
-                                        Some components care deeply about which
+                                        Some components care deeply about which
                     way you plug them in. Get it wrong and they either don't
                     work, or they burn out silently. No error message. Just a
                     dead component and a lot of confusion. Here's how to read
-                    each one.                  {' '}
+                    each one.                  {' '}
                   </p>
-                                   {' '}
+                                   {' '}
                   <div
                     style={{
                       display: 'grid',
@@ -5511,11 +5511,11 @@ export default function App() {
                       gap: 12,
                     }}
                   >
-                                       {' '}
+                                       {' '}
                     <Cd T={T} style={{ padding: 22 }}>
-                                           {' '}
-                      <Tg color={T.red} label="ONE-WAY · POLARIZED" />         
-                                 {' '}
+                                           {' '}
+                      <Tg color={T.red} label="ONE-WAY · POLARIZED" />         
+                                 {' '}
                       <p
                         style={{
                           fontSize: 12.5,
@@ -5529,7 +5529,7 @@ export default function App() {
                         Reverse them and they either refuse to work, or they
                         take permanent damage. No second chances.
                       </p>
-                                           {' '}
+                                           {' '}
                       <div
                         style={{
                           marginBottom: 20,
@@ -5537,7 +5537,7 @@ export default function App() {
                           borderBottom: `1px solid ${T.border}`,
                         }}
                       >
-                                               {' '}
+                                               {' '}
                         <div
                           style={{
                             display: 'flex',
@@ -5546,7 +5546,7 @@ export default function App() {
                             marginBottom: 10,
                           }}
                         >
-                                                   {' '}
+                                                   {' '}
                           <div
                             style={{
                               width: 28,
@@ -5562,7 +5562,7 @@ export default function App() {
                           >
                             💡
                           </div>
-                                                   {' '}
+                                                   {' '}
                           <div
                             style={{
                               fontSize: 14,
@@ -5572,9 +5572,9 @@ export default function App() {
                           >
                             LED
                           </div>
-                                                 {' '}
+                                                 {' '}
                         </div>
-                                               {' '}
+                                               {' '}
                         <p
                           style={{
                             fontSize: 13.5,
@@ -5583,16 +5583,16 @@ export default function App() {
                             marginBottom: 14,
                           }}
                         >
-                                                    Converts electricity into
+                                                    Converts electricity into
                           light — but only in one direction. The rule is simple
                           and you should never forget it:{' '}
                           <strong style={{ color: T.text }}>
                             long leg is positive, short leg is negative.
                           </strong>{' '}
-                          Long leg toward power. Short leg toward ground.      
-                                           {' '}
+                          Long leg toward power. Short leg toward ground.      
+                                           {' '}
                         </p>
-                                                                        {' '}
+                                                                        {' '}
                         <div
                           style={{
                             background: T.primaryBg,
@@ -5602,7 +5602,7 @@ export default function App() {
                             marginBottom: 12,
                           }}
                         >
-                                                   {' '}
+                                                   {' '}
                           <div
                             style={{
                               fontSize: 10,
@@ -5614,7 +5614,7 @@ export default function App() {
                           >
                             ⚠️ THE FLAT NOTCH SECRET
                           </div>
-                                                   {' '}
+                                                   {' '}
                           <p
                             style={{
                               fontSize: 13,
@@ -5629,9 +5629,9 @@ export default function App() {
                             inside the bulb, the large "flag-shaped" piece is
                             the Cathode.
                           </p>
-                                                 {' '}
+                                                 {' '}
                         </div>
-                                               {' '}
+                                               {' '}
                         <div
                           style={{
                             background: T.codeBg,
@@ -5640,7 +5640,7 @@ export default function App() {
                             padding: '12px 14px',
                           }}
                         >
-                                                   {' '}
+                                                   {' '}
                           {[
                             {
                               dot: T.green,
@@ -5662,7 +5662,7 @@ export default function App() {
                                 alignItems: 'flex-start',
                               }}
                             >
-                                                           {' '}
+                                                           {' '}
                               <div
                                 style={{
                                   width: 8,
@@ -5673,9 +5673,9 @@ export default function App() {
                                   flexShrink: 0,
                                 }}
                               />
-                                                           {' '}
+                                                           {' '}
                               <div>
-                                                               {' '}
+                                                               {' '}
                                 <div
                                   style={{
                                     fontFamily: "'JetBrains Mono',monospace",
@@ -5687,20 +5687,20 @@ export default function App() {
                                 >
                                   {r.label}
                                 </div>
-                                                               {' '}
+                                                               {' '}
                                 <p style={{ fontSize: 12.5, color: T.textSub }}>
                                   {r.desc}
                                 </p>
-                                                             {' '}
+                                                             {' '}
                               </div>
-                                                         {' '}
+                                                         {' '}
                             </div>
                           ))}
-                                                 {' '}
+                                                 {' '}
                         </div>
-                                             {' '}
+                                             {' '}
                       </div>
-                                           {' '}
+                                           {' '}
                       <div
                         style={{
                           display: 'flex',
@@ -5709,7 +5709,7 @@ export default function App() {
                           marginBottom: 10,
                         }}
                       >
-                                               {' '}
+                                               {' '}
                         <div
                           style={{
                             width: 28,
@@ -5725,7 +5725,7 @@ export default function App() {
                         >
                           🔊
                         </div>
-                                               {' '}
+                                               {' '}
                         <div
                           style={{
                             fontSize: 14,
@@ -5735,9 +5735,9 @@ export default function App() {
                         >
                           Active Buzzer
                         </div>
-                                             {' '}
+                                             {' '}
                       </div>
-                                           {' '}
+                                           {' '}
                       <p
                         style={{
                           fontSize: 13.5,
@@ -5752,13 +5752,13 @@ export default function App() {
                         </strong>{' '}
                         right next to the positive leg.
                       </p>
-                                         {' '}
+                                         {' '}
                     </Cd>
-                                       {' '}
+                                       {' '}
                     <Cd T={T} style={{ padding: 22 }}>
-                                           {' '}
-                      <Tg color={T.green} label="TWO-WAY · NON-POLARIZED" />   
-                                       {' '}
+                                           {' '}
+                      <Tg color={T.green} label="TWO-WAY · NON-POLARIZED" />   
+                                       {' '}
                       <p
                         style={{
                           fontSize: 12.5,
@@ -5772,7 +5772,7 @@ export default function App() {
                         them in backwards — they behave exactly the same every
                         time.
                       </p>
-                                           {' '}
+                                           {' '}
                       {[
                         {
                           icon: '≈',
@@ -5796,7 +5796,7 @@ export default function App() {
                               i === 0 ? `1px solid ${T.border}` : 'none',
                           }}
                         >
-                                                   {' '}
+                                                   {' '}
                           <div
                             style={{
                               display: 'flex',
@@ -5805,7 +5805,7 @@ export default function App() {
                               marginBottom: 10,
                             }}
                           >
-                                                       {' '}
+                                                       {' '}
                             <div
                               style={{
                                 width: 28,
@@ -5823,7 +5823,7 @@ export default function App() {
                             >
                               {c.icon}
                             </div>
-                                                       {' '}
+                                                       {' '}
                             <div
                               style={{
                                 fontSize: 14,
@@ -5833,9 +5833,9 @@ export default function App() {
                             >
                               {c.name}
                             </div>
-                                                     {' '}
+                                                     {' '}
                           </div>
-                                                   {' '}
+                                                   {' '}
                           <p
                             style={{
                               fontSize: 13.5,
@@ -5845,16 +5845,16 @@ export default function App() {
                           >
                             {c.desc}
                           </p>
-                                                 {' '}
+                                                 {' '}
                         </div>
                       ))}
-                                         {' '}
+                                         {' '}
                     </Cd>
-                                     {' '}
+                                     {' '}
                   </div>
-                                 {' '}
+                                 {' '}
                 </section>
-                               {' '}
+                               {' '}
                 <div
                   style={{
                     background: T.primaryBg,
@@ -5868,9 +5868,9 @@ export default function App() {
                     flexWrap: 'wrap',
                   }}
                 >
-                                   {' '}
+                                   {' '}
                   <div>
-                                       {' '}
+                                       {' '}
                     <div
                       style={{
                         fontSize: 16,
@@ -5881,13 +5881,13 @@ export default function App() {
                     >
                       That's your foundation. Let's touch some hardware.
                     </div>
-                                       {' '}
+                                       {' '}
                     <p style={{ fontSize: 14, color: T.textSub }}>
                       Module 1 is where we plug things in for the first time.
                     </p>
-                                     {' '}
+                                     {' '}
                   </div>
-                                   {' '}
+                                   {' '}
                   <button
                     onClick={() => go('m1')}
                     style={{
@@ -5903,14 +5903,14 @@ export default function App() {
                   >
                     Module 1 →
                   </button>
-                                 {' '}
+                                 {' '}
                 </div>
-                             {' '}
+                             {' '}
               </div>
             )}
-                                    {' '}
+                                    {' '}
             {/* If our active page matches an internal Lesson Database key, render the dynamic premium view */}
-                       {' '}
+                       {' '}
             {activeLesson && page !== 'gz' ? (
               // FIX: Only render locked screen if user hasn't overridden and it's a phase 1-12 restriction.
               [
@@ -5943,12 +5943,12 @@ export default function App() {
                     alignItems: 'flex-start',
                   }}
                 >
-                                    {/* Left Column (Width: 60% on desktop) */} 
-                                 {' '}
+                                    {/* Left Column (Width: 60% on desktop) */} 
+                                 {' '}
                   <div style={{ flex: '1 1 500px' }}>
-                                       {' '}
+                                       {' '}
                     <div style={{ marginBottom: 32 }}>
-                                           {' '}
+                                           {' '}
                       <div
                         style={{
                           display: 'inline-block',
@@ -5959,7 +5959,7 @@ export default function App() {
                           marginBottom: 18,
                         }}
                       >
-                                               {' '}
+                                               {' '}
                         <span
                           style={{
                             fontSize: 11,
@@ -5970,9 +5970,9 @@ export default function App() {
                         >
                           {activeLesson.phase.toUpperCase()}
                         </span>
-                                             {' '}
+                                             {' '}
                       </div>
-                                           {' '}
+                                           {' '}
                       <h1
                         style={{
                           fontSize: 36,
@@ -5984,9 +5984,9 @@ export default function App() {
                       >
                         {activeLesson.title}
                       </h1>
-                                         {' '}
+                                         {' '}
                     </div>
-                                       {' '}
+                                       {' '}
                     <div
                       style={{
                         background: `linear-gradient(135deg,${T.primaryBg},${T.greenBg})`,
@@ -5996,7 +5996,7 @@ export default function App() {
                         marginBottom: 32,
                       }}
                     >
-                                           {' '}
+                                           {' '}
                       <p
                         style={{
                           fontSize: 17,
@@ -6008,7 +6008,7 @@ export default function App() {
                       >
                         {activeLesson.overview.hook}
                       </p>
-                                           {' '}
+                                           {' '}
                       <p
                         style={{
                           fontSize: 14.5,
@@ -6018,10 +6018,10 @@ export default function App() {
                       >
                         {activeLesson.overview.concept}
                       </p>
-                                         {' '}
+                                         {' '}
                     </div>
-                                        {/* Supplies Section */}               
-                       {' '}
+                                        {/* Supplies Section */}               
+                       {' '}
                     <h3
                       style={{
                         fontSize: 18,
@@ -6032,9 +6032,9 @@ export default function App() {
                     >
                       Required Supplies
                     </h3>
-                                       {' '}
+                                       {' '}
                     <Cd T={T} style={{ overflow: 'hidden', marginBottom: 32 }}>
-                                           {' '}
+                                           {' '}
                       {activeLesson.parts.map((p, i, arr) => (
                         <div
                           key={p.name}
@@ -6049,7 +6049,7 @@ export default function App() {
                             alignItems: 'flex-start',
                           }}
                         >
-                                                   {' '}
+                                                   {' '}
                           <div
                             style={{
                               width: 28,
@@ -6069,9 +6069,9 @@ export default function App() {
                           >
                             ×{p.quantity}
                           </div>
-                                                   {' '}
+                                                   {' '}
                           <div style={{ flex: 1 }}>
-                                                       {' '}
+                                                       {' '}
                             <div
                               style={{
                                 fontSize: 14,
@@ -6082,7 +6082,7 @@ export default function App() {
                             >
                               {p.name}
                             </div>
-                                                       {' '}
+                                                       {' '}
                             <p
                               style={{
                                 fontSize: 13,
@@ -6092,15 +6092,15 @@ export default function App() {
                             >
                               {p.why}
                             </p>
-                                                     {' '}
+                                                     {' '}
                           </div>
-                                                 {' '}
+                                                 {' '}
                         </div>
                       ))}
-                                         {' '}
+                                         {' '}
                     </Cd>
-                                        {/* Build Steps Section */}             
-                         {' '}
+                                        {/* Build Steps Section */}             
+                         {' '}
                     <h3
                       style={{
                         fontSize: 18,
@@ -6111,9 +6111,9 @@ export default function App() {
                     >
                       Build & Assembly Steps
                     </h3>
-                                       {' '}
+                                       {' '}
                     <Cd T={T} style={{ overflow: 'hidden', marginBottom: 32 }}>
-                                           {' '}
+                                           {' '}
                       {activeLesson.steps &&
                         activeLesson.steps.map((s, i, arr) => (
                           <div
@@ -6126,7 +6126,7 @@ export default function App() {
                                   : 'none',
                             }}
                           >
-                                                     {' '}
+                                                     {' '}
                             <div
                               style={{
                                 display: 'flex',
@@ -6135,7 +6135,7 @@ export default function App() {
                                   s.sanityCheck || s.proTip ? 12 : 0,
                               }}
                             >
-                                                         {' '}
+                                                         {' '}
                               <div
                                 style={{
                                   width: 26,
@@ -6156,9 +6156,9 @@ export default function App() {
                               >
                                 {String(s.number).padStart(2, '0')}
                               </div>
-                                                         {' '}
+                                                         {' '}
                               <div style={{ flex: 1 }}>
-                                                             {' '}
+                                                             {' '}
                                 <div
                                   style={{
                                     fontSize: 14,
@@ -6169,7 +6169,7 @@ export default function App() {
                                 >
                                   {s.title}
                                 </div>
-                                                             {' '}
+                                                             {' '}
                                 <p
                                   style={{
                                     fontSize: 13.5,
@@ -6179,11 +6179,11 @@ export default function App() {
                                 >
                                   {s.instruction}
                                 </p>
-                                                           {' '}
+                                                           {' '}
                               </div>
-                                                       {' '}
+                                                       {' '}
                             </div>
-                                                     {' '}
+                                                     {' '}
                             {s.sanityCheck && (
                               <div
                                 style={{
@@ -6195,7 +6195,7 @@ export default function App() {
                                   marginBottom: s.proTip ? 8 : 0,
                                 }}
                               >
-                                                           {' '}
+                                                           {' '}
                                 <span
                                   style={{
                                     fontSize: 10,
@@ -6207,16 +6207,16 @@ export default function App() {
                                 >
                                   ✓ SANITY CHECK
                                 </span>
-                                                           {' '}
+                                                           {' '}
                                 <span
                                   style={{ fontSize: 12.5, color: T.textSub }}
                                 >
                                   {s.sanityCheck}
                                 </span>
-                                                         {' '}
+                                                         {' '}
                               </div>
                             )}
-                                                     {' '}
+                                                     {' '}
                             {s.proTip && (
                               <div
                                 style={{
@@ -6227,7 +6227,7 @@ export default function App() {
                                   padding: '9px 14px',
                                 }}
                               >
-                                                           {' '}
+                                                           {' '}
                                 <span
                                   style={{
                                     fontSize: 10,
@@ -6239,22 +6239,22 @@ export default function App() {
                                 >
                                   ⚠️ PRO TIP
                                 </span>
-                                                           {' '}
+                                                           {' '}
                                 <span
                                   style={{ fontSize: 12.5, color: T.textSub }}
                                 >
                                   {s.proTip}
                                 </span>
-                                                         {' '}
+                                                         {' '}
                               </div>
                             )}
-                                                   {' '}
+                                                   {' '}
                           </div>
                         ))}
-                                         {' '}
+                                         {' '}
                     </Cd>
-                                        {/* Observation Section */}             
-                         {' '}
+                                        {/* Observation Section */}             
+                         {' '}
                     {activeLesson.observation && (
                       <div
                         style={{
@@ -6265,7 +6265,7 @@ export default function App() {
                           marginBottom: 24,
                         }}
                       >
-                                               {' '}
+                                               {' '}
                         <h3
                           style={{
                             fontSize: 16,
@@ -6277,10 +6277,10 @@ export default function App() {
                             gap: 8,
                           }}
                         >
-                                                    <span>🎯</span> What You
-                          Will Observe                        {' '}
+                                                    <span>🎯</span> What You
+                          Will Observe                        {' '}
                         </h3>
-                                               {' '}
+                                               {' '}
                         <p
                           style={{
                             fontSize: 14,
@@ -6290,13 +6290,13 @@ export default function App() {
                         >
                           {activeLesson.observation}
                         </p>
-                                             {' '}
+                                             {' '}
                       </div>
                     )}
-                                        {/* FAQ Section */}                   {' '}
+                                        {/* FAQ Section */}                   {' '}
                     {activeLesson.faq && activeLesson.faq.length > 0 && (
                       <div style={{ marginBottom: 40 }}>
-                                               {' '}
+                                               {' '}
                         <button
                           onClick={() => setFaqOpen(!faqOpen)}
                           style={{
@@ -6316,16 +6316,16 @@ export default function App() {
                             transition: 'all 0.2s',
                           }}
                         >
-                                                   {' '}
+                                                   {' '}
                           <span>
                             🤔 Didn't get the right output? Don't worry! Click
                             here..
                           </span>
-                                                   {' '}
-                          <span>{faqOpen ? '▲' : '▼'}</span>                   
-                             {' '}
+                                                   {' '}
+                          <span>{faqOpen ? '▲' : '▼'}</span>                   
+                             {' '}
                         </button>
-                                                                        {' '}
+                                                                        {' '}
                         {faqOpen && (
                           <div
                             style={{
@@ -6337,7 +6337,7 @@ export default function App() {
                             }}
                             className="fu"
                           >
-                                                       {' '}
+                                                       {' '}
                             <h4
                               style={{
                                 color: T.red,
@@ -6348,7 +6348,7 @@ export default function App() {
                             >
                               Common Errors & Solutions
                             </h4>
-                                                       {' '}
+                                                       {' '}
                             {activeLesson.faq.map((f, i) => (
                               <div
                                 key={i}
@@ -6363,7 +6363,7 @@ export default function App() {
                                       : `1px solid ${T.red}20`,
                                 }}
                               >
-                                                               {' '}
+                                                               {' '}
                                 <strong
                                   style={{
                                     color: T.text,
@@ -6374,7 +6374,7 @@ export default function App() {
                                 >
                                   • {f.error}
                                 </strong>
-                                                               {' '}
+                                                               {' '}
                                 <p
                                   style={{
                                     fontSize: 13,
@@ -6387,27 +6387,27 @@ export default function App() {
                                   </strong>{' '}
                                   {f.cause}
                                 </p>
-                                                               {' '}
+                                                               {' '}
                                 <p style={{ fontSize: 13, color: T.textSub }}>
                                   <strong style={{ color: T.textMuted }}>
                                     Solution:
                                   </strong>{' '}
                                   {f.solution}
                                 </p>
-                                                             {' '}
+                                                             {' '}
                               </div>
                             ))}
-                                                     {' '}
+                                                     {' '}
                           </div>
                         )}
-                                             {' '}
+                                             {' '}
                       </div>
                     )}
-                                        {/* Code Terminal Section */}           
-                           {' '}
+                                        {/* Code Terminal Section */}           
+                           {' '}
                     {activeLesson.code ? (
                       <>
-                                               {' '}
+                                               {' '}
                         <h3
                           style={{
                             fontSize: 18,
@@ -6418,7 +6418,7 @@ export default function App() {
                         >
                           The Software Architecture
                         </h3>
-                                               {' '}
+                                               {' '}
                         <div
                           style={{
                             background: T.codeBg,
@@ -6428,7 +6428,7 @@ export default function App() {
                             marginBottom: 20,
                           }}
                         >
-                                                   {' '}
+                                                   {' '}
                           <div
                             style={{
                               display: 'flex',
@@ -6439,7 +6439,7 @@ export default function App() {
                               background: 'rgba(0,0,0,0.15)',
                             }}
                           >
-                                                       {' '}
+                                                       {' '}
                             <div
                               style={{
                                 display: 'flex',
@@ -6447,7 +6447,7 @@ export default function App() {
                                 gap: 8,
                               }}
                             >
-                                                           {' '}
+                                                           {' '}
                               {['#ef4444', '#f59e0b', '#22c55e'].map((c) => (
                                 <div
                                   key={c}
@@ -6459,7 +6459,7 @@ export default function App() {
                                   }}
                                 />
                               ))}
-                                                           {' '}
+                                                           {' '}
                               <span
                                 style={{
                                   fontFamily: "'JetBrains Mono',monospace",
@@ -6470,11 +6470,11 @@ export default function App() {
                               >
                                 {activeLesson.code.filename}
                               </span>
-                                                         {' '}
+                                                         {' '}
                             </div>
-                                                     {' '}
+                                                     {' '}
                           </div>
-                                                   {' '}
+                                                   {' '}
                           <pre
                             style={{
                               padding: '20px 22px',
@@ -6482,7 +6482,7 @@ export default function App() {
                               margin: 0,
                             }}
                           >
-                                                       {' '}
+                                                       {' '}
                             <code
                               dangerouslySetInnerHTML={codeLight(
                                 activeLesson.code.snippet
@@ -6494,11 +6494,11 @@ export default function App() {
                                 display: 'block',
                               }}
                             />
-                                                     {' '}
+                                                     {' '}
                           </pre>
-                                                 {' '}
+                                                 {' '}
                         </div>
-                                               {' '}
+                                               {' '}
                         <div
                           style={{
                             background: T.primaryBg,
@@ -6508,7 +6508,7 @@ export default function App() {
                             marginBottom: 40,
                           }}
                         >
-                                                   {' '}
+                                                   {' '}
                           <div
                             style={{
                               fontSize: 10,
@@ -6520,7 +6520,7 @@ export default function App() {
                           >
                             🧠 LOGIC BREAKDOWN
                           </div>
-                                                   {' '}
+                                                   {' '}
                           <p
                             style={{
                               fontSize: 14,
@@ -6530,9 +6530,9 @@ export default function App() {
                           >
                             {activeLesson.code.breakdown}
                           </p>
-                                                 {' '}
+                                                 {' '}
                         </div>
-                                             {' '}
+                                             {' '}
                       </>
                     ) : (
                       <div
@@ -6545,9 +6545,9 @@ export default function App() {
                           textAlign: 'center',
                         }}
                       >
-                                               {' '}
+                                               {' '}
                         <div style={{ fontSize: 32, marginBottom: 12 }}>⚙️</div>
-                                               {' '}
+                                               {' '}
                         <div
                           style={{
                             fontSize: 16,
@@ -6558,19 +6558,19 @@ export default function App() {
                         >
                           Hardware Only Project
                         </div>
-                                               {' '}
+                                               {' '}
                         <p style={{ fontSize: 14, color: T.textSub }}>
                           This phase requires no software compilation. Pure
                           physics!
                         </p>
-                                             {' '}
+                                             {' '}
                       </div>
                     )}
-                                     {' '}
+                                     {' '}
                   </div>
-                                   {' '}
+                                   {' '}
                   {/* Right Column (Width: 40% on desktop, sticky sandbox panel) */}
-                                   {' '}
+                                   {' '}
                   <div
                     style={{
                       flex: '0 0 320px',
@@ -6579,10 +6579,10 @@ export default function App() {
                       width: '100%',
                     }}
                   >
-                                        <LessonSimulator pageId={page} T={T} /> 
-                                   {' '}
+                                        <LessonSimulator pageId={page} T={T} /> 
+                                   {' '}
                   </div>
-                                 {' '}
+                                 {' '}
                 </div>
               )
             ) : // If page is lab, or some other loaded fallback page
@@ -6595,13 +6595,13 @@ export default function App() {
                 setHistory={setHistory}
               />
             ) : null}
-                     {' '}
+                     {' '}
           </div>
-                 {' '}
+                 {' '}
         </div>
-             {' '}
+             {' '}
       </div>
-            {modal && <Referral T={T} onClose={() => setModal(false)} />}   {' '}
+            {modal && <Referral T={T} onClose={() => setModal(false)} />}   {' '}
     </div>
   );
 }
