@@ -26,9 +26,9 @@ export default function BBViz({ T, activeWireState = true }) {
 
   const RAILS = [
     { id: 'l_red', cx: 18, rx: 8, sign: '+', color: T.red },
-    { id: 'l_blue', cx: 38, rx: 28, sign: 'ΓêÆ', color: T.blue },
+    { id: 'l_blue', cx: 38, rx: 28, sign: '−', color: T.blue },
     { id: 'r_red', cx: 250, rx: 240, sign: '+', color: T.red },
-    { id: 'r_blue', cx: 270, rx: 260, sign: 'ΓêÆ', color: T.blue },
+    { id: 'r_blue', cx: 270, rx: 260, sign: '−', color: T.blue },
   ];
 
   return (
@@ -263,7 +263,7 @@ export default function BBViz({ T, activeWireState = true }) {
               fontWeight: 600,
             }}
           >
-            ΓùÅ Vertical {hov.sign === '+' ? 'Power' : 'Ground'} Rail ΓÇö continuous
+            ● Vertical {hov.sign === '+' ? 'Power' : 'Ground'} Rail — continuous
             copper strip
           </span>
         ) : hov?.type === 'row' ? (
@@ -275,7 +275,7 @@ export default function BBViz({ T, activeWireState = true }) {
               fontWeight: 600,
             }}
           >
-            ΓùÅ Row {hov.r} ΓÇö {hov.s === 'l' ? 'columns AΓÇôE' : 'columns FΓÇôJ'} ΓÇö
+            ● Row {hov.r} — {hov.s === 'l' ? 'columns A–E' : 'columns F–J'} —
             shared copper strip
           </span>
         ) : (
@@ -286,7 +286,7 @@ export default function BBViz({ T, activeWireState = true }) {
               color: T.textMuted,
             }}
           >
-            Γåæ Hover any hole to see the copper strip underneath it
+            ↑ Hover any hole to see the copper strip underneath it
           </span>
         )}
         {' '}
@@ -327,7 +327,7 @@ export default function BBViz({ T, activeWireState = true }) {
           </div>
           {' '}
           <div style={{ color: T.green, fontWeight: 'bold' }}>
-            I = 1.3V / 220╬⌐ Γëê 6mA
+            I = 1.3V / 220Ω ≈ 6mA
           </div>
           {' '}
         </div>
