@@ -2261,295 +2261,6 @@ function ComponentModal({ componentName, T, onClose }) {
           </div>
         ) : componentName === '5V Single Channel Relay' ? (
           <div>
-            <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16, color: T.text }}>5V Single Channel Relay</h1>
-            <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-              <img src="https://5.imimg.com/data5/SELLER/Default/2020/11/FK/WK/OH/15458098/5v-relay-module-500x500.jpg" alt="5V Single Channel Relay" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
-            </div>
-
-            <h2 style={{ fontSize: 24, fontWeight: 700, marginBottom: 12, color: T.text }}>The High-Power Bridge</h2>
-            <p style={{ fontSize: 16, color: T.textSub, lineHeight: 1.8, marginBottom: 24 }}>
-              The Relay is an electromechanical switch. It safely bridges the gap between your delicate, low-power microcontroller (the ESP32) and heavy, high-power devices (like large motors or home appliances).
-            </p>
-
-            <h3 style={{ fontSize: 20, fontWeight: 600, marginTop: 32, marginBottom: 16, color: T.text }}>How It Works (The Physics):</h3>
-            <p style={{ fontSize: 16, color: T.textSub, lineHeight: 1.8, marginBottom: 24 }}>
-              Inside the plastic box on the module is an electromagnet (a coil of wire) and a physical metal switch. The ESP32's 3.3V signal alone isn't strong enough to power a heavy device. But when you send a tiny signal to the relay, it powers the electromagnet. The magnet physically pulls the metal switch shut with a satisfying click. The high-power electricity flows entirely through this separated metal switch, meaning the dangerous high voltage never actually touches your ESP32.
-            </p>
-
-            <h3 style={{ fontSize: 20, fontWeight: 600, marginTop: 32, marginBottom: 16, color: T.text }}>The Brains of the Module:</h3>
-            <p style={{ fontSize: 16, color: T.textSub, lineHeight: 1.8, marginBottom: 24 }}>
-              Because an electromagnet can cause a harsh backward spike of electricity when turned off, the module includes a built-in transistor to trigger the coil and a "flyback diode" to protect your circuit from any sudden voltage kicks.
-            </p>
-
-            <h3 style={{ fontSize: 20, fontWeight: 600, marginTop: 32, marginBottom: 16, color: T.text }}>Pinout & Wiring:</h3>
-
-            <div style={{ background: T.surfaceAlt, border: `1px solid ${T.border}`, borderRadius: 12, padding: 24, marginBottom: 24 }}>
-              <h4 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: T.primary }}>Low-Voltage Side (ESP32)</h4>
-              <ul style={{ paddingLeft: 24, color: T.textSub, lineHeight: 1.8, marginBottom: 24 }}>
-                <li><strong style={{ color: T.text }}>VCC (or DC+):</strong> Power input for the electromagnet. This MUST be connected to the VIN (5V) rail of the ESP32. If connected to 3.3V, it won't have enough magnetic force to pull the switch shut.</li>
-                <li><strong style={{ color: T.text }}>GND (or DC-):</strong> Ground connection. Connect to GND.</li>
-                <li><strong style={{ color: T.text }}>IN:</strong> The signal pin. Connect this to an output GPIO on your ESP32. Sending a signal here triggers the switch. (Note: Many relays are "Active-Low", meaning sending LOW turns it ON).</li>
-              </ul>
-
-              <h4 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: T.primary }}>High-Voltage Side (Screw Terminals)</h4>
-              <ul style={{ paddingLeft: 24, color: T.textSub, lineHeight: 1.8 }}>
-                <li><strong style={{ color: T.text }}>COM (Common):</strong> The main power coming in from your heavy battery or wall plug.</li>
-                <li><strong style={{ color: T.text }}>NO (Normally Open):</strong> Connects to your heavy device. It only receives power when the relay clicks ON.</li>
-                <li><strong style={{ color: T.text }}>NC (Normally Closed):</strong> Receives power until the relay clicks ON. Usually left empty for basic projects.</li>
-              </ul>
-            </div>
-
-            <button onClick={() => setComponentName(null)} style={{ padding: '10px 20px', background: T.surface, border: `1px solid ${T.border}`, color: T.text, borderRadius: 8, marginTop: 20 }}>
-              &larr; Back to Kit
-            </button>
-          </div>
-        ) : componentName === 'Capacitors' ? (
-          <div>
-            <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16, color: T.text }}>
-              {componentName}
-            </h1>
-            <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-              <img src="https://www.codrey.com/wp-content/uploads/2019/01/Capcitors.jpg" alt="Capacitors" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
-            </div>
-
-            <h2 style={{ fontSize: 24, fontWeight: 700, color: T.primary, marginBottom: 12 }}>The Energy Buckets</h2>
-            <p style={{ fontSize: 16, color: T.textSub, lineHeight: 1.8, marginBottom: 24 }}>
-              Capacitors act like tiny, lightning-fast batteries. They store and release electrical energy quickly, making them essential for smoothing out power drops in your circuits.
-            </p>
-
-            <div style={{ marginTop: 40 }}>
-              <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
-                <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
-                  <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 8l4 4-4 4M8 12h8"></path></svg>
-                </div>
-                <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>How It Works (The Physics)</h2>
-              </div>
-              <p style={{ fontSize: 16, color: T.textSub, lineHeight: 1.8, marginBottom: 32 }}>
-                Inside a capacitor are two conductive metal plates separated by an insulator (a material that blocks electricity). When power is applied, electrons pile up on one plate, creating an electrical charge. If the main power suddenly drops—like when a heavy servo motor jerks and pulls too much current—the capacitor instantly empties its stored electrons into the circuit to fill the gap and keep your ESP32 from crashing.
-              </p>
-            </div>
-
-            <div style={{ marginTop: 40 }}>
-              <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
-                <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
-                  <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
-                </div>
-                <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>Pinout & Wiring</h2>
-              </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
-                <div style={{ padding: 20, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16 }}>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: T.primary, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 }}>Ceramic (100nF)</div>
-                  <div style={{ fontSize: 15, color: T.textSub, lineHeight: 1.6 }}>These look like tiny brown discs. They are <strong>non-polarized</strong>, meaning they have no positive or negative leg. Plug them in facing either direction.</div>
-                </div>
-                <div style={{ padding: 20, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16 }}>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: T.primary, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 }}>Electrolytic (1uF+)</div>
-                  <div style={{ fontSize: 15, color: T.textSub, lineHeight: 1.6 }}>These are tiny tin cans and are <strong>polarized</strong>! Long leg connects to Positive, short leg (with minus stripe) to Ground.</div>
-                </div>
-              </div>
-            </div>
-
-            <button onClick={() => setComponentName(null)} style={{ padding: '10px 20px', background: 'transparent', border: `1px solid ${T.primary}`, color: T.primary, borderRadius: 8, marginTop: 20, fontSize: 14, fontWeight: 600, transition: 'all 0.2s' }} onMouseEnter={(e) => { e.currentTarget.style.background = T.primary; e.currentTarget.style.color = '#fff'; }} onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = T.primary; }}>
-              &larr; Back to Kit
-            </button>
-          </div>
-        ) : componentName === 'Potentiometer' ? (
-          <div>
-            <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16, color: T.text }}>
-              {componentName}
-            </h1>
-            <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-              <img src="https://robodo.in/cdn/shop/products/51mNAteWA9L.jpg?v=1672847436" alt="Potentiometer" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
-            </div>
-
-            <h2 style={{ fontSize: 24, fontWeight: 700, color: T.primary, marginBottom: 12 }}>The Volume Knob</h2>
-            <p style={{ fontSize: 16, color: T.textSub, lineHeight: 1.8, marginBottom: 24 }}>
-              A potentiometer (or "pot") is a variable resistor. Instead of having a fixed resistance value, you can adjust how much it resists the flow of electricity by turning a knob.
-            </p>
-
-            <div style={{ marginTop: 40 }}>
-              <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
-                <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
-                  <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 8l4 4-4 4M8 12h8"></path></svg>
-                </div>
-                <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>How It Works (The Physics)</h2>
-              </div>
-              <p style={{ fontSize: 16, color: T.textSub, lineHeight: 1.8, marginBottom: 32 }}>
-                Inside the plastic casing is a circular track made of a resistive material. A metal "wiper" sits on this track and is connected to the center pin. When you turn the knob, the wiper slides along the track. If the wiper is close to the power source, resistance is LOW. If you turn it the other way, resistance is HIGH.
-              </p>
-            </div>
-
-            <div style={{ marginTop: 40 }}>
-              <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
-                <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
-                  <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
-                </div>
-                <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>Pinout & Wiring</h2>
-              </div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 16, marginBottom: 16 }}>
-                <div style={{ padding: 20, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16 }}>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: T.primary, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 }}>Left Pin (Terminal 1)</div>
-                  <div style={{ fontSize: 15, color: T.textSub, lineHeight: 1.6 }}>Connect to Power (3.3V).</div>
-                </div>
-                <div style={{ padding: 20, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16 }}>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: T.primary, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 }}>Center Pin (Wiper)</div>
-                  <div style={{ fontSize: 15, color: T.textSub, lineHeight: 1.6 }}>Connect to an Analog Input Pin. This pin reads the shifting voltage as you turn the knob.</div>
-                </div>
-                <div style={{ padding: 20, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16 }}>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: T.primary, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 }}>Right Pin (Terminal 2)</div>
-                  <div style={{ fontSize: 15, color: T.textSub, lineHeight: 1.6 }}>Connect to Ground (GND).</div>
-                </div>
-              </div>
-            </div>
-
-            <button onClick={() => setComponentName(null)} style={{ padding: '10px 20px', background: 'transparent', border: `1px solid ${T.primary}`, color: T.primary, borderRadius: 8, marginTop: 20, fontSize: 14, fontWeight: 600, transition: 'all 0.2s' }} onMouseEnter={(e) => { e.currentTarget.style.background = T.primary; e.currentTarget.style.color = '#fff'; }} onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = T.primary; }}>
-              &larr; Back to Kit
-            </button>
-          </div>
-        ) : componentName === 'BC547 transistors' ? (
-          <div>
-            <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16, color: T.text }}>
-              BC547 Transistor
-            </h1>
-            <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-              <img src="https://robukits.in/static/uploads/bc547_2.png" alt="BC547 Transistor" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
-            </div>
-
-            <h2 style={{ fontSize: 24, fontWeight: 700, color: T.primary, marginBottom: 12 }}>The Electronic Switch</h2>
-            <p style={{ fontSize: 16, color: T.textSub, lineHeight: 1.8, marginBottom: 24 }}>
-              The transistor is the most important invention of the 20th century. In your kit, it acts as an electronic switch. It allows the weak 3.3V signal from your ESP32 to safely control components that need 5V without frying your microcontroller.
-            </p>
-
-            <div style={{ marginTop: 40 }}>
-              <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
-                <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
-                  <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 8l4 4-4 4M8 12h8"></path></svg>
-                </div>
-                <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>How It Works (The Physics)</h2>
-              </div>
-              <p style={{ fontSize: 16, color: T.textSub, lineHeight: 1.8, marginBottom: 32 }}>
-                Think of a transistor like a water valve. You have a huge pipe of high-pressure water (the main power supply) that is blocked by a gate. The ESP32 doesn't have the strength to push the gate open itself. However, if the ESP32 sends a tiny trickle of water to a specific pin on the transistor, that trickle triggers a mechanism that swings the massive gate wide open.
-              </p>
-            </div>
-
-            <div style={{ marginTop: 40 }}>
-              <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
-                <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
-                  <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
-                </div>
-                <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>Pinout & Wiring (NPN Type)</h2>
-              </div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 16, marginBottom: 16 }}>
-                <div style={{ padding: 20, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16 }}>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: T.primary, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 }}>Pin 1 (Collector)</div>
-                  <div style={{ fontSize: 15, color: T.textSub, lineHeight: 1.6 }}>Connects to the negative side of the heavy device you want to power.</div>
-                </div>
-                <div style={{ padding: 20, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16 }}>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: T.primary, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 }}>Pin 2 (Base)</div>
-                  <div style={{ fontSize: 15, color: T.textSub, lineHeight: 1.6 }}>The trigger pin. Connect this to your ESP32 through a 1k resistor. When power hits here, it turns ON.</div>
-                </div>
-                <div style={{ padding: 20, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16 }}>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: T.primary, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 }}>Pin 3 (Emitter)</div>
-                  <div style={{ fontSize: 15, color: T.textSub, lineHeight: 1.6 }}>Connects directly to Ground (GND).</div>
-                </div>
-              </div>
-            </div>
-
-            <button onClick={() => setComponentName(null)} style={{ padding: '10px 20px', background: 'transparent', border: `1px solid ${T.primary}`, color: T.primary, borderRadius: 8, marginTop: 20, fontSize: 14, fontWeight: 600, transition: 'all 0.2s' }} onMouseEnter={(e) => { e.currentTarget.style.background = T.primary; e.currentTarget.style.color = '#fff'; }} onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = T.primary; }}>
-              &larr; Back to Kit
-            </button>
-          </div>
-        ) : componentName === '555 Timer IC' ? (
-          <div>
-            <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16, color: T.text }}>
-              {componentName}
-            </h1>
-            <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-              <img src="https://5.imimg.com/data5/SELLER/Default/2020/11/SW/FE/YR/15458098/555-timer-ic.png" alt="555 Timer IC" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
-            </div>
-
-            <h2 style={{ fontSize: 24, fontWeight: 700, color: T.primary, marginBottom: 12 }}>The Heartbeat Chip</h2>
-            <p style={{ fontSize: 16, color: T.textSub, lineHeight: 1.8, marginBottom: 24 }}>
-              Designed in 1971, the 555 Timer is one of the most famous microchips in history. It creates perfect, rhythmic timing pulses in hardware, requiring absolutely no code.
-            </p>
-
-            <div style={{ marginTop: 40 }}>
-              <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
-                <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
-                  <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 8l4 4-4 4M8 12h8"></path></svg>
-                </div>
-                <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>How It Works (The Physics)</h2>
-              </div>
-              <p style={{ fontSize: 16, color: T.textSub, lineHeight: 1.8, marginBottom: 32 }}>
-                Inside this tiny black chip are 25 transistors, 2 diodes, and 15 resistors. It works by constantly filling and emptying a capacitor (like a bucket of water). When the bucket is full, the chip flips its output switch ON and empties the bucket. When the bucket is empty, it flips its output switch OFF and starts filling it again.
-              </p>
-            </div>
-
-            <div style={{ marginTop: 40 }}>
-              <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
-                <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
-                  <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
-                </div>
-                <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>Pinout & Wiring</h2>
-              </div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 16, marginBottom: 16 }}>
-                <div style={{ padding: 20, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16 }}>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: T.primary, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 }}>Pin 1 & 8</div>
-                  <div style={{ fontSize: 15, color: T.textSub, lineHeight: 1.6 }}>Pin 1 is GND. Pin 8 is VCC (Power). Count from the dimple!</div>
-                </div>
-                <div style={{ padding: 20, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16 }}>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: T.primary, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 }}>Pin 2, 6 & 7</div>
-                  <div style={{ fontSize: 15, color: T.textSub, lineHeight: 1.6 }}>Trigger, Threshold, and Discharge. These detect when the capacitor is full or empty.</div>
-                </div>
-                <div style={{ padding: 20, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16 }}>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: T.primary, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 }}>Pin 3 (Output)</div>
-                  <div style={{ fontSize: 15, color: T.textSub, lineHeight: 1.6 }}>The main power out. Connect your LED or Buzzer here.</div>
-                </div>
-              </div>
-            </div>
-
-            <button onClick={() => setComponentName(null)} style={{ padding: '10px 20px', background: 'transparent', border: `1px solid ${T.primary}`, color: T.primary, borderRadius: 8, marginTop: 20, fontSize: 14, fontWeight: 600, transition: 'all 0.2s' }} onMouseEnter={(e) => { e.currentTarget.style.background = T.primary; e.currentTarget.style.color = '#fff'; }} onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = T.primary; }}>
-              &larr; Back to Kit
-            </button>
-          </div>
-        ) : componentName === 'USB Cable' ? (
-          <div>
-            <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16, color: T.text }}>
-              {componentName}
-            </h1>
-            <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-              <img src="https://rukmini1.flixcart.com/image/1500/1500/xif0q/data-cable/micro-usb-cable/7/9/l/15w-micro-usb-cable-for-super-fast-charge-treams-original-imahgmeeq4ttrahz.jpeg?q=70" alt="USB Cable" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
-            </div>
-
-            <h2 style={{ fontSize: 24, fontWeight: 700, color: T.primary, marginBottom: 12 }}>The Lifeline</h2>
-            <p style={{ fontSize: 16, color: T.textSub, lineHeight: 1.8, marginBottom: 24 }}>
-              The Micro USB cable is the umbilical cord for your ESP32. It serves two critical functions simultaneously: providing raw electrical power and transferring high-speed data.
-            </p>
-
-            <div style={{ marginTop: 40 }}>
-              <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
-                <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
-                  <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 8l4 4-4 4M8 12h8"></path></svg>
-                </div>
-                <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>How It Works (The Physics)</h2>
-              </div>
-              <p style={{ fontSize: 16, color: T.textSub, lineHeight: 1.8, marginBottom: 32 }}>
-                Inside the thick rubber casing are four separate thin wires. Two of these wires carry exactly 5 Volts of DC power directly to the voltage regulator on the ESP32. The other two wires (D+ and D-) act like a microscopic telegraph line. When you click 'Upload', the computer sends these bits by rapidly fluctuating the voltage millions of times per second.
-              </p>
-            </div>
-
-            <div style={{ background: 'rgba(239, 68, 68, 0.1)', border: `1px solid #ef4444`, borderRadius: 12, padding: 24, marginBottom: 24 }}>
-              <h4 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: '#ef4444' }}>Data vs. Power-Only Cables</h4>
-              <p style={{ color: T.textSub, lineHeight: 1.8 }}>
-                Many cheap USB cables that come with toys or gas station chargers are <strong>Power-Only</strong>. They are missing the internal Data wires to save money! Always use the cable provided in the kit to upload code.
-              </p>
-            </div>
-
-            <button onClick={() => setComponentName(null)} style={{ padding: '10px 20px', background: 'transparent', border: `1px solid ${T.primary}`, color: T.primary, borderRadius: 8, marginTop: 20, fontSize: 14, fontWeight: 600, transition: 'all 0.2s' }} onMouseEnter={(e) => { e.currentTarget.style.background = T.primary; e.currentTarget.style.color = '#fff'; }} onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = T.primary; }}>
-              &larr; Back to Kit
-            </button>
-          </div>
-        ) : componentName === '5V Single Channel Relay' ? (
-          <div>
             <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16, color: T.text }}>
               {componentName}
             </h1>
@@ -2565,41 +2276,39 @@ function ComponentModal({ componentName, T, onClose }) {
             <div style={{ marginTop: 40 }}>
               <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
                 <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
-                  <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 8l4 4-4 4M8 12h8"></path></svg>
+                  <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
                 </div>
-                <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>How It Works (The Physics)</h2>
+                <h3 style={{ fontSize: 20, fontWeight: 700, color: T.text, margin: 0 }}>How It Works (The Physics)</h3>
               </div>
               <p style={{ fontSize: 16, color: T.textSub, lineHeight: 1.8, marginBottom: 32 }}>
                 Inside the plastic box on the module is an electromagnet (a coil of wire) and a physical metal switch. The ESP32's 3.3V signal alone isn't strong enough to power a heavy device. But when you send a tiny signal to the relay, it powers the electromagnet. The magnet physically pulls the metal switch shut with a satisfying click. The high-power electricity flows entirely through this separated metal switch, meaning the dangerous high voltage never actually touches your ESP32.
                 <br /><br />
-                Because an electromagnet can cause a harsh backward spike of electricity when turned off, the module includes a built-in transistor to trigger the coil and a "flyback diode" to protect your circuit.
+                <strong>The Brains of the Module:</strong> Because an electromagnet can cause a harsh backward spike of electricity when turned off, the module includes a built-in transistor to trigger the coil and a "flyback diode" to protect your circuit from any sudden voltage kicks.
               </p>
             </div>
 
             <div style={{ marginTop: 40 }}>
               <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
                 <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
-                  <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                  <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                 </div>
-                <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>Pinout & Wiring</h2>
+                <h3 style={{ fontSize: 20, fontWeight: 700, color: T.text, margin: 0 }}>Pinout & Wiring</h3>
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
-                <div style={{ padding: 20, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16 }}>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: T.primary, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 12 }}>Low-Voltage Side (ESP32)</div>
-                  <ul style={{ paddingLeft: 16, margin: 0, color: T.textSub, lineHeight: 1.6, fontSize: 14.5 }}>
-                    <li style={{ marginBottom: 8 }}><strong style={{ color: T.text }}>VCC / DC+:</strong> Power input. Connect to VIN (5V) on ESP32.</li>
-                    <li style={{ marginBottom: 8 }}><strong style={{ color: T.text }}>GND / DC-:</strong> Ground connection.</li>
-                    <li><strong style={{ color: T.text }}>IN:</strong> Signal pin. Connect to a GPIO. (Active-Low means LOW turns it ON).</li>
-                  </ul>
-                </div>
-                <div style={{ padding: 20, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16 }}>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: T.primary, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 12 }}>High-Voltage Side</div>
-                  <ul style={{ paddingLeft: 16, margin: 0, color: T.textSub, lineHeight: 1.6, fontSize: 14.5 }}>
-                    <li style={{ marginBottom: 8 }}><strong style={{ color: T.text }}>COM:</strong> Common. Main power coming in from battery/wall.</li>
-                    <li style={{ marginBottom: 8 }}><strong style={{ color: T.text }}>NO (Normally Open):</strong> Receives power when relay clicks ON.</li>
-                    <li><strong style={{ color: T.text }}>NC (Normally Closed):</strong> Receives power until relay clicks ON.</li>
-                  </ul>
-                </div>
+              
+              <div style={{ background: T.surfaceAlt, border: `1px solid ${T.border}`, borderRadius: 12, padding: 24, marginBottom: 24 }}>
+                <h4 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: T.primary }}>Low-Voltage Side (ESP32)</h4>
+                <ul style={{ paddingLeft: 24, color: T.textSub, lineHeight: 1.8, marginBottom: 24 }}>
+                  <li><strong style={{ color: T.text }}>VCC (or DC+):</strong> Power input for the electromagnet. This MUST be connected to the VIN (5V) rail of the ESP32. If connected to 3.3V, it won't have enough magnetic force to pull the switch shut.</li>
+                  <li><strong style={{ color: T.text }}>GND (or DC-):</strong> Ground connection. Connect to GND.</li>
+                  <li><strong style={{ color: T.text }}>IN:</strong> The signal pin. Connect this to an output GPIO on your ESP32. Sending a signal here triggers the switch. (Note: Many relays are "Active-Low", meaning sending LOW turns it ON).</li>
+                </ul>
+                
+                <h4 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: T.primary }}>High-Voltage Side (Screw Terminals)</h4>
+                <ul style={{ paddingLeft: 24, color: T.textSub, lineHeight: 1.8 }}>
+                  <li><strong style={{ color: T.text }}>COM (Common):</strong> The main power coming in from your heavy battery or wall plug.</li>
+                  <li><strong style={{ color: T.text }}>NO (Normally Open):</strong> Connects to your heavy device. It only receives power when the relay clicks ON.</li>
+                  <li><strong style={{ color: T.text }}>NC (Normally Closed):</strong> Receives power until the relay clicks ON. Usually left empty for basic projects.</li>
+                </ul>
               </div>
             </div>
 
