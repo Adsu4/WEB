@@ -1,31 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { LESSONS } from './db.js';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import Login from './Login.jsx';
-import PlumbingSim from './simulations/PlumbingSim.jsx';
-import ResistorDecoderSim from './simulations/ResistorDecoderSim.jsx';
-import BBViz from './simulations/BBViz.jsx';
-import HardwareTimerSim from './simulations/HardwareTimerSim.jsx';
-import VaultAlarmSim from './simulations/VaultAlarmSim.jsx';
-import AnalogOutputSim from './simulations/AnalogOutputSim.jsx';
-import SerialCommSim from './simulations/SerialCommSim.jsx';
-import ThermometerSim from './simulations/ThermometerSim.jsx';
-import ServoMotorSim from './simulations/ServoMotorSim.jsx';
-import OledDisplaySim from './simulations/OledDisplaySim.jsx';
-import EnvSensingSim from './simulations/EnvSensingSim.jsx';
-import RelayPowerSim from './simulations/RelayPowerSim.jsx';
-import DesktopRadarSim from './simulations/DesktopRadarSim.jsx';
-import HighVoltageBridgeSim from './simulations/HighVoltageBridgeSim.jsx';
-import LocalHotspotSim from './simulations/LocalHotspotSim.jsx';
-import TwoWayDataSim from './simulations/TwoWayDataSim.jsx';
-import SmartHomeHubSim from './simulations/SmartHomeHubSim.jsx';
 
-
-// ── SYSTEM CONFIGURATION ─────────────────────────────────────────────
+// ΓöÇΓöÇ SYSTEM CONFIGURATION ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
 // Change this:
 const OR_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
 const OR_MODEL = 'deepseek/deepseek-chat';
 
-const PROJ_SYSTEM = `You are an expert hardware maker and IoT mentor with the personality of a confident technical YouTuber — think GreatScott! meets The Engineering Mindset. You talk to makers like a knowledgeable friend.
+const PROJ_SYSTEM = `You are an expert hardware maker and IoT mentor with the personality of a confident technical YouTuber ΓÇö think GreatScott! meets The Engineering Mindset. You talk to makers like a knowledgeable friend.
 
 HARD RULES:
 1. Always design around the ESP32 development board. That is the only microcontroller.
@@ -66,11 +47,11 @@ Return exactly this JSON shape:
 
 Voice rules inside JSON strings:
 - Use first-person naturally ("I usually...", "Here's what caught me off guard the first time...")
-- Add ⚠️ PRO TIP: prefix inside instruction text where it adds real value
+- Add ΓÜá∩╕Å PRO TIP: prefix inside instruction text where it adds real value
 - Never be condescending. Be a knowledgeable friend.
 - Keep it practical. No fluff.`;
 
-// ── STYLING AND PALETTES ──────────────────────────────────────────────
+// ΓöÇΓöÇ STYLING AND PALETTES ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
 const DARK = {
   bg: '#04080f',
   surface: '#080f1c',
@@ -170,7 +151,7 @@ button{font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;}
 }
 `;
 
-// ── CODELIGHT: MICRO C++ HIGHLIGHTER ─────────────────────────────────
+// ΓöÇΓöÇ CODELIGHT: MICRO C++ HIGHLIGHTER ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
 const codeLight = (code) => {
   if (!code) return { __html: '' };
   let escaped = code
@@ -203,7 +184,7 @@ const safeJSONParse = (rawText) => {
   return JSON.parse(cleanStr);
 };
 
-// ── SVG ICONS ────────────────────────────────────────────────────────
+// ΓöÇΓöÇ SVG ICONS ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
 const Sun = ({ s = 16, c }) => (
   <svg
     width={s}
@@ -315,7 +296,7 @@ const CloseIcon = ({ s = 20 }) => (
   </svg>
 );
 
-// ── ATOM UI COMPONENTS ────────────────────────────────────────────────
+// ΓöÇΓöÇ ATOM UI COMPONENTS ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
 const SN = ({ n, T }) => (
   <div
     style={{
@@ -497,6 +478,1127 @@ const TToggle = ({ dark, onToggle, T }) => (
   </button>
 );
 
+// ΓöÇΓöÇ MASTER CURRICULUM DATABASE ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+const LESSONS = {
+  m1: {
+    title: 'Module 1: The Physical Handshake',
+    phase: 'Phase 1: Pure Hardware Fundamentals',
+    overview: {
+      hook: "Let's build your very first circuit without a single line of code! We are using our ESP32 strictly as a 3.3V battery to prove how hardware loops function.",
+      concept:
+        "An LED needs about 1.8V to 3.0V (depending on color) to glow safely. Our board pushes 3.3V of pressure. If we connect them directly, the LED burns out instantly. We add a 220╬⌐ resistor to act as a 'toll booth', eating the extra voltage so the LED stays safe.",
+      difficulty: 'Complete Novice',
+      buildTime: '15 mins',
+    },
+    parts: [
+      {
+        category: 'Microcontroller',
+        name: 'ESP32 Dev Board',
+        quantity: 1,
+        why: 'Acts purely as a 3.3V power supply.',
+      },
+      {
+        category: 'Consumables',
+        name: 'Red LED',
+        quantity: 1,
+        why: 'Visual indicator of current flow.',
+      },
+      {
+        category: 'Consumables',
+        name: '220╬⌐ Resistor',
+        quantity: 1,
+        why: 'Slows the current and drops the voltage.',
+      },
+      {
+        category: 'Consumables',
+        name: 'Jumper Wires',
+        quantity: 2,
+        why: 'Closes the physical loops.',
+      },
+    ],
+    steps: [
+      {
+        phase: 'Hardware',
+        number: 1,
+        title: 'Mount the Brain',
+        instruction:
+          'Gently press your ESP32 board anywhere into the breadboard so it straddles the central dividing valley.',
+        sanityCheck: null,
+        proTip: 'Never force pins. Wiggle gently if they resist.',
+      },
+      {
+        phase: 'Hardware',
+        number: 2,
+        title: 'Power Rails',
+        instruction:
+          'Connect a wire from the 3V3 pin on the ESP32 to the Red (+) Rail. Connect a wire from the GND pin to the Blue (-) Rail.',
+        sanityCheck: 'The entire vertical power column is now live.',
+        proTip: 'Always use red for power and blue/black for ground.',
+      },
+      {
+        phase: 'Hardware',
+        number: 3,
+        title: 'Resistor Bodyguard',
+        instruction:
+          'Plug one leg of the 220╬⌐ resistor into the Red (+) rail, and the other leg into any free row on the main board.',
+        sanityCheck: 'That specific row now has safe, restricted 3.3V power.',
+        proTip: null,
+      },
+      {
+        phase: 'Hardware',
+        number: 4,
+        title: 'LED Gate',
+        instruction:
+          "Insert the LED's long leg (+) into the same row as the resistor. Push the short leg (-) into a different free row next to it. Run a jumper wire from the short leg's row to the Blue (-) Rail.",
+        sanityCheck: 'Plug your ESP32 into a USB power source.',
+        proTip:
+          "If you move the ground wire to a completely separate row, the light dies. That's row isolation!",
+      },
+    ],
+    observation:
+      'The red LED should immediately light up brilliantly, but safely! Current is successfully flowing from the board, through the resistor, into the LED, and back to ground.',
+    faq: [
+      {
+        error: "The LED doesn't light up.",
+        cause: 'LED is backwards (polarity mismatch) or resistor is loose.',
+        solution:
+          'Flip the LED so the longer leg faces the positive power source.',
+      },
+    ],
+    code: null,
+  },
+  m2: {
+    title: 'Module 2: The Analog Bridge',
+    phase: 'Phase 1: Pure Hardware Fundamentals',
+    overview: {
+      hook: "Welcome to the gray area! We're building an Analog Bridge to control electricity manually using a volume knob.",
+      concept:
+        "Real-world control isn't just ON/OFF. A Potentiometer functions like a dial-operated water valve. By turning it, we physically change the resistance, which smoothly limits the current flowing into our LED.",
+      difficulty: 'Complete Novice',
+      buildTime: '20 mins',
+    },
+    parts: [
+      {
+        category: 'Actuators',
+        name: '10k Potentiometer Module',
+        quantity: 1,
+        why: 'Varies resistance dynamically as you turn the central shaft.',
+      },
+      {
+        category: 'Consumables',
+        name: 'Red LED',
+        quantity: 1,
+        why: 'To visually display the analog dimming effect.',
+      },
+    ],
+    steps: [
+      {
+        phase: 'Hardware',
+        number: 1,
+        title: 'Place Potentiometer',
+        instruction:
+          'Insert the potentiometer legs into three separate free horizontal rows on your breadboard.',
+        sanityCheck:
+          'Make sure all three legs occupy completely separate rows.',
+        proTip: 'Squeeze wide curved pins closer gently before pushing.',
+      },
+      {
+        phase: 'Hardware',
+        number: 2,
+        title: 'Wire Entrance/Exit',
+        instruction:
+          'Wire one outer leg to the Red (+) Power Rail. Wire the other outer leg to the Blue (-) Ground Rail.',
+        sanityCheck: null,
+        proTip: null,
+      },
+      {
+        phase: 'Hardware',
+        number: 3,
+        title: 'The Middle Wiper',
+        instruction:
+          "Wire the middle signal leg to a new empty row. Plug the LED's long leg into this row, and connect the short leg back to the Blue Ground Rail.",
+        sanityCheck: 'Power on the board and gently turn the knob.',
+        proTip: "You are manually adjusting the 'squeeze' on the electricity.",
+      },
+    ],
+    observation:
+      'Rotating the potentiometer smoothly adjusts the brightness of the LED from completely off to full maximum.',
+    faq: [
+      {
+        error: 'The LED stays at full brightness.',
+        cause: 'Wired to a static power rail instead of the wiper pin.',
+        solution:
+          "Ensure the LED connects strictly to the middle 'Signal' pin of the potentiometer.",
+      },
+    ],
+    code: null,
+  },
+  m3: {
+    title: 'Module 3: Physical Logic Gates',
+    phase: 'Phase 1: Pure Hardware Fundamentals',
+    overview: {
+      hook: "Let's teach a circuit to make decisions without a brain! We are building physical computer science logic using switches.",
+      concept:
+        'Computers run on Boolean logic. If we wire two buttons in a line (Series), electricity must cross both bridges to work ΓÇö this is an AND gate. If we wire them side-by-side (Parallel), electricity can cross either bridge ΓÇö this is an OR gate.',
+      difficulty: 'Weekend Warrior',
+      buildTime: '25 mins',
+    },
+    parts: [
+      {
+        category: 'Sensors',
+        name: 'Push Buttons',
+        quantity: 2,
+        why: 'Acts as our mechanical logic operators.',
+      },
+      {
+        category: 'Consumables',
+        name: 'Red LED & Resistor',
+        quantity: 1,
+        why: 'Visual indicator of a true/false output.',
+      },
+    ],
+    steps: [
+      {
+        phase: 'Hardware',
+        number: 1,
+        title: 'Mount Buttons',
+        instruction:
+          'Push two buttons across the center valley of the breadboard, leaving space between them.',
+        sanityCheck: null,
+        proTip:
+          'Buttons are non-polarized. Direction across the valley does not matter.',
+      },
+      {
+        phase: 'Hardware',
+        number: 2,
+        title: 'AND Gate Wiring (Series)',
+        instruction:
+          "Wire Red (+) to Button A's entrance. Wire Button A's exit to Button B's entrance. Wire Button B's exit to an LED setup (with a resistor) going to Ground.",
+        sanityCheck: 'Pressing just one button does nothing.',
+        proTip: 'This is the physical foundation of all computer processing.',
+      },
+      {
+        phase: 'Hardware',
+        number: 3,
+        title: 'OR Gate Wiring (Parallel)',
+        instruction:
+          'Now, wire Red (+) to BOTH Button A and Button B entrances. Wire BOTH exits to the same LED setup.',
+        sanityCheck: 'Pressing either button completes the circuit.',
+        proTip: null,
+      },
+    ],
+    observation:
+      'For the Series setup, the LED lights up ONLY when you press BOTH buttons simultaneously. For Parallel, pressing EITHER button lights the LED.',
+    faq: [
+      {
+        error: "Buttons don't affect the LED at all.",
+        cause:
+          'Buttons are plugged in incorrectly, bridging the connection permanently.',
+        solution:
+          'Rotate the buttons 90 degrees to properly bridge the breadboard valley.',
+      },
+    ],
+    code: null,
+  },
+  m4: {
+    title: 'Module 4: The Automatic Night Light',
+    phase: 'Phase 1: Pure Hardware Fundamentals',
+    overview: {
+      hook: 'Our masterpiece of Phase 1! We are building a smart light that turns on automatically when the room goes dark, using zero code.',
+      concept:
+        'Instead of building complex transistor circuits from scratch, we use an LDR Sensor Module. It has a built-in comparator chip. When it gets dark, its Digital Out (DO) pin automatically switches from LOW to HIGH. We can wire this directly to an LED!',
+      difficulty: 'Intermediate Builder',
+      buildTime: '30 mins',
+    },
+    parts: [
+      {
+        category: 'Sensors',
+        name: 'LDR Sensor Module',
+        quantity: 1,
+        why: 'Detects light and triggers a digital output.',
+      },
+      {
+        category: 'Consumables',
+        name: 'Red LED',
+        quantity: 1,
+        why: 'Our automated street lamp.',
+      },
+      {
+        category: 'Consumables',
+        name: 'Jumper Wires',
+        quantity: 3,
+        why: 'Routes the module signals.',
+      },
+    ],
+    steps: [
+      {
+        phase: 'Hardware',
+        number: 1,
+        title: 'Power the Sensor',
+        instruction:
+          "Connect the LDR Module's VCC pin to the Red (+) Power Rail and the GND pin to the Blue (-) Ground Rail.",
+        sanityCheck: 'A small power LED on the module should turn on.',
+        proTip: null,
+      },
+      {
+        phase: 'Hardware',
+        number: 2,
+        title: 'Wire the Output',
+        instruction:
+          "Connect the LDR Module's DO (Digital Out) pin to a free row on your breadboard.",
+        sanityCheck: null,
+        proTip:
+          'The DO pin acts like a smart switch, providing voltage when the threshold is met.',
+      },
+      {
+        phase: 'Hardware',
+        number: 3,
+        title: 'Connect the Light',
+        instruction:
+          "Plug the LED's long leg (+) into the DO pin's row. Connect the LED's short leg (-) back to the Blue Ground Rail.",
+        sanityCheck: 'Cast a shadow over the LDR sensor.',
+        proTip: 'You just built industrial automation using pure physics.',
+      },
+    ],
+    observation:
+      'When you cast a shadow over the LDR sensor to block the light, the LED instantly turns on!',
+    faq: [
+      {
+        error: 'The LED is always ON or always OFF.',
+        cause: "The module's sensitivity threshold needs tuning.",
+        solution:
+          "Use a small screwdriver to turn the blue potentiometer block on the sensor module until it calibrates to your room's light.",
+      },
+    ],
+    code: null,
+  },
+  m5: {
+    title: 'Module 5: The Software Gatekeeper',
+    phase: 'Phase 2: The Software Gatekeeper',
+    overview: {
+      hook: 'Welcome to Phase 2. We are moving from physical wires to writing digital instructions. We will setup our environment and compile our first software script.',
+      concept:
+        'Instead of hardwiring everything, we write code loops that flip internal electronic switches on and off. We write this inside two critical structures: setup() configures hardware on boot, and loop() runs endlessly.',
+      difficulty: 'Complete Novice',
+      buildTime: '30 mins',
+    },
+    parts: [
+      {
+        category: 'Microcontroller',
+        name: 'ESP32 Dev Board',
+        quantity: 1,
+        why: 'The target for our compiled software upload.',
+      },
+      {
+        category: 'Consumables',
+        name: 'Micro USB B Cable',
+        quantity: 1,
+        why: 'Routes serial packets from your PC to the CP2102 chip.',
+      },
+    ],
+    steps: [
+      {
+        phase: 'Software',
+        number: 1,
+        title: 'IDE & Drivers',
+        instruction:
+          'Download the Arduino IDE. Install the CP210x driver so your computer can recognize the board.',
+        sanityCheck: "Your board should appear in the 'Tools -> Port' menu.",
+        proTip: 'Driver installation fixes 90% of beginner errors.',
+      },
+      {
+        phase: 'Software',
+        number: 2,
+        title: 'Upload Blink',
+        instruction:
+          "Paste the code, select 'ESP32 Dev Module', and hit Upload. The blue onboard LED will blink.",
+        sanityCheck:
+          "If upload hangs on 'Connecting...', hold the physical BOOT button on the ESP32.",
+        proTip: null,
+      },
+    ],
+    observation:
+      'The small blue LED directly on the ESP32 board flashes on and off every second, proving your software is running.',
+    faq: [
+      {
+        error: 'Upload fails / Timeout error',
+        cause: 'ESP32 requires manual boot mode.',
+        solution:
+          "Hold down the physical 'BOOT' button on the board when the IDE terminal says 'Connecting...'.",
+      },
+      {
+        error: 'Port not showing up',
+        cause: 'Using a charge-only cable or missing driver.',
+        solution:
+          'Ensure you installed the CP2102 driver and are using a data-sync USB cable.',
+      },
+    ],
+    code: {
+      filename: 'onboard_blink.ino',
+      snippet: `const int LED_PIN = 2; // Onboard Blue LED
+
+void setup() {pinMode(LED_PIN, OUTPUT);
+}
+
+void loop() {digitalWrite(LED_PIN, HIGH);delay(1000); // Wait 1000ms (1 second)
+  digitalWrite(LED_PIN, LOW);delay(1000); 
+}`,
+      breakdown:
+        'This code declares GPIO 2 as an Output. In the loop, `digitalWrite(2, HIGH)` raises voltage to 3.3V, lighting the LED. It waits 1000ms, drops the pin back to 0V (LOW), and repeats.',
+    },
+  },
+  m6: {
+    title: 'Module 6: Digital Inputs & If-Statements',
+    phase: 'Phase 2: The Software Gatekeeper',
+    overview: {
+      hook: "Let's make our software react to the physical environment! We are programming a digital input bridge using an if-statement.",
+      concept:
+        "Unlike output pins, input pins listen for voltage. To prevent pins from picking up static electricity and floating, we configure the ESP32's Internal Pull-Up Resistor. This holds the pin at 3.3V (HIGH) until a button press pulls it to Ground (LOW).",
+      difficulty: 'Complete Novice',
+      buildTime: '40 mins',
+    },
+    parts: [
+      {
+        category: 'Microcontroller',
+        name: 'ESP32 Dev Board',
+        quantity: 1,
+        why: 'Acts as the logic brain parsing the digital button states.',
+      },
+      {
+        category: 'Sensors',
+        name: 'Push Button',
+        quantity: 1,
+        why: 'Bridges the circuit loop dynamically when pressed.',
+      },
+    ],
+    steps: [
+      {
+        phase: 'Hardware',
+        number: 1,
+        title: 'Mount Button',
+        instruction:
+          'Push a button over the center groove. Wire one side to a free GPIO pin (e.g., GPIO 4), and the other side to Ground.',
+        sanityCheck:
+          'Do not use an external resistor! Our software handles it.',
+        proTip: null,
+      },
+    ],
+    observation:
+      "Pressing the breadboard button immediately toggles the ESP32's onboard LED and prints text to the Serial Monitor.",
+    faq: [
+      {
+        error: 'LED flickers randomly without touch',
+        cause: 'Pin is floating (INPUT instead of INPUT_PULLUP).',
+        solution:
+          'Ensure your code explicitly uses pinMode(BUTTON_PIN, INPUT_PULLUP).',
+      },
+    ],
+    code: {
+      filename: 'button_logic.ino',
+      snippet: `const int BUTTON_PIN = 4;
+const int LED_PIN = 2;
+
+void setup() {Serial.begin(115200);pinMode(BUTTON_PIN, INPUT_PULLUP);pinMode(LED_PIN, OUTPUT);
+}
+
+void loop() {int state = digitalRead(BUTTON_PIN);
+  if (state == LOW) {  digitalWrite(LED_PIN, HIGH);  Serial.println("Button Pressed!");} else {  digitalWrite(LED_PIN, LOW);}delay(50);
+}`,
+      breakdown:
+        'By setting `INPUT_PULLUP`, the ESP32 feeds 3.3V directly to GPIO 4 internally. Unpressed reads HIGH. Pressing the button pulls it to Ground (LOW). Our conditional `if` captures this switch and flashes the blue LED.',
+    },
+  },
+  m7: {
+    title: 'Module 7: Analog Outputs & PWM',
+    phase: 'Phase 3: Actuation & Sensors',
+    overview: {
+      hook: "Digital is boring when it's just ON or OFF. We will fade an LED using Pulse Width Modulation (PWM).",
+      concept:
+        "Microcontrollers cannot output true analog voltage (like 1.5V). We fake it by flipping the pin ON and OFF incredibly fast. By changing the 'Duty Cycle' (ratio of ON to OFF time), our eyes see an averaged, dimmed brightness.",
+      difficulty: 'Complete Novice',
+      buildTime: '30 mins',
+    },
+    parts: [
+      {
+        category: 'Actuators',
+        name: 'LED',
+        quantity: 1,
+        why: 'Our output element to display fading brightness.',
+      },
+    ],
+    steps: [
+      {
+        phase: 'Hardware',
+        number: 1,
+        title: 'Wiring PWM',
+        instruction:
+          'Wire an LED and a 220╬⌐ resistor to a PWM-capable pin, like GPIO 18.',
+        sanityCheck: 'Ensure the wire maps correctly to GPIO 18.',
+        proTip:
+          'The ESP32 uses dedicated hardware channels for PWM, making it extremely precise.',
+      },
+    ],
+    observation:
+      'The external LED breathes, smoothly fading in and out endlessly.',
+    faq: [
+      {
+        error: 'LED blinks sharply instead of fading',
+        cause: 'Delay is too long or PWM channel is misconfigured.',
+        solution:
+          'Double check that your delay(5) is extremely short to allow smooth visual transitions.',
+      },
+    ],
+    code: {
+      filename: 'led_pwm_fader.ino',
+      snippet: `const int LED_PIN = 18;
+const int FREQ = 5000;
+const int CHANNEL = 0;
+const int RESOLUTION = 8; // 0-255
+
+void setup() {ledcSetup(CHANNEL, FREQ, RESOLUTION);ledcAttachPin(LED_PIN, CHANNEL);
+}
+
+void loop() {for (int duty = 0; duty <= 255; duty++) {  ledcWrite(CHANNEL, duty);  delay(5);}for (int duty = 255; duty >= 0; duty--) {  ledcWrite(CHANNEL, duty);  delay(5);}
+}`,
+      breakdown:
+        'We configure an internal PWM generator on Channel 0 running at 5000Hz. Using a standard `for` loop, we increment the duty cycle from 0 to 255, producing a smooth breathing effect on the LED.',
+    },
+  },
+  m8: {
+    title: 'Module 8: Servos & Motors',
+    phase: 'Phase 3: Actuation & Sensors',
+    overview: {
+      hook: "Let's make things move! We are commanding a physical servo motor to rotate to specific degree angles.",
+      concept:
+        'Standard motors spin wildly, but Servos use feedback loops to pivot exactly to an angle. We send control pulses every 20ms ΓÇö the width of this pulse locks the physical gears in place.',
+      difficulty: 'Weekend Warrior',
+      buildTime: '45 mins',
+    },
+    parts: [
+      {
+        category: 'Actuators',
+        name: 'SG90 Micro Servo',
+        quantity: 1,
+        why: 'A geared 180-degree micro-servo.',
+      },
+    ],
+    steps: [
+      {
+        phase: 'Hardware',
+        number: 1,
+        title: 'Wiring to Board',
+        instruction:
+          "Connect the servo's Brown wire to GND, Red wire to VIN (5V power), and Orange wire to GPIO 13.",
+        sanityCheck: 'Ensure Red goes to VIN (5V), not 3.3V!',
+        proTip:
+          'Servos are power-hungry. The 3.3V pin cannot provide enough current for the motor.',
+      },
+    ],
+    observation:
+      'The servo motor arm smoothly sweeps back and forth between 0 and 180 degrees.',
+    faq: [
+      {
+        error: 'Servo twitches and ESP32 crashes',
+        cause: 'Servo is pulling too much power from the 3.3V pin.',
+        solution:
+          "Move the servo's red power wire directly to the VIN (5V) pin.",
+      },
+    ],
+    code: {
+      filename: 'servo_sweep.ino',
+      snippet: `#include <ESP32Servo.h>
+
+Servo myServo;
+const int SERVO_PIN = 13;
+
+void setup() {ESP32PWM::allocateTimer(0);myServo.setPeriodHertz(50);myServo.attach(SERVO_PIN, 500, 2400);
+}
+
+void loop() {for (int pos = 0; pos <= 180; pos++) {  myServo.write(pos);  delay(15);}for (int pos = 180; pos >= 0; pos--) {  myServo.write(pos);  delay(15);}
+}`,
+      breakdown:
+        'Using the `ESP32Servo` library, we allocate a hardware timer. We attach our servo and invoke `myServo.write(angle)`. The library handles the complex microsecond PWM math to lock the motor at the exact degree.',
+    },
+  },
+  m9: {
+    title: 'Module 9: OLED Displays (I2C)',
+    phase: 'Phase 3: Actuation & Sensors',
+    overview: {
+      hook: 'Ditch the boring Serial Monitor! We are going to draw clean text and data on an external OLED screen.',
+      concept:
+        'Instead of running 10 wires, we use a 2-wire serial bus called I2C. SDA (Data) and SCL (Clock) carry address packets. Our ESP32 acts as the master, telling the screen (at address 0x3C) which pixels to light up.',
+      difficulty: 'Intermediate Builder',
+      buildTime: '45 mins',
+    },
+    parts: [
+      {
+        category: 'Displays',
+        name: '0.96" I2C OLED Screen Module',
+        quantity: 1,
+        why: 'High-contrast graphical display over 2 wires.',
+      },
+    ],
+    steps: [
+      {
+        phase: 'Hardware',
+        number: 1,
+        title: 'Wire I2C Paths',
+        instruction:
+          "Connect the OLED's GND to Ground, VCC to 3.3V. Wire SDA to GPIO 21, and SCL to GPIO 22.",
+        sanityCheck: 'Swapping SDA and SCL will prevent display boot.',
+        proTip:
+          'OLED glass is extremely fragile. Handle the plastic header only.',
+      },
+    ],
+    observation:
+      "The OLED screen lights up and cleanly displays 'BFIOT SYSTEM OK'.",
+    faq: [
+      {
+        error: 'Screen remains totally black',
+        cause: 'SDA and SCL pins are swapped or wrong I2C address.',
+        solution:
+          'Ensure SDA is on GPIO 21 and SCL is on GPIO 22. Verify the I2C address in code is 0x3C.',
+      },
+    ],
+    code: {
+      filename: 'oled_hello.ino',
+      snippet: `#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+Adafruit_SSD1306 display(128, 64, &Wire, -1);
+
+void setup() {Serial.begin(115200);if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {  for(;;); // Halt on error}
+  display.clearDisplay();display.setTextSize(1);display.setTextColor(WHITE);display.setCursor(0, 10);display.println("BFIOT SYSTEM OK");display.display(); // Push buffer to screen
+}
+
+void loop() {}`,
+      breakdown:
+        "We initiate communication at I2C address 0x3C. We write text to the ESP32's internal memory buffer quietly, then call `display.display()` to push the entire image to the glass instantly, preventing flickering.",
+    },
+  },
+  m10: {
+    title: 'Module 10: Environmental Sensing',
+    phase: 'Phase 3: Actuation & Sensors',
+    overview: {
+      hook: 'Teach your project spatial and climate perception! We combine the DHT11 and Ultrasonic sensors to read the real world.',
+      concept:
+        'The DHT11 uses a thermistor, and the HC-SR04 uses sound waves. We trigger a high-frequency sound blast (40 kHz). By measuring the echo flight time, we calculate distance using the speed of sound.',
+      difficulty: 'Intermediate Builder',
+      buildTime: '60 mins',
+    },
+    parts: [
+      {
+        category: 'Sensors',
+        name: 'DHT11 Sensor Module',
+        quantity: 1,
+        why: 'Reads temp and humidity (VCC, DATA, GND).',
+      },
+      {
+        category: 'Sensors',
+        name: 'HC-SR04 Ultrasonic',
+        quantity: 1,
+        why: 'Measures distance via sound waves.',
+      },
+    ],
+    steps: [
+      {
+        phase: 'Hardware',
+        number: 1,
+        title: 'Sonar Setup',
+        instruction:
+          'Wire Ultrasonic VCC to VIN(5V), GND to Ground. Wire TRIG to GPIO 5, ECHO to GPIO 18.',
+        sanityCheck:
+          'Ensure VCC goes to 5V, not 3.3V, for stronger acoustic waves.',
+        proTip:
+          'Sound travels 343m/s. We divide the round-trip microsecond time to find distance.',
+      },
+    ],
+    observation:
+      'Your Serial Monitor continuously prints accurate distance measurements and climate data every couple of seconds.',
+    faq: [
+      {
+        error: "DHT11 returns 'Failed to read' or 'nan'",
+        cause: 'Querying the sensor too fast.',
+        solution:
+          'Ensure there is a delay of at least 2000ms between sensor reads in your loop.',
+      },
+    ],
+    code: {
+      filename: 'sensor_hub.ino',
+      snippet: `const int TRIG_PIN = 5;
+const int ECHO_PIN = 18;
+
+void setup() {Serial.begin(115200);pinMode(TRIG_PIN, OUTPUT);pinMode(ECHO_PIN, INPUT);
+}
+
+void loop() {digitalWrite(TRIG_PIN, LOW);delayMicroseconds(2);
+  // Screech for 10usdigitalWrite(TRIG_PIN, HIGH);delayMicroseconds(10);digitalWrite(TRIG_PIN, LOW);
+  // Listen for echolong duration = pulseIn(ECHO_PIN, HIGH);float distance = duration * 0.0343 / 2;
+  Serial.print("Distance: ");Serial.print(distance);Serial.println(" cm");delay(200);
+}`,
+      breakdown:
+        'We use `delayMicroseconds()` for surgical precision. A 10us pulse fires the acoustic screech. `pulseIn()` acts as a stopwatch, measuring how long the ECHO pin stays HIGH. We calculate distance by multiplying the time by the speed of sound and dividing by two for the round trip.',
+    },
+  },
+  m11: {
+    title: 'Module 11: Relay Power Control',
+    phase: 'Phase 3: Actuation & Sensors',
+    overview: {
+      hook: 'Control industrial appliances safely! We are setting up a mechanical Relay module to toggle high-power devices using our tiny 3.3V chip.',
+      concept:
+        'A relay is an electromagnetic switch. Our microchip pin powers a coil, creating a magnetic field that physically pulls a metal contact to bridge a gap. This keeps our delicate 3.3V brain completely isolated from heavy loads.',
+      difficulty: 'Weekend Warrior',
+      buildTime: '40 mins',
+    },
+    parts: [
+      {
+        category: 'Actuators',
+        name: '5V Relay Module',
+        quantity: 1,
+        why: 'Opto-isolated switch module.',
+      },
+    ],
+    steps: [
+      {
+        phase: 'Hardware',
+        number: 1,
+        title: 'Control Wiring',
+        instruction:
+          "Hook the relay's GND to Ground, VCC to VIN(5V). Wire the IN control pin to GPIO 19.",
+        sanityCheck:
+          "You will hear a loud mechanical 'click' when the coil energizes.",
+        proTip:
+          'ΓÜá∩╕Å PRO TIP: Never plug mains AC voltage into the relay during this tutorial! Test with battery power only.',
+      },
+    ],
+    observation:
+      "You will hear a distinct mechanical 'click' from the relay module every 3 seconds, and its onboard indicator LED will flash.",
+    faq: [
+      {
+        error: 'Relay LED flashes but no click sound',
+        cause: 'Not enough activation voltage.',
+        solution:
+          'Make sure the relay module VCC is connected to the 5V (VIN) pin, not 3.3V.',
+      },
+    ],
+    code: {
+      filename: 'relay_toggle.ino',
+      snippet: `const int RELAY_PIN = 19;
+
+void setup() {pinMode(RELAY_PIN, OUTPUT);digitalWrite(RELAY_PIN, LOW);
+}
+
+void loop() {digitalWrite(RELAY_PIN, HIGH); // Click!delay(3000); 
+  digitalWrite(RELAY_PIN, LOW); // Click!delay(3000); 
+}`,
+      breakdown:
+        'Setting the pin HIGH energizes the electromagnet inside the blue box, physically swinging a copper plate closed to bridge the high-power circuit (NO terminal). LOW releases the spring.',
+    },
+  },
+  m12: {
+    title: 'Module 12: Local Web Server & Dashboard',
+    phase: 'Phase 4: Connected IoT',
+    overview: {
+      hook: 'Welcome to the grand finale! We are decoupling from USB entirely, hosting a local Wi-Fi web server to toggle hardware from your smartphone browser.',
+      concept:
+        'The ESP32 generates its own private Wi-Fi network (Access Point Mode). Your phone logs in, requests an IP address, and the ESP32 serves up a custom HTML dashboard to trigger pins wirelessly.',
+      difficulty: 'Intermediate Builder',
+      buildTime: '1 hour',
+    },
+    parts: [
+      {
+        category: 'Microcontroller',
+        name: 'ESP32 Dev Board',
+        quantity: 1,
+        why: 'Utilizing the built-in Wi-Fi radio antenna.',
+      },
+    ],
+    steps: [
+      {
+        phase: 'Software',
+        number: 1,
+        title: 'Connect via Phone',
+        instruction:
+          "Upload code, open Phone WiFi, connect to 'BFIOT-Hub'. Visit 192.168.4.1 in your browser.",
+        sanityCheck:
+          'Tapping the HTML buttons on your phone screen will toggle the physical LED on your desk.',
+        proTip:
+          'Wi-Fi operates like an invisible ethernet cable. No ISP router needed for Access Point mode!',
+      },
+    ],
+    observation:
+      "Tapping the ON/OFF buttons on your phone's browser instantly toggles the physical LED connected to your ESP32.",
+    faq: [
+      {
+        error: 'Phone cannot find the webpage',
+        cause: 'Not connected to the correct network.',
+        solution:
+          "Ensure your phone's Wi-Fi is connected directly to the 'BFIOT-Hub' network.",
+      },
+    ],
+    code: {
+      filename: 'wifi_dashboard.ino',
+      snippet: `#include <WiFi.h>
+#include <WebServer.h>
+
+WebServer server(80);
+const int LED_PIN = 2;
+
+void setup() {Serial.begin(115200);pinMode(LED_PIN, OUTPUT);
+  // Create our own Wi-Fi hotspotWiFi.softAP("BFIOT-Hub", "password123");
+  server.on("/", [](){  String html = "<h1>BFIOT Control</h1><a href='/on'>TURN ON</a> <br> <a href='/off'>TURN OFF</a>";  server.send(200, "text/html", html);});
+  server.on("/on", [](){ digitalWrite(LED_PIN, HIGH); server.sendHeader("Location","/"); server.send(303); });server.on("/off", [](){ digitalWrite(LED_PIN, LOW); server.sendHeader("Location","/"); server.send(303); });
+  server.begin();
+}
+
+void loop() {server.handleClient(); // Listen for phone requests
+}`,
+      breakdown:
+        "We boot the ESP32 radio in `softAP` mode. The `server.on` routing intercepts URL requests (like `/on`), triggers `digitalWrite()`, and instantly redirects the user's browser back to the main HTML dashboard.",
+    },
+  },
+};
+
+// ΓöÇΓöÇ BREADBOARD MECHANICS VISUALIZER (840-Point Standard) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+function BBViz({ T, activeWireState = true }) {
+  const [hov, setHov] = useState(null);
+  const R = 30,
+    RH = 24,
+    SY = 44; // Shifted CX coordinates outward to prevent rail overlaps
+  const CX = {
+    A: 60,
+    B: 78,
+    C: 96,
+    D: 114,
+    E: 132,
+    F: 156,
+    G: 174,
+    H: 192,
+    I: 210,
+    J: 228,
+  };
+  const LC = ['A', 'B', 'C', 'D', 'E'],
+    RC = ['F', 'G', 'H', 'I', 'J'];
+  const ry = (r) => SY + (r - 1) * RH;
+  const W = 288,
+    H = SY + R * RH + 24;
+  const dk = T.bg === '#04080f'; // Defined rail zones explicitly for easier hover grouping
+
+  const RAILS = [
+    { id: 'l_red', cx: 18, rx: 8, sign: '+', color: T.red },
+    { id: 'l_blue', cx: 38, rx: 28, sign: 'ΓêÆ', color: T.blue },
+    { id: 'r_red', cx: 250, rx: 240, sign: '+', color: T.red },
+    { id: 'r_blue', cx: 270, rx: 260, sign: 'ΓêÆ', color: T.blue },
+  ];
+
+  return (
+    <div style={{ position: 'relative' }}>
+      {' '}
+      <svg
+        width={W}
+        height={H}
+        style={{
+          borderRadius: 12,
+          display: 'block',
+          background: T.bbBg,
+          border: `1px solid ${T.border}`,
+        }}
+      >
+        {/* Interactive Power Rails */}       {' '}
+        {RAILS.map((rail) => {
+          const isLit = hov?.id === rail.id;
+          return (
+            <g
+              key={rail.id}
+              style={{ cursor: 'crosshair', transition: 'all 0.1s' }}
+              onMouseEnter={() =>
+                setHov({
+                  type: 'rail',
+                  id: rail.id,
+                  color: rail.color,
+                  sign: rail.sign,
+                })
+              }
+              onMouseLeave={() => setHov(null)}
+            >
+              {' '}
+              <rect
+                x={rail.rx}
+                y={SY - 16}
+                width={20}
+                height={H - SY + 8}
+                rx={4}
+                fill={
+                  isLit
+                    ? dk
+                      ? '#0f172a'
+                      : '#dbeafe'
+                    : dk
+                      ? '#040810'
+                      : '#e0e7ff'
+                }
+              />
+              {' '}
+              <line
+                x1={rail.cx}
+                y1={SY}
+                x2={rail.cx}
+                y2={H - 12}
+                stroke={isLit ? rail.color : rail.color + '40'}
+                strokeWidth={isLit ? 2 : 1.2}
+              />
+              {' '}
+              <text
+                x={rail.cx}
+                y={SY - 6}
+                textAnchor="middle"
+                fill={rail.color + '80'}
+                fontSize={10}
+                fontWeight={700}
+                fontFamily="monospace"
+              >
+                {rail.sign}
+              </text>
+              {' '}
+              {Array.from({ length: R }, (_, i) => i + 1).map((row) => (
+                <circle
+                  key={row}
+                  cx={rail.cx}
+                  cy={ry(row)}
+                  r={isLit ? 4.5 : 3.5}
+                  fill={isLit ? rail.color : T.bbHole}
+                  stroke={isLit ? rail.color : rail.color + '30'}
+                  strokeWidth={1}
+                />
+              ))}
+              {' '}
+            </g>
+          );
+        })}
+        {' '}
+        {/* Render physical wire connections if activeWireState is on */}       {' '}
+        {activeWireState && (
+          <g style={{ pointerEvents: 'none' }}>
+            {/* 3V3 Jumper (entering from top off-board) */}
+            {' '}
+            <path
+              d={`M 18 0 L 18 ${ry(1)}`}
+              fill="none"
+              stroke={T.red}
+              strokeWidth={2.5}
+              opacity={0.85}
+            />
+            {/* GND Jumper (entering from top off-board) */}
+            {' '}
+            <path
+              d={`M 38 0 L 38 ${ry(1)}`}
+              fill="none"
+              stroke={T.blue}
+              strokeWidth={2.5}
+              opacity={0.85}
+            />
+            {/* Resistor Jumper */}           {' '}
+            <path
+              d={`M 18 ${ry(10)} Q 35 ${ry(8)}, 60 ${ry(10)}`}
+              fill="none"
+              stroke={T.green}
+              strokeWidth={2.5}
+              opacity={0.85}
+            />
+            {/* LED Jumper spanning 10 & 11 */}           {' '}
+            <path
+              d={`M 78 ${ry(10)} Q 86 ${ry(8)}, 78 ${ry(11)}`}
+              fill="none"
+              stroke={T.amber}
+              strokeWidth={2.5}
+              opacity={0.85}
+            />
+            {/* Return loop jumper */}           {' '}
+            <path
+              d={`M 132 ${ry(11)} Q 90 ${ry(14)}, 38 ${ry(11)}`}
+              fill="none"
+              stroke="#2563eb"
+              strokeWidth={2.5}
+              opacity={0.85}
+            />
+            {' '}
+          </g>
+        )}
+        {/* Center Grid Elements */}       {' '}
+        {[...LC, ...RC].map((c) => (
+          <text
+            key={c}
+            x={CX[c]}
+            y={SY - 7}
+            textAnchor="middle"
+            fill={T.textMuted}
+            fontSize={8}
+            fontFamily="monospace"
+          >
+            {c}
+          </text>
+        ))}
+        {' '}
+        <rect
+          x={142}
+          y={SY - 8}
+          width={4}
+          height={H - SY + 4}
+          fill={T.bg}
+          opacity={0.9}
+        />
+        {' '}
+        {Array.from({ length: R }, (_, i) => i + 1).map((row) => (
+          <g key={row}>
+            {' '}
+            <text
+              x={144}
+              y={ry(row) + 3}
+              textAnchor="middle"
+              fill={T.textMuted}
+              fontSize={7}
+              fontFamily="monospace"
+            >
+              {row}
+            </text>
+            {' '}
+            {LC.map((c) => {
+              const isLit =
+                hov?.type === 'row' && hov.r === row && hov.s === 'l';
+              return (
+                <circle
+                  key={c}
+                  cx={CX[c]}
+                  cy={ry(row)}
+                  r={isLit ? 5.5 : 4.5}
+                  fill={isLit ? T.primary : T.bbHole}
+                  stroke={isLit ? T.primaryLight : T.bbHoleBorder}
+                  strokeWidth={isLit ? 1.5 : 1}
+                  style={{ cursor: 'crosshair', transition: 'all 0.1s' }}
+                  onMouseEnter={() => setHov({ type: 'row', r: row, s: 'l' })}
+                  onMouseLeave={() => setHov(null)}
+                />
+              );
+            })}
+            {' '}
+            {RC.map((c) => {
+              const isLit =
+                hov?.type === 'row' && hov.r === row && hov.s === 'r';
+              return (
+                <circle
+                  key={c}
+                  cx={CX[c]}
+                  cy={ry(row)}
+                  r={isLit ? 5.5 : 4.5}
+                  fill={isLit ? T.primary : T.bbHole}
+                  stroke={isLit ? T.primaryLight : T.bbHoleBorder}
+                  strokeWidth={isLit ? 1.5 : 1}
+                  style={{ cursor: 'crosshair', transition: 'all 0.1s' }}
+                  onMouseEnter={() => setHov({ type: 'row', r: row, s: 'r' })}
+                  onMouseLeave={() => setHov(null)}
+                />
+              );
+            })}
+            {' '}
+          </g>
+        ))}
+        {' '}
+      </svg>
+      {' '}
+      <div
+        style={{
+          height: 30,
+          display: 'flex',
+          alignItems: 'center',
+          marginTop: 8,
+        }}
+      >
+        {' '}
+        {hov?.type === 'rail' ? (
+          <span
+            style={{
+              fontFamily: "'JetBrains Mono',monospace",
+              fontSize: 11.5,
+              color: hov.color,
+              fontWeight: 600,
+            }}
+          >
+            ΓùÅ Vertical {hov.sign === '+' ? 'Power' : 'Ground'} Rail ΓÇö continuous
+            copper strip
+          </span>
+        ) : hov?.type === 'row' ? (
+          <span
+            style={{
+              fontFamily: "'JetBrains Mono',monospace",
+              fontSize: 11.5,
+              color: T.primary,
+              fontWeight: 600,
+            }}
+          >
+            ΓùÅ Row {hov.r} ΓÇö {hov.s === 'l' ? 'columns AΓÇôE' : 'columns FΓÇôJ'} ΓÇö
+            shared copper strip
+          </span>
+        ) : (
+          <span
+            style={{
+              fontFamily: "'JetBrains Mono',monospace",
+              fontSize: 11,
+              color: T.textMuted,
+            }}
+          >
+            Γåæ Hover any hole to see the copper strip underneath it
+          </span>
+        )}
+        {' '}
+      </div>
+      {/* Physics Tooltip Overlay for Module 1 */}     {' '}
+      {activeWireState && (
+        <div
+          style={{
+            position: 'absolute',
+            top: 120,
+            right: -20,
+            background: T.surface,
+            border: `1px solid ${T.border}`,
+            padding: '8px 12px',
+            borderRadius: 8,
+            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+            fontFamily: "'JetBrains Mono', monospace",
+            fontSize: 11,
+          }}
+        >
+          {' '}
+          <div
+            style={{ color: T.primary, fontWeight: 'bold', marginBottom: 4 }}
+          >
+            Ohm's Law: LED Circuit
+          </div>
+          <div style={{ color: T.textSub }}>V_source: 3.3V</div>
+          <div style={{ color: T.textSub }}>V_led: ~2.0V</div>         {' '}
+          <div
+            style={{
+              color: T.textSub,
+              borderTop: `1px solid ${T.border}`,
+              marginTop: 4,
+              paddingTop: 4,
+            }}
+          >
+            V_drop (R): 1.3V
+          </div>
+          {' '}
+          <div style={{ color: T.green, fontWeight: 'bold' }}>
+            I = 1.3V / 220╬⌐ Γëê 6mA
+          </div>
+          {' '}
+        </div>
+      )}
+      {' '}
+    </div>
+  );
+}
+
+// ΓöÇΓöÇ CUSTOM LESSON SIMULATOR COMPONENT ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
 function LessonSimulator({ pageId, T }) {
   const isDark = T.bg === '#04080f'; // Module 1 States
 
@@ -509,10 +1611,8 @@ function LessonSimulator({ pageId, T }) {
   const svgRef = useRef(null); // M5 (Blink timing)
 
   const [onboardBlink, setOnboardBlink] = useState(false);
-  const [onDelay, setOnDelay] = useState(100);
-  const [offDelay, setOffDelay] = useState(1000);
-  const [tempOnDelay, setTempOnDelay] = useState('100');
-  const [tempOffDelay, setTempOffDelay] = useState('1000'); // Handle Rotary Dial Mouse Drag
+  const [onDelay, setOnDelay] = useState(1000);
+  const [offDelay, setOffDelay] = useState(1000); // Handle Rotary Dial Mouse Drag
 
   const handleMouseMove = (e) => {
     if (!isDragging || !svgRef.current) return;
@@ -541,7 +1641,7 @@ function LessonSimulator({ pageId, T }) {
   const potVal = Math.round(((knobAngle - 30) / 300) * 100) || 0; // Blink precise interval engine (M5)
 
   useEffect(() => {
-    if (pageId !== 'p2m1') return;
+    if (pageId !== 'm5') return;
     let timer;
     const cycle = () => {
       setOnboardBlink((prev) => {
@@ -600,7 +1700,7 @@ function LessonSimulator({ pageId, T }) {
         {' '}
       </div>
       {' '}
-      {pageId === 'p1m1' && (
+      {pageId === 'm1' && (
         <div>
           {' '}
           <p style={{ fontSize: 13, color: T.textSub, marginBottom: 16 }}>
@@ -667,7 +1767,7 @@ function LessonSimulator({ pageId, T }) {
                   transition: 'all 0.1s',
                 }}
               >
-                🔴
+                ≡ƒö┤
               </div>
               {' '}
               <span
@@ -683,7 +1783,7 @@ function LessonSimulator({ pageId, T }) {
         </div>
       )}
       {' '}
-      {pageId === 'p1m2' && (
+      {pageId === 'm2' && (
         <div>
           {' '}
           <p style={{ fontSize: 13, color: T.textSub, marginBottom: 16 }}>
@@ -768,7 +1868,7 @@ function LessonSimulator({ pageId, T }) {
                   transition: 'all 0.1s',
                 }}
               >
-                💡
+                ≡ƒÆí
               </div>
               {' '}
               <span
@@ -784,7 +1884,7 @@ function LessonSimulator({ pageId, T }) {
         </div>
       )}
       {' '}
-      {pageId === 'p1m3' && (
+      {pageId === 'm3' && (
         <div>
           {' '}
           <p style={{ fontSize: 13, color: T.textSub, marginBottom: 16 }}>
@@ -874,7 +1974,7 @@ function LessonSimulator({ pageId, T }) {
                 transition: 'all 0.1s',
               }}
             >
-              🔴
+              ≡ƒö┤
             </div>
             {' '}
           </div>
@@ -912,7 +2012,7 @@ function LessonSimulator({ pageId, T }) {
                 transition: 'all 0.1s',
               }}
             >
-              💡
+              ≡ƒÆí
             </div>
             {' '}
           </div>
@@ -920,7 +2020,7 @@ function LessonSimulator({ pageId, T }) {
         </div>
       )}
       {' '}
-      {pageId === 'p1m4' && (
+      {pageId === 'm4' && (
         <div>
           {' '}
           <p style={{ fontSize: 13, color: T.textSub, marginBottom: 16 }}>
@@ -935,13 +2035,52 @@ function LessonSimulator({ pageId, T }) {
               marginBottom: 20,
             }}
           >
-            <input
-              type="range"
-              min="0" max="100"
-              value={potVal}
-              onChange={(e) => setKnobAngle((Number(e.target.value) / 100) * 300 + 30)}
-              style={{ width: '100%', maxWidth: 220, accentColor: T.primary, marginTop: 40, marginBottom: 40 }}
-            />
+            {/* Circular Dial acting as Ambient Light proxy */}
+            {' '}
+            <svg
+              ref={svgRef}
+              width="160"
+              height="160"
+              onMouseDown={(e) => {
+                setIsDragging(true);
+                handleMouseMove(e);
+              }}
+              style={{ cursor: 'pointer' }}
+            >
+              {' '}
+              <circle
+                cx="80"
+                cy="80"
+                r="70"
+                fill={isDark ? '#1e293b' : '#e2e8f0'}
+                stroke={T.border}
+                strokeWidth="4"
+              />
+              {' '}
+              {[30, 90, 150, 210, 270, 330].map((a) => (
+                <line
+                  key={a}
+                  x1={80 + 55 * Math.cos(((a - 90) * Math.PI) / 180)}
+                  y1={80 + 55 * Math.sin(((a - 90) * Math.PI) / 180)}
+                  x2={80 + 65 * Math.cos(((a - 90) * Math.PI) / 180)}
+                  y2={80 + 65 * Math.sin(((a - 90) * Math.PI) / 180)}
+                  stroke={T.textMuted}
+                  strokeWidth="2"
+                />
+              ))}
+              {' '}
+              <line
+                x1="80"
+                y1="80"
+                x2={80 + 60 * Math.cos(((knobAngle - 90) * Math.PI) / 180)}
+                y2={80 + 60 * Math.sin(((knobAngle - 90) * Math.PI) / 180)}
+                stroke={T.primaryLight}
+                strokeWidth="6"
+                strokeLinecap="round"
+              />
+              {' '}
+              <circle cx="80" cy="80" r="15" fill={T.primaryLight} />           {' '}
+            </svg>
             {' '}
           </div>
           {' '}
@@ -990,7 +2129,7 @@ function LessonSimulator({ pageId, T }) {
                   transition: 'all 0.2s',
                 }}
               >
-                💡
+                ≡ƒÆí
               </div>
               {' '}
             </div>
@@ -1000,7 +2139,7 @@ function LessonSimulator({ pageId, T }) {
         </div>
       )}
       {' '}
-      {pageId === 'p2m1' && (
+      {pageId === 'm5' && (
         <div>
           {' '}
           <p style={{ fontSize: 13, color: T.textSub, marginBottom: 16 }}>
@@ -1008,8 +2147,17 @@ function LessonSimulator({ pageId, T }) {
             parameters and watch the simulated onboard LED timing.
           </p>
           {' '}
-          <div style={{ display: 'flex', gap: 12, marginBottom: 12 }}>
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: 10,
+              marginBottom: 16,
+            }}
+          >
+            {' '}
             <div style={{ flex: 1 }}>
+              {' '}
               <label
                 style={{
                   fontSize: 11,
@@ -1020,10 +2168,11 @@ function LessonSimulator({ pageId, T }) {
               >
                 delay(ON_ms)
               </label>
+              {' '}
               <input
-                type="text"
-                value={tempOnDelay}
-                onChange={(e) => setTempOnDelay(e.target.value)}
+                type="number"
+                value={onDelay}
+                onChange={(e) => setOnDelay(parseInt(e.target.value) || 100)}
                 style={{
                   width: '100%',
                   background: T.bg,
@@ -1034,8 +2183,11 @@ function LessonSimulator({ pageId, T }) {
                   fontSize: 13,
                 }}
               />
+              {' '}
             </div>
+            {' '}
             <div style={{ flex: 1 }}>
+              {' '}
               <label
                 style={{
                   fontSize: 11,
@@ -1046,10 +2198,11 @@ function LessonSimulator({ pageId, T }) {
               >
                 delay(OFF_ms)
               </label>
+              {' '}
               <input
-                type="text"
-                value={tempOffDelay}
-                onChange={(e) => setTempOffDelay(e.target.value)}
+                type="number"
+                value={offDelay}
+                onChange={(e) => setOffDelay(parseInt(e.target.value) || 100)}
                 style={{
                   width: '100%',
                   background: T.bg,
@@ -1060,32 +2213,10 @@ function LessonSimulator({ pageId, T }) {
                   fontSize: 13,
                 }}
               />
+              {' '}
             </div>
+            {' '}
           </div>
-          <button
-            onClick={() => {
-              setOnDelay(parseInt(tempOnDelay) || 10);
-              setOffDelay(parseInt(tempOffDelay) || 10);
-            }}
-            style={{
-              width: '100%',
-              background: T.green,
-              color: '#000',
-              border: 'none',
-              borderRadius: 6,
-              padding: '10px 0',
-              fontWeight: 800,
-              fontSize: 14,
-              cursor: 'pointer',
-              marginBottom: 20,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: 8,
-            }}
-          >
-            <span style={{ fontSize: 16 }}>▶</span> RUN SIMULATION
-          </button>
           {' '}
           <div
             style={{
@@ -1130,7 +2261,7 @@ function LessonSimulator({ pageId, T }) {
         </div>
       )}
       {' '}
-      {pageId === 'p2m2' && (
+      {pageId === 'm6' && (
         <div>
           {' '}
           <p style={{ fontSize: 13, color: T.textSub, marginBottom: 16 }}>
@@ -1196,32 +2327,17 @@ function LessonSimulator({ pageId, T }) {
                 transition: 'all 0.1s',
               }}
             >
-              🔴
+              ≡ƒö┤
             </div>
             {' '}
           </div>
           {' '}
         </div>
       )}
-      {pageId === 'p1m5' && <HardwareTimerSim T={T} />}
-      {pageId === 'p1cap' && <VaultAlarmSim T={T} />}
-      {pageId === 'p2m3' && <AnalogOutputSim T={T} />}
-      {pageId === 'p2m4' && <SerialCommSim T={T} />}
-      {pageId === 'p2cap' && <ThermometerSim T={T} />}
-      {pageId === 'p3m1' && <ServoMotorSim T={T} />}
-      {pageId === 'p3m2' && <OledDisplaySim T={T} />}
-      {pageId === 'p3m3' && <EnvSensingSim T={T} />}
-      {pageId === 'p3m4' && <RelayPowerSim T={T} />}
-      {pageId === 'p3cap' && <DesktopRadarSim T={T} />}
-      {pageId === 'p4m1' && <HighVoltageBridgeSim T={T} />}
-      {pageId === 'p4m2' && <LocalHotspotSim T={T} />}
-      {pageId === 'p4m3' && <TwoWayDataSim T={T} />}
-      {pageId === 'p4cap' && <SmartHomeHubSim T={T} />}
-
       {/* Fallback for Phase 3/4 modules */}     {' '}
       {['m7', 'm8', 'm9', 'm10', 'm11', 'm12'].includes(pageId) && (
         <div style={{ padding: 20, textAlign: 'center' }}>
-          <div style={{ fontSize: 40, marginBottom: 10 }}>🚀</div>
+          <div style={{ fontSize: 40, marginBottom: 10 }}>≡ƒÜÇ</div>
 
           <h3 style={{ fontSize: 16, fontWeight: 700, color: T.text }}>
             Simulator Online
@@ -1238,7 +2354,7 @@ function LessonSimulator({ pageId, T }) {
   );
 }
 
-// ── SAFETY INTERCEPT WARNING ─────────────────────────────────────────
+// ΓöÇΓöÇ SAFETY INTERCEPT WARNING ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
 function SafetyAlert({ result, T }) {
   const codeCheck =
     result && result.code && result.code.snippet ? result.code.snippet : '';
@@ -1262,7 +2378,7 @@ function SafetyAlert({ result, T }) {
       }}
       className="fu"
     >
-      <span style={{ fontSize: 24 }}>⚡</span>     {' '}
+      <span style={{ fontSize: 24 }}>ΓÜí</span>     {' '}
       <div>
         {' '}
         <div
@@ -1273,7 +2389,7 @@ function SafetyAlert({ result, T }) {
             marginBottom: 6,
           }}
         >
-          ⚠️ HIGH VOLTAGE WORKBENCH WARNING
+          ΓÜá∩╕Å HIGH VOLTAGE WORKBENCH WARNING
         </div>
         {' '}
         <p style={{ fontSize: 13, color: T.textSub, lineHeight: 1.8 }}>
@@ -1289,11 +2405,11 @@ function SafetyAlert({ result, T }) {
   );
 }
 
-// ── REFERRAL MODAL ───────────────────────────────────────────────────
+// ΓöÇΓöÇ REFERRAL MODAL ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
 function Referral({ T, onClose }) {
   const [name, setName] = useState('');
   const [ok, setOk] = useState(false);
-  const txt = `I just unlocked the Beginners Formula to IoT platform!\n\nThe breadboard visualizer is genuinely something else — hover any row and the hidden copper tracks light up live. Plus there's an AI project builder that spits out full ESP32 code for any IoT idea you throw at it.\n\nbfiot.vercel.app\n\n— ${name || 'A curious builder'
+  const txt = `I just unlocked the Beginners Formula to IoT platform!\n\nThe breadboard visualizer is genuinely something else ΓÇö hover any row and the hidden copper tracks light up live. Plus there's an AI project builder that spits out full ESP32 code for any IoT idea you throw at it.\n\nbfiot.vercel.app\n\nΓÇö ${name || 'A curious builder'
     }`;
   const copy = () => {
     const el = document.createElement('textarea');
@@ -1370,7 +2486,7 @@ function Referral({ T, onClose }) {
               cursor: 'pointer',
             }}
           >
-            ×
+            ├ù
           </button>
           {' '}
         </div>
@@ -1458,7 +2574,7 @@ function Referral({ T, onClose }) {
               transition: 'all 0.2s',
             }}
           >
-            {ok ? '✓ Copied!' : 'Copy to Clipboard'}
+            {ok ? 'Γ£ô Copied!' : 'Copy to Clipboard'}
           </button>
           {' '}
         </div>
@@ -1469,7 +2585,7 @@ function Referral({ T, onClose }) {
   );
 }
 
-// ── PROJECT LAB COMPONENT ────────────────────────────────────────────
+// ΓöÇΓöÇ PROJECT LAB COMPONENT ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
 const EXAMPLES = [
   'Smart plant watering system',
   'Room temperature monitor on OLED',
@@ -1776,7 +2892,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
               fontFamily: "'JetBrains Mono',monospace",
             }}
           >
-            ↵ Enter to generate · Shift+Enter for new line
+            Γå╡ Enter to generate ┬╖ Shift+Enter for new line
           </span>
           {' '}
           <button
@@ -1795,7 +2911,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
             }}
           >
             {' '}
-            {loading ? 'Assembling Framework...' : 'Generate Project →'}
+            {loading ? 'Assembling Framework...' : 'Generate Project ΓåÆ'}
             {' '}
           </button>
           {' '}
@@ -1974,7 +3090,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                   fontWeight: 700,
                 }}
               >
-                💬 Mentoring Chat
+                ≡ƒÆ¼ Mentoring Chat
               </button>
               {' '}
               <button
@@ -1989,7 +3105,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                   fontWeight: 700,
                 }}
               >
-                ↓ Save Blueprint (.md)
+                Γåô Save Blueprint (.md)
               </button>
               {' '}
             </div>
@@ -2183,7 +3299,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                             flexShrink: 0,
                           }}
                         >
-                          ×{p.quantity}
+                          ├ù{p.quantity}
                         </div>
                         {' '}
                         <div style={{ flex: 1 }}>
@@ -2352,7 +3468,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                                 marginRight: 6,
                               }}
                             >
-                              ✓ SANITY CHECK
+                              Γ£ô SANITY CHECK
                             </span>
                             {' '}
                             <span style={{ fontSize: 12.5, color: T.textSub }}>
@@ -2382,7 +3498,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                                 marginRight: 6,
                               }}
                             >
-                              ⚠️ PRO TIP
+                              ΓÜá∩╕Å PRO TIP
                             </span>
                             {' '}
                             <span style={{ fontSize: 12.5, color: T.textSub }}>
@@ -2521,7 +3637,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                         marginBottom: 10,
                       }}
                     >
-                      🧠 LOGIC BREAKDOWN
+                      ≡ƒºá LOGIC BREAKDOWN
                     </div>
                     {' '}
                     <p
@@ -2548,7 +3664,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
                   }}
                 >
                   {' '}
-                  <div style={{ fontSize: 32, marginBottom: 12 }}>⚙️</div>
+                  <div style={{ fontSize: 32, marginBottom: 12 }}>ΓÜÖ∩╕Å</div>
                   {' '}
                   <div
                     style={{
@@ -2588,7 +3704,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
               display: 'block',
             }}
           >
-            ← Build a different project          {' '}
+            ΓåÉ Build a different project          {' '}
           </button>
           {' '}
         </div>
@@ -2732,7 +3848,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
   );
 }
 
-// ── LOCKED MODULAR VIEWS (Fallback Component) ─────────────────────────
+// ΓöÇΓöÇ LOCKED MODULAR VIEWS (Fallback Component) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
 function LockedPage({ info, T, unlocked, setUnlocked }) {
   const title = info ? info.title : 'Module Locked';
   const [inputCode, setInputCode] = useState('');
@@ -2896,7 +4012,7 @@ function LockedPage({ info, T, unlocked, setUnlocked }) {
               transition: 'all 0.2s',
             }}
           >
-            {loading ? 'Verifying...' : 'Unlock Workbench →'}
+            {loading ? 'Verifying...' : 'Unlock Workbench ΓåÆ'}
           </button>
         </form>
       )}
@@ -2957,7 +4073,7 @@ function LockedPage({ info, T, unlocked, setUnlocked }) {
   );
 }
 
-// ── ROOT APP CONTROLLER ──────────────────────────────────────────────
+// ΓöÇΓöÇ ROOT APP CONTROLLER ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
 const LINFO = {
   m1: { title: 'Module 1: The Physical Handshake' },
   m2: { title: 'Module 2: The Analog Bridge' },
@@ -2971,20 +4087,12 @@ const LINFO = {
   m10: { title: 'Module 10: Environmental Sensing' },
   m11: { title: 'Module 11: Relay Power Control' },
   m12: { title: 'Module 12: Local Web Server' },
-  c1: { title: 'Capstone: Vault Alarm' },
-  c2: { title: 'Capstone: Thermometer' },
-  c3: { title: 'Capstone: Desktop Radar' },
-  p4m1: { title: '4.1 High-Voltage Bridge' },
-  p4m2: { title: '4.2 The Local Hotspot' },
-  p4m3: { title: '4.3 Two-Way Data' },
-  p4cap: { title: 'Capstone: Smart Home Hub' },
 };
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(() => localStorage.getItem('bfiot_auth') === 'true');
   const [dark, setDark] = useState(false);
   const T = dark ? DARK : LIGHT;
-  const [p0, setP0] = useState(true);
   const [page, setPage] = useState('gz'); // default to Ground Zero
   const [p1, setP1] = useState(true);
   const [p2, setP2] = useState(true);
@@ -3032,36 +4140,20 @@ export default function App() {
   const activeLesson = LESSONS[page];
 
   const crumb = {
-    gz1: ['Phase 0', '0.1 · The Language of Electricity'],
-    gz2: ['Phase 0', '0.2 · Anatomy of a Breadboard'],
-    gz3: ['Phase 0', '0.3 · The Multimeter'],
-    gz4: ['Phase 0', '0.4 · Reading Resistors'],
-    gz5: ['Phase 0', '0.5 · The Maker Kit'],
-
-    p1m1: ['Phase 1', 'Module 1.1 · The Physical Handshake'],
-    p1m2: ['Phase 1', 'Module 1.2 · The Analog Bridge'],
-    p1m3: ['Phase 1', 'Module 1.3 · Physical Logic Gates'],
-    p1m4: ['Phase 1', 'Module 1.4 · The Automatic Night Light'],
-    p1m5: ['Phase 1', 'Module 1.5 · Hardware Timers'],
-    p1cap: ['Phase 1', 'Capstone · Vault Alarm'],
-
-    p2m1: ['Phase 2', 'Module 2.1 · Software Gatekeeper'],
-    p2m2: ['Phase 2', 'Module 2.2 · Digital Inputs'],
-    p2m3: ['Phase 2', 'Module 2.3 · Analog Outputs & PWM'],
-    p2m4: ['Phase 2', 'Module 2.4 · Serial Communication'],
-    p2cap: ['Phase 2', 'Capstone · Thermometer'],
-
-    p3m1: ['Phase 3', 'Module 3.1 · Servos & Motors'],
-    p3m2: ['Phase 3', 'Module 3.2 · OLED Displays'],
-    p3m3: ['Phase 3', 'Module 3.3 · Environmental Sensing'],
-    p3m4: ['Phase 3', 'Module 3.4 · Relay Power Control'],
-    p3cap: ['Phase 3', 'Capstone · Desktop Radar'],
-
-    p4m1: ['Phase 4', 'Module 4.1 · High-Voltage Bridge'],
-    p4m2: ['Phase 4', 'Module 4.2 · The Local Hotspot'],
-    p4m3: ['Phase 4', 'Module 4.3 · Two-Way Data'],
-    p4m4: ['Phase 4', 'Module 4.4 · Cloud Dashboard'],
-    p4cap: ['Phase 4', 'Capstone · Smart Home Hub'],
+    gz: ['Ground Zero', 'Before You Build'],
+    m1: ['Phase 1', 'Module 1 ┬╖ The Physical Handshake'],
+    m2: ['Phase 1', 'Module 2 ┬╖ The Analog Bridge'],
+    m3: ['Phase 1', 'Module 3 ┬╖ Physical Logic Gates'],
+    m4: ['Phase 1', 'Module 4 ┬╖ The Automatic Night Light'],
+    m5: ['Phase 2', 'Module 5 ┬╖ The Software Gatekeeper'],
+    m6: ['Phase 2', 'Module 6 ┬╖ Digital Inputs'],
+    m7: ['Phase 3', 'Module 7 ┬╖ Analog Outputs & PWM'],
+    m8: ['Phase 3', 'Module 8 ┬╖ Servos & Motors'],
+    m9: ['Phase 3', 'Module 9 ┬╖ OLED Displays (I2C)'],
+    m10: ['Phase 3', 'Module 10 ┬╖ Environmental Sensing'],
+    m11: ['Phase 3', 'Module 11 ┬╖ Relay Power Control'],
+    m12: ['Phase 4', 'Module 12 ┬╖ Local Web Server'],
+    lab: ['Project Lab', 'AI Project Builder'],
   }[page] || ['', ''];
 
   // Global auth removed
@@ -3202,7 +4294,7 @@ export default function App() {
                   marginTop: 1,
                 }}
               >
-                LEARN · BUILD · INNOVATE
+                LEARN ┬╖ BUILD ┬╖ INNOVATE
               </div>
               {' '}
             </div>
@@ -3248,64 +4340,30 @@ export default function App() {
         {' '}
         <nav style={{ flex: 1, overflowY: 'auto', padding: '10px 8px' }}>
           {' '}
-          <button
-            onClick={() => setP0(!p0)}
+          <div
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              width: '100%',
-              padding: '5px 14px',
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              marginBottom: 4,
+              fontSize: 9,
+              color: T.textMuted,
+              fontFamily: "'JetBrains Mono',monospace",
+              letterSpacing: 1.5,
+              padding: '4px 14px 8px',
+              fontWeight: 500,
             }}
           >
-            <div style={{ textAlign: 'left' }}>
-              <div
-                style={{
-                  fontSize: 9,
-                  color: T.textMuted,
-                  fontFamily: "'JetBrains Mono',monospace",
-                  letterSpacing: 1.5,
-                  fontWeight: 700,
-                }}
-              >
-                PHASE 0
-              </div>
-              <div
-                style={{
-                  fontSize: 12,
-                  fontWeight: 600,
-                  color: T.textSub,
-                  marginTop: 1,
-                }}
-              >
-                Before You Build
-              </div>
-            </div>
-            <div
-              style={{
-                transform: p0 ? 'rotate(0)' : 'rotate(-90deg)',
-                transition: 'transform 0.2s',
-              }}
-            >
-              <ChevD s={14} c={T.textMuted} />
-            </div>
-          </button>
-          {p0 && (
-            <div style={{ paddingLeft: 2 }}>
-              <LBtn id="gz1" title="Module 0.1" tag="Language of Electricity" active={page === 'gz1'} locked={!unlocked} onClick={go} T={T} />
-              <LBtn id="gz2" title="Module 0.2" tag="Inside a Breadboard" active={page === 'gz2'} locked={!unlocked} onClick={go} T={T} />
-              <LBtn id="gz3" title="Module 0.3" tag="Component Anatomy" active={page === 'gz3'} locked={!unlocked} onClick={go} T={T} />
-              <LBtn id="gz4" title="Module 0.4" tag="Reading Resistors" active={page === 'gz4'} locked={!unlocked} onClick={go} T={T} />
-              <LBtn id="gz5" title="Module 0.5" tag="The Formula " active={page === 'gz5'} locked={!unlocked} onClick={go} T={T} />
-            </div>
-          )}
-          <div style={{ height: 8 }} />
-
-          {/* Phase 1 */}
+            STARTING GATE
+          </div>
+          {' '}
+          <LBtn
+            id="gz"
+            title="Before You Build"
+            tag="Breadboard 101"
+            active={page === 'gz'}
+            locked={false}
+            onClick={go}
+            T={T}
+          />
+          <div style={{ height: 8 }} />         {' '}
+          {/* Phase 1 Collapsible */}         {' '}
           <button
             onClick={() => setP1(!p1)}
             style={{
@@ -3320,7 +4378,9 @@ export default function App() {
               marginBottom: 4,
             }}
           >
+            {' '}
             <div style={{ textAlign: 'left' }}>
+              {' '}
               <div
                 style={{
                   fontSize: 9,
@@ -3332,6 +4392,7 @@ export default function App() {
               >
                 PHASE 1
               </div>
+              {' '}
               <div
                 style={{
                   fontSize: 12,
@@ -3342,7 +4403,9 @@ export default function App() {
               >
                 Pure Hardware
               </div>
+              {' '}
             </div>
+            {' '}
             <div
               style={{
                 transform: p1 ? 'rotate(0)' : 'rotate(-90deg)',
@@ -3351,20 +4414,56 @@ export default function App() {
             >
               <ChevD s={14} c={T.textMuted} />
             </div>
+            {' '}
           </button>
+          {' '}
           {p1 && (
             <div style={{ paddingLeft: 2 }}>
-              <LBtn id="p1m1" title="Module 1.1" tag="Physical Handshake" active={page === 'p1m1'} locked={!unlocked} onClick={go} T={T} />
-              <LBtn id="p1m2" title="Module 1.2" tag="Analog Bridge" active={page === 'p1m2'} locked={!unlocked} onClick={go} T={T} />
-              <LBtn id="p1m3" title="Module 1.3" tag="Logic Gates" active={page === 'p1m3'} locked={!unlocked} onClick={go} T={T} />
-              <LBtn id="p1m4" title="Module 1.4" tag="Auto Night Light" active={page === 'p1m4'} locked={!unlocked} onClick={go} T={T} />
-              <LBtn id="p1m5" title="Module 1.5" tag="Hardware Timers" active={page === 'p1m5'} locked={!unlocked} onClick={go} T={T} />
-              <LBtn id="p1cap" title="Capstone" tag="Vault Alarm" active={page === 'p1cap'} locked={!unlocked} onClick={go} T={T} special />
+              {' '}
+              <LBtn
+                id="m1"
+                title="Module 1"
+                tag="Physical Handshake"
+                active={page === 'm1'}
+                locked={!unlocked}
+                onClick={go}
+                T={T}
+              />
+              {' '}
+              <LBtn
+                id="m2"
+                title="Module 2"
+                tag="Analog Bridge"
+                active={page === 'm2'}
+                locked={!unlocked}
+                onClick={go}
+                T={T}
+              />
+              {' '}
+              <LBtn
+                id="m3"
+                title="Module 3"
+                tag="Logic Gates"
+                active={page === 'm3'}
+                locked={!unlocked}
+                onClick={go}
+                T={T}
+              />
+              {' '}
+              <LBtn
+                id="m4"
+                title="Module 4"
+                tag="Auto Night Light"
+                active={page === 'm4'}
+                locked={!unlocked}
+                onClick={go}
+                T={T}
+              />
+              {' '}
             </div>
           )}
-          <div style={{ height: 8 }} />
-
-          {/* Phase 2 */}
+          {/* Phase 2 Collapsible */}
+          <div style={{ height: 8 }} />         {' '}
           <button
             onClick={() => setP2(!p2)}
             style={{
@@ -3379,7 +4478,9 @@ export default function App() {
               marginBottom: 4,
             }}
           >
+            {' '}
             <div style={{ textAlign: 'left' }}>
+              {' '}
               <div
                 style={{
                   fontSize: 9,
@@ -3391,6 +4492,7 @@ export default function App() {
               >
                 PHASE 2
               </div>
+              {' '}
               <div
                 style={{
                   fontSize: 12,
@@ -3401,7 +4503,9 @@ export default function App() {
               >
                 Software Gatekeeper
               </div>
+              {' '}
             </div>
+            {' '}
             <div
               style={{
                 transform: p2 ? 'rotate(0)' : 'rotate(-90deg)',
@@ -3410,19 +4514,36 @@ export default function App() {
             >
               <ChevD s={14} c={T.textMuted} />
             </div>
+            {' '}
           </button>
+          {' '}
           {p2 && (
             <div style={{ paddingLeft: 2 }}>
-              <LBtn id="p2m1" title="Module 2.1" tag="Software Gatekeeper" active={page === 'p2m1'} locked={!unlocked} onClick={go} T={T} />
-              <LBtn id="p2m2" title="Module 2.2" tag="Digital Inputs" active={page === 'p2m2'} locked={!unlocked} onClick={go} T={T} />
-              <LBtn id="p2m3" title="Module 2.3" tag="Analog Outputs" active={page === 'p2m3'} locked={!unlocked} onClick={go} T={T} />
-              <LBtn id="p2m4" title="Module 2.4" tag="Serial Comm" active={page === 'p2m4'} locked={!unlocked} onClick={go} T={T} />
-              <LBtn id="p2cap" title="Capstone" tag="Thermometer" active={page === 'p2cap'} locked={!unlocked} onClick={go} T={T} special />
+              {' '}
+              <LBtn
+                id="m5"
+                title="Module 5"
+                tag="ESP32 Setup & Blink"
+                active={page === 'm5'}
+                locked={!unlocked}
+                onClick={go}
+                T={T}
+              />
+              {' '}
+              <LBtn
+                id="m6"
+                title="Module 6"
+                tag="Inputs & If-Statements"
+                active={page === 'm6'}
+                locked={!unlocked}
+                onClick={go}
+                T={T}
+              />
+              {' '}
             </div>
           )}
-          <div style={{ height: 8 }} />
-
-          {/* Phase 3 */}
+          {/* Phase 3 Collapsible */}
+          <div style={{ height: 8 }} />         {' '}
           <button
             onClick={() => setP3(!p3)}
             style={{
@@ -3437,11 +4558,13 @@ export default function App() {
               marginBottom: 4,
             }}
           >
+            {' '}
             <div style={{ textAlign: 'left' }}>
+              {' '}
               <div
                 style={{
                   fontSize: 9,
-                  color: T.primary,
+                  color: T.blue,
                   fontFamily: "'JetBrains Mono',monospace",
                   letterSpacing: 1.5,
                   fontWeight: 700,
@@ -3449,6 +4572,7 @@ export default function App() {
               >
                 PHASE 3
               </div>
+              {' '}
               <div
                 style={{
                   fontSize: 12,
@@ -3457,9 +4581,11 @@ export default function App() {
                   marginTop: 1,
                 }}
               >
-                Analog & Real World
+                Actuation & Sensors
               </div>
+              {' '}
             </div>
+            {' '}
             <div
               style={{
                 transform: p3 ? 'rotate(0)' : 'rotate(-90deg)',
@@ -3468,19 +4594,66 @@ export default function App() {
             >
               <ChevD s={14} c={T.textMuted} />
             </div>
+            {' '}
           </button>
+          {' '}
           {p3 && (
             <div style={{ paddingLeft: 2 }}>
-              <LBtn id="p3m1" title="Module 3.1" tag="Servos & Motors" active={page === 'p3m1'} locked={!unlocked} onClick={go} T={T} />
-              <LBtn id="p3m2" title="Module 3.2" tag="OLED Displays" active={page === 'p3m2'} locked={!unlocked} onClick={go} T={T} />
-              <LBtn id="p3m3" title="Module 3.3" tag="Env. Sensing" active={page === 'p3m3'} locked={!unlocked} onClick={go} T={T} />
-              <LBtn id="p3m4" title="Module 3.4" tag="Relay Power" active={page === 'p3m4'} locked={!unlocked} onClick={go} T={T} />
-              <LBtn id="p3cap" title="Capstone" tag="Desktop Radar" active={page === 'p3cap'} locked={!unlocked} onClick={go} T={T} special />
+              {' '}
+              <LBtn
+                id="m7"
+                title="Module 7"
+                tag="Analog PWM"
+                active={page === 'm7'}
+                locked={!unlocked}
+                onClick={go}
+                T={T}
+              />
+              {' '}
+              <LBtn
+                id="m8"
+                title="Module 8"
+                tag="Servos & Motors"
+                active={page === 'm8'}
+                locked={!unlocked}
+                onClick={go}
+                T={T}
+              />
+              {' '}
+              <LBtn
+                id="m9"
+                title="Module 9"
+                tag="OLED Displays (I2C)"
+                active={page === 'm9'}
+                locked={!unlocked}
+                onClick={go}
+                T={T}
+              />
+              {' '}
+              <LBtn
+                id="m10"
+                title="Module 10"
+                tag="Enviro Sensing"
+                active={page === 'm10'}
+                locked={!unlocked}
+                onClick={go}
+                T={T}
+              />
+              {' '}
+              <LBtn
+                id="m11"
+                title="Module 11"
+                tag="Relay Power Control"
+                active={page === 'm11'}
+                locked={!unlocked}
+                onClick={go}
+                T={T}
+              />
+              {' '}
             </div>
           )}
-          <div style={{ height: 8 }} />
-
-          {/* Phase 4 */}
+          {/* Phase 4 Collapsible */}
+          <div style={{ height: 8 }} />         {' '}
           <button
             onClick={() => setP4(!p4)}
             style={{
@@ -3495,11 +4668,13 @@ export default function App() {
               marginBottom: 4,
             }}
           >
+            {' '}
             <div style={{ textAlign: 'left' }}>
+              {' '}
               <div
                 style={{
                   fontSize: 9,
-                  color: '#d946ef',
+                  color: T.primaryLight,
                   fontFamily: "'JetBrains Mono',monospace",
                   letterSpacing: 1.5,
                   fontWeight: 700,
@@ -3507,6 +4682,7 @@ export default function App() {
               >
                 PHASE 4
               </div>
+              {' '}
               <div
                 style={{
                   fontSize: 12,
@@ -3517,7 +4693,9 @@ export default function App() {
               >
                 Connected IoT
               </div>
+              {' '}
             </div>
+            {' '}
             <div
               style={{
                 transform: p4 ? 'rotate(0)' : 'rotate(-90deg)',
@@ -3526,13 +4704,22 @@ export default function App() {
             >
               <ChevD s={14} c={T.textMuted} />
             </div>
+            {' '}
           </button>
+          {' '}
           {p4 && (
             <div style={{ paddingLeft: 2 }}>
-              <LBtn id="p4m1" title="Module 4.1" tag="High-Voltage Bridge" active={page === 'p4m1'} locked={!unlocked} onClick={go} T={T} />
-              <LBtn id="p4m2" title="Module 4.2" tag="The Local Hotspot" active={page === 'p4m2'} locked={!unlocked} onClick={go} T={T} />
-              <LBtn id="p4m3" title="Module 4.3" tag="Two-Way Data" active={page === 'p4m3'} locked={!unlocked} onClick={go} T={T} />
-              <LBtn id="p4cap" title="Capstone" tag="Smart Home Hub" active={page === 'p4cap'} locked={!unlocked} onClick={go} T={T} special />
+              {' '}
+              <LBtn
+                id="m12"
+                title="Module 12"
+                tag="Smart Dashboard"
+                active={page === 'm12'}
+                locked={!unlocked}
+                onClick={go}
+                T={T}
+              />
+              {' '}
             </div>
           )}
           {/* Maker's Log persistence timeline */}         {' '}
@@ -3636,7 +4823,7 @@ export default function App() {
             <LBtn
               id="lab"
               title="Project Builder"
-              tag="Context-Aware · ESP32"
+              tag="Context-Aware ┬╖ ESP32"
               active={page === 'lab'}
               locked={false}
               onClick={go}
@@ -3851,7 +5038,7 @@ export default function App() {
                       marginBottom: 16,
                     }}
                   >
-                    Alright — before we plug
+                    Alright ΓÇö before we plug
                     <br />
                     anything in,{' '}
                     <span style={{ color: T.primary }}>read this first.</span>
@@ -3868,7 +5055,7 @@ export default function App() {
                   >
                     I've watched a lot of students fry their
                     first LED in the first 10 minutes of a lab session. Not
-                    because they weren't smart — because nobody pulled them
+                    because they weren't smart ΓÇö because nobody pulled them
                     aside beforehand and said{' '}
                     <em style={{ color: T.text }}>
                       "here's what the textbook skips."
@@ -3899,7 +5086,7 @@ export default function App() {
                     Skim through, make sure your mental model lines up with
                     ours, then jump straight to Module 1. But if you're the kind
                     of person who just stared at a breadboard wondering what
-                    those holes even do —                    {' '}
+                    those holes even do ΓÇö                    {' '}
                     <strong style={{ color: T.text }}>
                       you're exactly who this was written for. Don't skip it.
                     </strong>
@@ -3908,11 +5095,6 @@ export default function App() {
                   {' '}
                 </div>
                 {' '}
-              </div>
-            )}
-
-            {page === 'gz1' && (
-              <div className="fu">
                 <section style={{ marginBottom: 52 }}>
                   {' '}
                   <div
@@ -3963,7 +5145,7 @@ export default function App() {
                         unit: 'Volts',
                         color: T.primary,
                         simple: 'the push',
-                        desc: `The water pressure. Our ESP32 provides 3.3V pressure. It’s gentle enough that you can't even feel it.`,
+                        desc: `The water pressure. Our ESP32 provides 3.3V pressure. ItΓÇÖs gentle enough that you can't even feel it.`,
                       },
                       {
                         sym: 'I',
@@ -3974,7 +5156,7 @@ export default function App() {
                         desc: `The volume of water flow. If too much "volume" hits a tiny LED without a "throttle," it pops.`,
                       },
                       {
-                        sym: 'Ω',
+                        sym: '╬⌐',
                         name: 'Resistance',
                         unit: 'Ohms',
                         color: T.green,
@@ -4113,15 +5295,7 @@ export default function App() {
                   </div>
                   {' '}
                 </section>
-
-                <div style={{ marginTop: 52, paddingBottom: 52 }}>
-                  <PlumbingSim T={T} />
-                </div>
-              </div>
-            )}
-
-            {page === 'gz2' && (
-              <div className="fu">
+                {' '}
                 <section style={{ marginBottom: 52 }}>
                   {' '}
                   <div
@@ -4204,7 +5378,7 @@ export default function App() {
                         >
                           You never need to jam two metal legs into the same
                           tiny hole. Plug your resistor into A10, and your LED
-                          into B10 — because they share Row 10, they are already
+                          into B10 ΓÇö because they share Row 10, they are already
                           linked underground. This is how we prototype without
                           soldering.
                         </p>
@@ -4228,21 +5402,21 @@ export default function App() {
                         {[
                           {
                             l: '+ Power Rail',
-                            d: 'Vertical bus — live when powered',
+                            d: 'Vertical bus ΓÇö live when powered',
                             c: T.red,
                           },
                           {
-                            l: '− Ground Rail',
-                            d: 'Vertical bus — return pathway',
+                            l: 'ΓêÆ Ground Rail',
+                            d: 'Vertical bus ΓÇö return pathway',
                             c: T.blue,
                           },
                           {
-                            l: 'A–E Row Strip',
+                            l: 'AΓÇôE Row Strip',
                             d: 'One connected strip of metal clips',
                             c: T.primary,
                           },
                           {
-                            l: 'F–J Row Strip',
+                            l: 'FΓÇôJ Row Strip',
                             d: 'Separated clip strip across divide',
                             c: T.bg === '#04080f' ? '#818cf8' : '#6366f1',
                           },
@@ -4298,11 +5472,6 @@ export default function App() {
                   {' '}
                 </section>
                 {' '}
-              </div>
-            )}
-
-            {page === 'gz3' && (
-              <div className="fu">
                 <section style={{ marginBottom: 52 }}>
                   {' '}
                   <div
@@ -4349,7 +5518,7 @@ export default function App() {
                     {' '}
                     <Cd T={T} style={{ padding: 22 }}>
                       {' '}
-                      <Tg color={T.red} label="ONE-WAY · POLARIZED" />
+                      <Tg color={T.red} label="ONE-WAY ┬╖ POLARIZED" />
                       {' '}
                       <p
                         style={{
@@ -4395,7 +5564,7 @@ export default function App() {
                               fontSize: 15,
                             }}
                           >
-                            💡
+                            ≡ƒÆí
                           </div>
                           {' '}
                           <div
@@ -4419,7 +5588,7 @@ export default function App() {
                           }}
                         >
                           Converts electricity into
-                          light — but only in one direction. The rule is simple
+                          light ΓÇö but only in one direction. The rule is simple
                           and you should never forget it:{' '}
                           <strong style={{ color: T.text }}>
                             long leg is positive, short leg is negative.
@@ -4447,7 +5616,7 @@ export default function App() {
                               marginBottom: 6,
                             }}
                           >
-                            ⚠️ THE FLAT NOTCH SECRET
+                            ΓÜá∩╕Å THE FLAT NOTCH SECRET
                           </div>
                           {' '}
                           <p
@@ -4460,7 +5629,7 @@ export default function App() {
                             If the legs are trimmed, run your finger along the
                             bottom rim of the plastic bulb. You'll feel a{' '}
                             <strong style={{ color: T.text }}>flat spot</strong>{' '}
-                            — that side is always the negative Cathode. Also,
+                            ΓÇö that side is always the negative Cathode. Also,
                             inside the bulb, the large "flag-shaped" piece is
                             the Cathode.
                           </p>
@@ -4479,12 +5648,12 @@ export default function App() {
                           {[
                             {
                               dot: T.green,
-                              label: 'LONG LEG (+) — Anode',
+                              label: 'LONG LEG (+) ΓÇö Anode',
                               desc: 'Faces your power source or the ESP32 GPIO pin.',
                             },
                             {
                               dot: T.red,
-                              label: 'SHORT LEG (−) — Cathode',
+                              label: 'SHORT LEG (ΓêÆ) ΓÇö Cathode',
                               desc: 'Always connects back to GND. Completes the loop.',
                             },
                           ].map((r) => (
@@ -4558,7 +5727,7 @@ export default function App() {
                             fontSize: 15,
                           }}
                         >
-                          🔊
+                          ≡ƒöè
                         </div>
                         {' '}
                         <div
@@ -4580,8 +5749,8 @@ export default function App() {
                           lineHeight: 1.8,
                         }}
                       >
-                        Makes a continuous beep when powered. Same (+/−) leg
-                        rule as the LED. Check the top of the casing — there's a{' '}
+                        Makes a continuous beep when powered. Same (+/ΓêÆ) leg
+                        rule as the LED. Check the top of the casing ΓÇö there's a{' '}
                         <strong style={{ color: T.amber }}>
                           small sticker with a + symbol
                         </strong>{' '}
@@ -4592,7 +5761,7 @@ export default function App() {
                     {' '}
                     <Cd T={T} style={{ padding: 22 }}>
                       {' '}
-                      <Tg color={T.green} label="TWO-WAY · NON-POLARIZED" />
+                      <Tg color={T.green} label="TWO-WAY ┬╖ NON-POLARIZED" />
                       {' '}
                       <p
                         style={{
@@ -4604,22 +5773,22 @@ export default function App() {
                         }}
                       >
                         No direction, no drama. Flip them, rotate them, plug
-                        them in backwards — they behave exactly the same every
+                        them in backwards ΓÇö they behave exactly the same every
                         time.
                       </p>
                       {' '}
                       {[
                         {
-                          icon: '≈',
+                          icon: 'Γëê',
                           name: 'Resistors',
                           color: T.green,
-                          desc: `Your LED's bodyguard. It sits between power and the component, squeezing the current down to a safe level. No direction needed — just plug it in. Read the resistance value from the colored bands painted on the body.`,
+                          desc: `Your LED's bodyguard. It sits between power and the component, squeezing the current down to a safe level. No direction needed ΓÇö just plug it in. Read the resistance value from the colored bands painted on the body.`,
                         },
                         {
-                          icon: '⊕',
+                          icon: 'Γèò',
                           name: 'Push Button',
                           color: T.blue,
-                          desc: `Think of it as a physical drawbridge. You press it — the bridge drops and electricity crosses. Release it — the bridge lifts and the circuit breaks. Sits across the center groove of the breadboard, and any orientation works.`,
+                          desc: `Think of it as a physical drawbridge. You press it ΓÇö the bridge drops and electricity crosses. Release it ΓÇö the bridge lifts and the circuit breaks. Sits across the center groove of the breadboard, and any orientation works.`,
                         },
                       ].map((c, i) => (
                         <div
@@ -4690,107 +5859,6 @@ export default function App() {
                   {' '}
                 </section>
                 {' '}
-              </div>
-            )}
-
-            {page === 'gz4' && (
-              <div className="fu">
-                <div style={{ marginBottom: 48 }}>
-                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: T.primaryBg, border: `1px solid ${T.primaryBorder}`, borderRadius: 20, padding: '4px 12px', marginBottom: 18 }}>
-                    <span style={{ fontSize: 11, fontWeight: 600, color: T.primary, letterSpacing: 0.5 }}>SKILL ACQUISITION</span>
-                  </div>
-                  <h1 style={{ fontSize: 38, fontWeight: 800, color: T.text, lineHeight: 1.12, marginBottom: 16 }}>
-                    Reading <span style={{ color: T.primary }}>Resistors</span>
-                  </h1>
-                  <p style={{ fontSize: 16, lineHeight: 1.9, color: T.textSub, maxWidth: 600 }}>
-                    Resistors are too small to print numbers on. Instead, they use colored bands. Let's decode them so you never accidentally use a 10kΩ instead of a 220Ω.
-                  </p>
-                </div>
-
-                <div style={{ marginBottom: 52 }}>
-                  <ResistorDecoderSim T={T} />
-                </div>
-
-                <section style={{ marginBottom: 52 }}>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 24 }}>
-                    <div style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12, padding: 24 }}>
-                      <h3 style={{ fontSize: 18, fontWeight: 700, color: T.text, marginBottom: 12 }}>Standard 4-Band Resistors</h3>
-                      <p style={{ fontSize: 14, color: T.textSub, lineHeight: 1.8, marginBottom: 16 }}>
-                        Most common in starter kits. The last band is separated by a gap and indicates tolerance (usually Gold). The other three bands give you the value.
-                      </p>
-                      <ul style={{ paddingLeft: 20, color: T.textSub, fontSize: 14, lineHeight: 1.8, margin: 0 }}>
-                        <li><strong style={{ color: T.text }}>Band 1 & 2:</strong> The first two digits.</li>
-                        <li><strong style={{ color: T.text }}>Band 3:</strong> The multiplier (add this many zeros).</li>
-                        <li><strong style={{ color: T.text }}>Band 4:</strong> Tolerance (Gold = ±5%).</li>
-                      </ul>
-                    </div>
-
-                    <div style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12, padding: 24 }}>
-                      <h3 style={{ fontSize: 18, fontWeight: 700, color: T.text, marginBottom: 12 }}>Precision 5-Band Resistors</h3>
-                      <p style={{ fontSize: 14, color: T.textSub, lineHeight: 1.8, marginBottom: 16 }}>
-                        Used when precise resistance is needed. They just add a third digit band before the multiplier. Often found with a blue casing.
-                      </p>
-                      <ul style={{ paddingLeft: 20, color: T.textSub, fontSize: 14, lineHeight: 1.8, margin: 0 }}>
-                        <li><strong style={{ color: T.text }}>Band 1, 2 & 3:</strong> The first three digits.</li>
-                        <li><strong style={{ color: T.text }}>Band 4:</strong> The multiplier (add this many zeros).</li>
-                        <li><strong style={{ color: T.text }}>Band 5:</strong> Tolerance (Brown = ±1%).</li>
-                      </ul>
-                    </div>
-                  </div>
-                </section>
-
-                <div style={{ background: T.amberBg, border: `1px solid ${T.amberBorder}`, borderLeft: `3px solid ${T.amber}`, borderRadius: '0 10px 10px 0', padding: '16px 22px', marginBottom: 52 }}>
-                  <div style={{ fontSize: 11, fontWeight: 700, color: T.amber, fontFamily: "'JetBrains Mono',monospace", marginBottom: 8 }}>QUICK REFERENCE</div>
-                  <p style={{ fontSize: 14, lineHeight: 1.85, color: T.textSub, margin: 0 }}>
-                    <strong style={{ color: T.text }}>220Ω (Red-Red-Brown):</strong> Your best friend. Use this to protect LEDs from burning out. <br />
-                    <strong style={{ color: T.text }}>10kΩ (Brown-Black-Orange):</strong> Your second best friend. Used as "pull-up" or "pull-down" resistors for buttons.
-                  </p>
-                </div>
-              </div>
-            )}
-
-            {page === 'gz5' && (
-              <div className="fu">
-                <div style={{ marginBottom: 48 }}>
-                  <h1 style={{ fontSize: 38, fontWeight: 800, color: T.text, lineHeight: 1.12, marginBottom: 16 }}>
-                    The <span style={{ color: T.primary }}>Maker Kit</span>
-                  </h1>
-                  <p style={{ fontSize: 16, lineHeight: 1.9, color: T.textSub, maxWidth: 600 }}>
-                    Here's exactly what is inside your kit and what each component does. You will use these throughout the curriculum.
-                  </p>
-                </div>
-
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16, marginBottom: 52 }}>
-                  {[
-                    { n: 'ESP32 Development Board', icon: '🧠', d: 'The brain of the operation. Contains a dual-core processor, Wi-Fi, and Bluetooth. It runs your code and controls everything else.' },
-                    { n: 'Breadboard', icon: '🧲', d: 'The prototyping base. Allows you to connect components together without any soldering using internal metal clips.' },
-                    { n: 'Jumper Wires', icon: '🔌', d: 'The circulatory system. These carry voltage and signals between your ESP32 and your components.' },
-                    { n: '0.96" OLED Display', icon: '📺', d: 'A tiny, crisp screen that uses I2C communication. Perfect for showing sensor data or debugging information directly on the hardware.' },
-                    { n: 'DHT11 Sensor', icon: '🌡️', d: 'A digital sensor that measures ambient temperature and humidity. Great for weather stations.' },
-                    { n: 'Ultrasonic Sensor (HC-SR04)', icon: '🦇', d: 'Acts like bat echolocation. It sends out an ultrasonic ping and measures how long it takes to bounce back, calculating distance.' },
-                    { n: 'IR Sensor', icon: '👁️', d: 'Detects infrared light bouncing off objects. Used for obstacle avoidance or detecting black/white lines.' },
-                    { n: 'LDR (Light Sensor)', icon: '☀️', d: 'A Light Dependent Resistor. Its resistance changes based on how much light hits its face.' },
-                    { n: 'Active Buzzer', icon: '🔊', d: 'A simple speaker that emits a loud beep when provided with power. Great for alarms.' },
-                    { n: 'SG90 Servo Motor', icon: '🦾', d: 'A precise motor that can rotate to specific angles (0-180 degrees) based on PWM signals.' },
-                    { n: 'Push Buttons', icon: '🔘', d: 'Simple tactile switches that close a circuit when pressed, used for user input.' },
-                    { n: 'LEDs', icon: '💡', d: 'Light Emitting Diodes. They turn electrical current into light. Always use them with a resistor!' },
-                    { n: 'Resistors', icon: '🛑', d: 'They restrict the flow of current. Essential for protecting delicate components like LEDs from receiving too much power.' }
-                  ].map(item => (
-                    <div key={item.n} style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12, padding: 20 }}>
-                      <div style={{ width: '100%', height: 120, background: T.primaryBg, borderRadius: 8, marginBottom: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-                        <img src={`https://placehold.co/300x120/png?text=${encodeURIComponent(item.n)}`} alt={item.n} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                      </div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
-                        <div style={{ width: 36, height: 36, background: T.primaryBg, border: `1px solid ${T.primaryBorder}`, borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18 }}>
-                          {item.icon}
-                        </div>
-                        <div style={{ fontSize: 15, fontWeight: 700, color: T.text }}>{item.n}</div>
-                      </div>
-                      <p style={{ fontSize: 13.5, color: T.textSub, lineHeight: 1.7 }}>{item.d}</p>
-                    </div>
-                  ))}
-                </div>
-                {' '}
                 <div
                   style={{
                     background: T.primaryBg,
@@ -4825,7 +5893,7 @@ export default function App() {
                   </div>
                   {' '}
                   <button
-                    onClick={() => go('p1m1')}
+                    onClick={() => go('m1')}
                     style={{
                       background: T.primary,
                       border: 'none',
@@ -4837,16 +5905,17 @@ export default function App() {
                       flexShrink: 0,
                     }}
                   >
-                    Module 1 →
+                    Module 1 ΓåÆ
                   </button>
                   {' '}
                 </div>
+                {' '}
               </div>
             )}
             {' '}
             {/* If our active page matches an internal Lesson Database key, render the dynamic premium view */}
             {' '}
-            {isAuthenticated && activeLesson && !page.startsWith('gz') ? (
+            {isAuthenticated && activeLesson && page !== 'gz' ? (
               (
                 <div
                   className="fu"
@@ -4981,7 +6050,7 @@ export default function App() {
                               flexShrink: 0,
                             }}
                           >
-                            ×{p.quantity}
+                            ├ù{p.quantity}
                           </div>
                           {' '}
                           <div style={{ flex: 1 }}>
@@ -5119,7 +6188,7 @@ export default function App() {
                                     marginRight: 6,
                                   }}
                                 >
-                                  ✓ SANITY CHECK
+                                  Γ£ô SANITY CHECK
                                 </span>
                                 {' '}
                                 <span
@@ -5151,7 +6220,7 @@ export default function App() {
                                     marginRight: 6,
                                   }}
                                 >
-                                  ⚠️ PRO TIP
+                                  ΓÜá∩╕Å PRO TIP
                                 </span>
                                 {' '}
                                 <span
@@ -5169,7 +6238,7 @@ export default function App() {
                     </Cd>
                     {/* Observation Section */}
                     {' '}
-                    {(activeLesson.observation || activeLesson.whatYouWillObserve) && (
+                    {activeLesson.observation && (
                       <div
                         style={{
                           background: T.surfaceAlt,
@@ -5191,7 +6260,7 @@ export default function App() {
                             gap: 8,
                           }}
                         >
-                          <span>🎯</span> What You
+                          <span>≡ƒÄ»</span> What You
                           Will Observe                        {' '}
                         </h3>
                         {' '}
@@ -5202,13 +6271,13 @@ export default function App() {
                             lineHeight: 1.8,
                           }}
                         >
-                          {activeLesson.observation || activeLesson.whatYouWillObserve}
+                          {activeLesson.observation}
                         </p>
                         {' '}
                       </div>
                     )}
                     {/* FAQ Section */}                   {' '}
-                    {(activeLesson.faq || activeLesson.troubleshooting) && (activeLesson.faq || activeLesson.troubleshooting).length > 0 && (
+                    {activeLesson.faq && activeLesson.faq.length > 0 && (
                       <div style={{ marginBottom: 40 }}>
                         {' '}
                         <button
@@ -5232,11 +6301,11 @@ export default function App() {
                         >
                           {' '}
                           <span>
-                            🤔 Didn't get the right output? Don't worry! Click
+                            ≡ƒñö Didn't get the right output? Don't worry! Click
                             here..
                           </span>
                           {' '}
-                          <span>{faqOpen ? '▲' : '▼'}</span>
+                          <span>{faqOpen ? 'Γû▓' : 'Γû╝'}</span>
                           {' '}
                         </button>
                         {' '}
@@ -5263,16 +6332,16 @@ export default function App() {
                               Common Errors & Solutions
                             </h4>
                             {' '}
-                            {(activeLesson.faq || activeLesson.troubleshooting).map((f, i) => (
+                            {activeLesson.faq.map((f, i) => (
                               <div
                                 key={i}
                                 style={{
                                   marginBottom:
-                                    i === (activeLesson.faq || activeLesson.troubleshooting).length - 1 ? 0 : 16,
+                                    i === activeLesson.faq.length - 1 ? 0 : 16,
                                   paddingBottom:
-                                    i === (activeLesson.faq || activeLesson.troubleshooting).length - 1 ? 0 : 16,
+                                    i === activeLesson.faq.length - 1 ? 0 : 16,
                                   borderBottom:
-                                    i === (activeLesson.faq || activeLesson.troubleshooting).length - 1
+                                    i === activeLesson.faq.length - 1
                                       ? 'none'
                                       : `1px solid ${T.red}20`,
                                 }}
@@ -5286,7 +6355,7 @@ export default function App() {
                                     marginBottom: 4,
                                   }}
                                 >
-                                  • {f.error || f.q}
+                                  ΓÇó {f.error}
                                 </strong>
                                 {' '}
                                 <p
@@ -5306,7 +6375,7 @@ export default function App() {
                                   <strong style={{ color: T.textMuted }}>
                                     Solution:
                                   </strong>{' '}
-                                  {f.solution || f.a}
+                                  {f.solution}
                                 </p>
                                 {' '}
                               </div>
@@ -5432,7 +6501,7 @@ export default function App() {
                               marginBottom: 10,
                             }}
                           >
-                            🧠 LOGIC BREAKDOWN
+                            ≡ƒºá LOGIC BREAKDOWN
                           </div>
                           {' '}
                           <p
@@ -5442,18 +6511,7 @@ export default function App() {
                               lineHeight: 1.9,
                             }}
                           >
-                            {Array.isArray(activeLesson.code.breakdown) ? (
-                              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                                {activeLesson.code.breakdown.map((b, i) => (
-                                  <div key={i} style={{ display: 'flex', gap: 12 }}>
-                                    <div style={{ background: T.primary, color: T.surface, padding: '2px 8px', borderRadius: 4, fontSize: 11, fontWeight: 'bold', height: 'fit-content', whiteSpace: 'nowrap' }}>Line {b.line}</div>
-                                    <div style={{ fontSize: 14, color: T.textSub, lineHeight: 1.6 }}>{b.desc}</div>
-                                  </div>
-                                ))}
-                              </div>
-                            ) : (
-                              activeLesson.code.breakdown
-                            )}
+                            {activeLesson.code.breakdown}
                           </p>
                           {' '}
                         </div>
@@ -5471,7 +6529,7 @@ export default function App() {
                         }}
                       >
                         {' '}
-                        <div style={{ fontSize: 32, marginBottom: 12 }}>⚙️</div>
+                        <div style={{ fontSize: 32, marginBottom: 12 }}>ΓÜÖ∩╕Å</div>
                         {' '}
                         <div
                           style={{
