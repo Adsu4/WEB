@@ -4292,6 +4292,40 @@ export default function App() {
                         {' '}
                       </Cd>
                       {' '}
+                      <div
+                        style={{
+                          background: `${T.primary}10`,
+                          border: `1px solid ${T.primaryBorder}`,
+                          borderRadius: 10,
+                          padding: 16,
+                          marginTop: 20,
+                        }}
+                      >
+                        {' '}
+                        <div
+                          style={{
+                            fontSize: 12,
+                            fontWeight: 700,
+                            color: T.primary,
+                            marginBottom: 6,
+                          }}
+                        >
+                          Important Note on Power Rails
+                        </div>
+                        {' '}
+                        <p
+                          style={{
+                            fontSize: 13,
+                            color: T.textSub,
+                            lineHeight: 1.6,
+                            margin: 0,
+                          }}
+                        >
+                          Not all breadboards are created equal! Some have continuous painted power lines (meaning the power rail runs the entire length of the board). Others, like the one visualized here, have a break in the painted lines exactly in the middle. This broken line signifies an invisible electrical break in the copper strip, separating the top half from the bottom half. This is incredibly useful if you need to supply two different voltages (e.g., 5V to the top section and 3.3V to the bottom section) on the same board. Always check the painted lines on your physical breadboard to see which type you have!
+                        </p>
+                        {' '}
+                      </div>
+                      {' '}
                     </div>
                     {' '}
                   </div>

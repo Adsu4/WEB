@@ -25,10 +25,14 @@ export default function BBViz({ T, activeWireState = true }) {
   const dk = T.bg === '#04080f'; // Defined rail zones explicitly for easier hover grouping
 
   const RAILS = [
-    { id: 'l_red', cx: 18, rx: 8, sign: '+', color: T.red },
-    { id: 'l_blue', cx: 38, rx: 28, sign: '−', color: T.blue },
-    { id: 'r_red', cx: 250, rx: 240, sign: '+', color: T.red },
-    { id: 'r_blue', cx: 270, rx: 260, sign: '−', color: T.blue },
+    { id: 'l_red_t', cx: 18, rx: 8, sign: '+', color: T.red, sr: 1, er: 15 },
+    { id: 'l_red_b', cx: 18, rx: 8, sign: '+', color: T.red, sr: 16, er: 30 },
+    { id: 'l_blue_t', cx: 38, rx: 28, sign: '−', color: T.blue, sr: 1, er: 15 },
+    { id: 'l_blue_b', cx: 38, rx: 28, sign: '−', color: T.blue, sr: 16, er: 30 },
+    { id: 'r_red_t', cx: 250, rx: 240, sign: '+', color: T.red, sr: 1, er: 15 },
+    { id: 'r_red_b', cx: 250, rx: 240, sign: '+', color: T.red, sr: 16, er: 30 },
+    { id: 'r_blue_t', cx: 270, rx: 260, sign: '−', color: T.blue, sr: 1, er: 15 },
+    { id: 'r_blue_b', cx: 270, rx: 260, sign: '−', color: T.blue, sr: 16, er: 30 },
   ];
 
   return (
@@ -57,6 +61,8 @@ export default function BBViz({ T, activeWireState = true }) {
                   id: rail.id,
                   color: rail.color,
                   sign: rail.sign,
+                  sr: rail.sr,
+                  er: rail.er,
                 })
               }
               onMouseLeave={() => setHov(null)}
@@ -64,9 +70,9 @@ export default function BBViz({ T, activeWireState = true }) {
               {' '}
               <rect
                 x={rail.rx}
-                y={SY - 16}
+                y={rail.sr === 1 ? SY - 16 : ry(rail.sr) - 10}
                 width={20}
-                height={H - SY + 8}
+                height={rail.er === 30 ? H - ry(16) + 4 : ry(rail.er) - ry(rail.sr) + 26}
                 rx={4}
                 fill={
                   isLit
@@ -81,26 +87,41 @@ export default function BBViz({ T, activeWireState = true }) {
               {' '}
               <line
                 x1={rail.cx}
-                y1={SY}
+                y1={rail.sr === 1 ? SY : ry(rail.sr) - 4}
                 x2={rail.cx}
-                y2={H - 12}
+                y2={rail.er === 30 ? H - 12 : ry(rail.er) + 4}
                 stroke={isLit ? rail.color : rail.color + '40'}
                 strokeWidth={isLit ? 2 : 1.2}
               />
               {' '}
-              <text
-                x={rail.cx}
-                y={SY - 6}
-                textAnchor="middle"
-                fill={rail.color + '80'}
-                fontSize={10}
-                fontWeight={700}
-                fontFamily="monospace"
-              >
-                {rail.sign}
-              </text>
+              {rail.sr === 1 && (
+                <text
+                  x={rail.cx}
+                  y={SY - 6}
+                  textAnchor="middle"
+                  fill={rail.color + '80'}
+                  fontSize={10}
+                  fontWeight={700}
+                  fontFamily="monospace"
+                >
+                  {rail.sign}
+                </text>
+              )}
+              {rail.er === 30 && (
+                <text
+                  x={rail.cx}
+                  y={ry(30) + 14}
+                  textAnchor="middle"
+                  fill={rail.color + '80'}
+                  fontSize={10}
+                  fontWeight={700}
+                  fontFamily="monospace"
+                >
+                  {rail.sign}
+                </text>
+              )}
               {' '}
-              {Array.from({ length: R }, (_, i) => i + 1).map((row) => (
+              {Array.from({ length: rail.er - rail.sr + 1 }, (_, i) => i + rail.sr).map((row) => (
                 <circle
                   key={row}
                   cx={rail.cx}
@@ -115,6 +136,14 @@ export default function BBViz({ T, activeWireState = true }) {
             </g>
           );
         })}
+        {' '}
+        {/* Break Symbols */}
+        {[18, 38, 250, 270].map(cx => (
+          <g key={`break-${cx}`} stroke={T.bbHoleBorder} strokeWidth={1.5} opacity={0.6}>
+            <line x1={cx - 3} y1={ry(15) + 10} x2={cx + 3} y2={ry(15) + 10} />
+            <line x1={cx - 3} y1={ry(15) + 14} x2={cx + 3} y2={ry(15) + 14} />
+          </g>
+        ))}
         {' '}
         {/* Render physical wire connections if activeWireState is on */}       {' '}
         {activeWireState && (
@@ -263,7 +292,7 @@ export default function BBViz({ T, activeWireState = true }) {
               fontWeight: 600,
             }}
           >
-            ● Vertical {hov.sign === '+' ? 'Power' : 'Ground'} Rail — continuous
+            ● Vertical {hov.sign === '+' ? 'Power' : 'Ground'} Rail ({hov.sr}–{hov.er}) — continuous
             copper strip
           </span>
         ) : hov?.type === 'row' ? (
