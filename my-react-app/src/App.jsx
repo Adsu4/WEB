@@ -3866,14 +3866,11 @@ export default function App() {
                       maxWidth: 600,
                     }}
                   >
-                    I've watched a lot of students fry their
-                    first LED in the first 10 minutes of a lab session. Not
-                    because they weren't smart — because nobody pulled them
-                    aside beforehand and said{' '}
-                    <em style={{ color: T.text }}>
-                      "here's what the textbook skips."
-                    </em>{' '}
-                    That's what this page is.                  {' '}
+                    We built this material because we know firsthand how brutally tough the initial learning curve can be. We never want you to hit a wall and give up just because the right guidance wasn't there. It genuinely hurts to see beginners accidentally fry their first components and feel utterly defeated.
+                    <br /><br />
+                    But please understand—we aren't here to spoon-feed you. This guide is purposefully incomplete, which is meant to challenge you. We want to push you to step into the unknown, ask the hard questions, and seek out new answers on your own. That is the exact moment when real learning begins.
+                    <br /><br />
+                    And truth be told, no matter how carefully you follow along, you <i>will</i> eventually plug something in backward. You will experience the dreaded "magic smoke." Don't let it break you. Embrace it. It's an essential, beautiful part of the journey.
                   </p>
                   {' '}
                 </div>
