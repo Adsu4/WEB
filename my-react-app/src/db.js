@@ -487,7 +487,7 @@ export const LESSONS = {
       {
         "number": 2,
         "title": "Wire the Load",
-        "instruction": "Connect 3V3 to LED Anode. Connect LED Cathode to the Collector."
+        "instruction": "Connect 3V3 to LED Anode. Connect a 220Ω resistor from LED Cathode to the Collector."
       },
       {
         "number": 3,
@@ -497,12 +497,12 @@ export const LESSONS = {
       {
         "number": 4,
         "title": "Wire the Sensor",
-        "instruction": "Connect the LDR from 3V3 to the Base. Connect a 10k resistor from Base to GND."
+        "instruction": "Wire LDR Module VCC to 3V3, and GND to GND. Connect the DO (Digital Out) pin to the Transistor's Base (add a 1kΩ resistor between DO and the Base for safety)."
       },
       {
         "number": 5,
-        "title": "Test",
-        "instruction": "Cover the LDR with your finger."
+        "title": "Tune and Test",
+        "instruction": "Use a tiny screwdriver to twist the blue potentiometer on the LDR module to tune the light sensitivity! Cover the LDR with your finger to test."
       }
     ],
     "whatYouWillObserve": "The transistor acts as an automatic switch. When the LDR is exposed to light, the base gets triggered, and the main LED turns on.",
@@ -553,7 +553,7 @@ export const LESSONS = {
       {
         "number": 2,
         "title": "Power Pins",
-        "instruction": "Connect Pin 8 and 4 to 3V3. Connect Pin 1 to GND."
+        "instruction": "Connect Pin 8 and 4 to VIN (5V). Connect Pin 1 to GND."
       },
       {
         "number": 3,
@@ -619,12 +619,12 @@ export const LESSONS = {
       {
         "number": 2,
         "title": "Buzzer Output",
-        "instruction": "Connect 3V3 to Buzzer POSITIVE. Connect Buzzer NEGATIVE to Collector."
+        "instruction": "Connect VIN (5V) to Buzzer POSITIVE. Connect Buzzer NEGATIVE to Collector."
       },
       {
         "number": 3,
-        "title": "Voltage Divider Trigger",
-        "instruction": "Connect LDR from 3V3 to Base. Connect 10k resistor from Base to GND."
+        "title": "Sensor Trigger",
+        "instruction": "Wire LDR Module VCC to 3V3, and GND to GND. Connect the DO (Digital Out) pin to the Transistor's Base."
       },
       {
         "number": 4,
@@ -843,7 +843,7 @@ export const LESSONS = {
     ],
     "code": {
       "filename": "PWMFade.ino",
-      "snippet": "const int ledPin = 16;\n\nvoid setup() {\n  ledcSetup(0, 5000, 8);\n  ledcAttachPin(ledPin, 0);\n}\n\nvoid loop() {\n  for(int dutyCycle = 0; dutyCycle <= 255; dutyCycle++) {\n    ledcWrite(0, dutyCycle);\n    delay(5);\n  }\n  for(int dutyCycle = 255; dutyCycle >= 0; dutyCycle--) {\n    ledcWrite(0, dutyCycle);\n    delay(5);\n  }\n}",
+      "snippet": "const int ledPin = 16;\n\nvoid setup() {\n  ledcAttach(ledPin, 5000, 8);\n}\n\nvoid loop() {\n  for(int dutyCycle = 0; dutyCycle <= 255; dutyCycle++) {\n    ledcWrite(ledPin, dutyCycle);\n    delay(5);\n  }\n  for(int dutyCycle = 255; dutyCycle >= 0; dutyCycle--) {\n    ledcWrite(ledPin, dutyCycle);\n    delay(5);\n  }\n}",
       "breakdown": [
         {
           "line": 4,
@@ -1010,7 +1010,7 @@ export const LESSONS = {
       {
         "number": 1,
         "title": "Wiring",
-        "instruction": "Brown wire to GND. Red wire to 3V3. Orange (Signal) wire to GPIO 13."
+        "instruction": "Brown wire to GND. Red wire to VIN (5V). Orange (Signal) wire to GPIO 13."
       },
       {
         "number": 2,
@@ -1200,7 +1200,7 @@ export const LESSONS = {
       {
         "number": 1,
         "title": "Wiring the Control",
-        "instruction": "Connect Relay VCC to 5V (or VIN), GND to GND, and IN to GPIO 26."
+        "instruction": "Connect Relay VCC to VIN (5V), GND to GND, and IN to GPIO 26."
       },
       {
         "number": 2,
@@ -1270,8 +1270,8 @@ export const LESSONS = {
       },
       {
         "number": 2,
-        "title": "Wiring",
-        "instruction": "Wire the I2C OLED, the HC-SR04 to GPIO 5 and 18, and the Servo to GPIO 13."
+        "title": "Safety Wiring",
+        "instruction": "Wire the OLED and Servo. Power HC-SR04 with VIN (5V). Crucial: Build a voltage divider to protect the ESP32! HC-SR04 Echo -> 10k resistor -> GPIO 18. Then from GPIO 18 -> 10k resistor -> GND."
       },
       {
         "number": 3,
@@ -1289,7 +1289,7 @@ export const LESSONS = {
 
     "code": {
       "filename": "DesktopRadar.ino",
-      "snippet": "#include <ESP32Servo.h>\n#include <Wire.h>\n#include <Adafruit_GFX.h>\n#include <Adafruit_SSD1306.h>\n\n#define SCREEN_WIDTH 128\n#define SCREEN_HEIGHT 64\nAdafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);\n\nServo myServo;\nconst int trigPin = 5;\nconst int echoPin = 18;\n\nvoid setup() {\n  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);\n  myServo.attach(13);\n  pinMode(trigPin, OUTPUT);\n  pinMode(echoPin, INPUT);\n}\n\nvoid loop() {\n  for (int angle = 0; angle <= 180; angle += 5) {\n    scan(angle);\n  }\n  for (int angle = 180; angle >= 0; angle -= 5) {\n    scan(angle);\n  }\n}\n\nvoid scan(int angle) {\n  myServo.write(angle);\n  delay(30);\n\n  digitalWrite(trigPin, LOW);\n  delayMicroseconds(2);\n  digitalWrite(trigPin, HIGH);\n  delayMicroseconds(10);\n  digitalWrite(trigPin, LOW);\n  \n  long duration = pulseIn(echoPin, HIGH);\n  long distance = duration * 0.034 / 2;\n\n  display.clearDisplay();\n  display.setTextSize(1);\n  display.setTextColor(WHITE);\n  display.setCursor(0,0);\n  display.print(\"Angle: \"); display.print(angle);\n  display.setCursor(0,10);\n  display.print(\"Dist: \"); display.print(distance); display.print(\" cm\");\n  display.display();\n}",
+      "snippet": "#include <ESP32Servo.h>\n#include <Wire.h>\n#include <Adafruit_GFX.h>\n#include <Adafruit_SSD1306.h>\n\n#define SCREEN_WIDTH 128\n#define SCREEN_HEIGHT 64\nAdafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);\n\nServo myServo;\nconst int trigPin = 5;\nconst int echoPin = 18;\n\nvoid setup() {\n  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);\n  myServo.attach(13);\n  pinMode(trigPin, OUTPUT);\n  pinMode(echoPin, INPUT);\n}\n\nvoid loop() {\n  for (int angle = 0; angle <= 180; angle += 5) {\n    scan(angle);\n  }\n  for (int angle = 180; angle >= 0; angle -= 5) {\n    scan(angle);\n  }\n}\n\nvoid scan(int angle) {\n  myServo.write(angle);\n  delay(30);\n\n  digitalWrite(trigPin, LOW);\n  delayMicroseconds(2);\n  digitalWrite(trigPin, HIGH);\n  delayMicroseconds(10);\n  digitalWrite(trigPin, LOW);\n  \n  long duration = pulseIn(echoPin, HIGH, 30000);\n  long distance = duration * 0.034 / 2;\n\n  display.clearDisplay();\n  display.setTextSize(1);\n  display.setTextColor(WHITE);\n  display.setCursor(0,0);\n  display.print(\"Angle: \"); display.print(angle);\n  display.setCursor(0,10);\n  display.print(\"Dist: \"); display.print(distance); display.print(\" cm\");\n  display.display();\n}",
       "breakdown": [
         {
           "line": 21,
@@ -1312,7 +1312,7 @@ export const LESSONS = {
     "phase": "PHASE 4: Connected IoT",
     "isCapstone": false,
     "overview": {
-      "hook": "Using a 3.3V digital signal to safely control a 120V/240V AC appliance using an Electromagnetic Relay.",
+      "hook": "Using a 3.3V digital signal to safely control a high-current device like a DC Motor using an Electromagnetic Relay.",
       "concept": "A relay is an electromechanical switch. When we send a tiny 3.3V signal to the coil, it creates a magnetic field that physically pulls a metal contact shut, allowing high voltage to flow on an isolated circuit.",
       "difficulty": "Advanced",
       "buildTime": "20 mins"
@@ -1331,7 +1331,7 @@ export const LESSONS = {
       {
         "number": 1,
         "title": "Wiring the Control",
-        "instruction": "Connect Relay VCC to 3V3, GND to GND, and IN to GPIO 26."
+        "instruction": "Connect Relay VCC to VIN (5V), GND to GND, and IN to GPIO 26."
       },
       {
         "number": 2,
@@ -1554,7 +1554,7 @@ export const LESSONS = {
 
     "code": {
       "filename": "SmartHomeHub.ino",
-      "snippet": "#include <WiFi.h>\n#include <WebServer.h>\n#include <DHT.h>\n#include <Wire.h>\n#include <Adafruit_GFX.h>\n#include <Adafruit_SSD1306.h>\n\nconst char* ssid = \"YOUR_HOME_WIFI\";\nconst char* password = \"YOUR_PASSWORD\";\n\nWebServer server(80);\nDHT dht(4, DHT11);\nAdafruit_SSD1306 display(128, 64, &Wire, -1);\nconst int relayPin = 26;\nbool relayState = false;\nfloat temp = 0.0;\n\nvoid setup() {\n  pinMode(relayPin, OUTPUT);\n  dht.begin();\n  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);\n  \n  WiFi.begin(ssid, password);\n  while (WiFi.status() != WL_CONNECTED) delay(500);\n\n  server.on(\"/\", []() {\n    temp = dht.readTemperature();\n    String html = \"<h1>Smart Hub</h1><p>Temp: \" + String(temp) + \" C</p>\";\n    html += \"<a href='/toggle'><button>Toggle Relay</button></a>\";\n    server.send(200, \"text/html\", html);\n  });\n\n  server.on(\"/toggle\", []() {\n    relayState = !relayState;\n    digitalWrite(relayPin, relayState ? HIGH : LOW);\n    server.sendHeader(\"Location\", \"/\");\n    server.send(303);\n  });\n\n  server.begin();\n}\n\nvoid loop() {\n  server.handleClient();\n  \n  display.clearDisplay();\n  display.setCursor(0,0);\n  display.setTextColor(WHITE);\n  display.print(\"IP: \"); display.println(WiFi.localIP());\n  display.print(\"Temp: \"); display.print(temp);\n  display.print(\" C\\nRelay: \"); display.println(relayState ? \"ON\" : \"OFF\");\n  display.display();\n}",
+      "snippet": "#include <WiFi.h>\n#include <WebServer.h>\n#include <DHT.h>\n#include <Wire.h>\n#include <Adafruit_GFX.h>\n#include <Adafruit_SSD1306.h>\n\nconst char* ssid = \"YOUR_HOME_WIFI\";\nconst char* password = \"YOUR_PASSWORD\";\n\nWebServer server(80);\nDHT dht(4, DHT11);\nAdafruit_SSD1306 display(128, 64, &Wire, -1);\nconst int relayPin = 26;\nbool relayState = false;\nfloat temp = 0.0;\nunsigned long lastDHTRead = 0;\n\nvoid setup() {\n  pinMode(relayPin, OUTPUT);\n  dht.begin();\n  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);\n  \n  WiFi.begin(ssid, password);\n  while (WiFi.status() != WL_CONNECTED) delay(500);\n\n  server.on(\"/\", []() {\n    String html = \"<h1>Smart Hub</h1><p>Temp: \" + String(temp) + \" C</p>\";\n    html += \"<a href='/toggle'><button>Toggle Relay</button></a>\";\n    server.send(200, \"text/html\", html);\n  });\n\n  server.on(\"/toggle\", []() {\n    relayState = !relayState;\n    digitalWrite(relayPin, relayState ? HIGH : LOW);\n    server.sendHeader(\"Location\", \"/\");\n    server.send(303);\n  });\n\n  server.begin();\n}\n\nvoid loop() {\n  server.handleClient();\n  \n  if (millis() - lastDHTRead >= 2000) {\n    lastDHTRead = millis();\n    temp = dht.readTemperature();\n  }\n  \n  display.clearDisplay();\n  display.setCursor(0,0);\n  display.setTextColor(WHITE);\n  display.print(\"IP: \"); display.println(WiFi.localIP());\n  display.print(\"Temp: \"); display.print(temp);\n  display.print(\" C\\nRelay: \"); display.println(relayState ? \"ON\" : \"OFF\");\n  display.display();\n}",
       "breakdown": [
         {
           "line": 23,
