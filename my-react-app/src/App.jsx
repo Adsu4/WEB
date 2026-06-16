@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { LESSONS } from './db.js';
 import Login from './Login.jsx';
 import PlumbingSim from './simulations/PlumbingSim.jsx';
@@ -179,7 +179,7 @@ const codeLight = (code) => {
     .replace(/>/g, '&gt;');
 
   escaped = escaped.replace(
-    /(\/\/.*)|(".*?"|'.*?')|\b(void|int|float|bool|char|const|if|else|for|while|return|define|include|setup|loop|String|long|byte|unsigned|true|false)\b|\b(pinMode|digitalWrite|digitalRead|delay|Serial|begin|print|println|analogRead|analogWrite|pulseIn|delayMicroseconds|map|isnan|WiFi|softAP|server|on|handleClient|Wire|display|dht|myServo|attach|write|ledcSetup|ledcAttachPin|ledcWrite|beginTransmission|endTransmission|clearDisplay|setTextSize|setTextColor|setCursor|readTemperature|readHumidity|addHeader|POST|end)\b|\b(\d+(\.\d+)?)\b|([+\-*\/%=!|^]+)/g,
+    /(\/\/.*)|(".*?"|'.*?')|\b(void|int|float|bool|char|const|if|else|for|while|return|define|include|setup|loop|String|long|byte|unsigned|true|false)\b|\b(pinMode|digitalWrite|digitalRead|delay|Serial|begin|print|println|analogRead|analogWrite|pulseIn|delayMicroseconds|map|isnan|WiFi|softAP|server|on|handleClient|Wire|display|dht|myServo|attach|write|ledcSetup|ledcAttachPin|ledcWrite|beginTransmission|endTransmission|clearDisplay|setTextSize|setTextColor|setCursor|readTemperature|readHumidity|addHeader|POST|end)\b|\b(\d+(\.\d+)?)\b|([+\-*/%=!|^]+)/g,
     (match, cm, st, kw, fn, num, dec, op) => {
       if (cm) return `<span class="st-cm">${cm}</span>`;
       if (st) return `<span class="st-st">${st}</span>`;
@@ -536,6 +536,7 @@ function LessonSimulator({ pageId, T }) {
       window.removeEventListener('mouseup', handleMouseUp);
       window.removeEventListener('mousemove', handleMouseMove);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDragging]); // Derived Potentiometer Value (0 to 100)
 
   const potVal = Math.round(((knobAngle - 30) / 300) * 100) || 0; // Blink precise interval engine (M5)
@@ -1289,6 +1290,991 @@ function SafetyAlert({ result, T }) {
   );
 }
 
+// ── COMPONENT MODAL ──────────────────────────────────────────────────
+function ComponentModal({ componentName, T, onClose }) {
+  if (!componentName) return null;
+
+  return (
+    <div
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        background: 'rgba(0,0,0,0.85)',
+        backdropFilter: 'blur(10px)',
+        zIndex: 9999,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 40,
+        overflowY: 'auto'
+      }}
+      onClick={onClose}
+    >
+      <div
+        style={{
+          width: '100%',
+          maxWidth: 900,
+          background: T.surface,
+          border: `1px solid ${T.border}`,
+          borderRadius: 24,
+          padding: 40,
+          position: 'relative',
+          color: T.text,
+          maxHeight: '90vh',
+          overflowY: 'auto',
+          boxShadow: '0 24px 64px rgba(0,0,0,0.5)'
+        }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          onClick={onClose}
+          style={{
+            position: 'absolute',
+            top: 24,
+            right: 24,
+            width: 40,
+            height: 40,
+            borderRadius: '50%',
+            background: T.surface,
+            border: `1px solid ${T.border}`,
+            color: T.textSub,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+          }}
+          onMouseEnter={(e) => { e.currentTarget.style.background = T.primaryBg; e.currentTarget.style.color = T.primary; }}
+          onMouseLeave={(e) => { e.currentTarget.style.background = T.surface; e.currentTarget.style.color = T.textSub; }}
+        >
+          <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+
+        {componentName === 'ESP32 Development Board' ? (
+          <div>
+            <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16, color: T.text }}>
+              {componentName}
+            </h1>
+            <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+              <img src="https://c8.alamy.com/comp/2GTDCF8/esp32-development-board-isolated-on-white-background-2GTDCF8.jpg" alt="ESP32" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
+            </div>
+
+            <h2 style={{ fontSize: 24, fontWeight: 700, color: T.primary, marginBottom: 12 }}>Meet the ESP32: The Brain of Your Projects</h2>
+            <p style={{ fontSize: 16, color: T.textSub, lineHeight: 1.8, marginBottom: 24 }}>
+              Think of the ESP32 as a tiny, highly capable computer on a single board. It’s built to read sensors, control motors, connect to the internet, and make decisions all at the same time.
+            </p>
+            <p style={{ fontSize: 16, color: T.textSub, lineHeight: 1.8, marginBottom: 32 }}>
+              Here is what makes it tick:
+            </p>
+
+            <div style={{ marginTop: 40 }}>
+              <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+                <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                  <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+                </div>
+                <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>The Core Brain (ESP-WROOM-32)</h2>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
+                <div style={{ padding: 20, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16 }}>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: T.primary, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 }}>Dual-Core Power</div>
+                  <div style={{ fontSize: 15, color: T.textSub, lineHeight: 1.6 }}>Unlike older single-core chips, the ESP32 can run a web server and check sensors simultaneously.</div>
+                </div>
+                <div style={{ padding: 20, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16 }}>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: T.primary, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 }}>Blazing Speed</div>
+                  <div style={{ fontSize: 15, color: T.textSub, lineHeight: 1.6 }}>It runs at up to <strong style={{ color: T.text }}>240 MHz</strong>, making it incredibly fast in the microcontroller world.</div>
+                </div>
+              </div>
+              
+              <div style={{ fontSize: 14, fontWeight: 600, color: T.text, marginBottom: 12, marginTop: 24 }}>Memory Architecture</div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12, marginBottom: 40 }}>
+                <div style={{ padding: 16, background: T.primaryBg, borderRadius: 12 }}>
+                  <div style={{ fontSize: 18, fontWeight: 800, color: T.text, marginBottom: 4 }}>ROM</div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: T.primary, marginBottom: 8 }}>448 KB</div>
+                  <div style={{ fontSize: 13, color: T.textSub, lineHeight: 1.5 }}>Permanent instructions to wake the chip up.</div>
+                </div>
+                <div style={{ padding: 16, background: T.primaryBg, borderRadius: 12 }}>
+                  <div style={{ fontSize: 18, fontWeight: 800, color: T.text, marginBottom: 4 }}>SRAM</div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: T.primary, marginBottom: 8 }}>520 KB</div>
+                  <div style={{ fontSize: 13, color: T.textSub, lineHeight: 1.5 }}>Short-term memory while code is actively running.</div>
+                </div>
+                <div style={{ padding: 16, background: T.primaryBg, borderRadius: 12 }}>
+                  <div style={{ fontSize: 18, fontWeight: 800, color: T.text, marginBottom: 4 }}>Flash</div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: T.primary, marginBottom: 8 }}>4 MB</div>
+                  <div style={{ fontSize: 13, color: T.textSub, lineHeight: 1.5 }}>The "hard drive". Code is saved here permanently.</div>
+                </div>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+              <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>
+              </div>
+              <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>Wireless Connection</h2>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 40 }}>
+              <div style={{ padding: 20, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16 }}>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 12 }}>
+                  <div style={{ width: 8, height: 8, borderRadius: '50%', background: T.green, marginRight: 8 }}></div>
+                  <div style={{ fontSize: 15, fontWeight: 700, color: T.text }}>WiFi Built-In</div>
+                </div>
+                <div style={{ fontSize: 14, color: T.textSub, lineHeight: 1.6 }}>Connects to your home router for internet access, or acts as its own mini-router.</div>
+              </div>
+              <div style={{ padding: 20, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16 }}>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 12 }}>
+                  <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#3b82f6', marginRight: 8 }}></div>
+                  <div style={{ fontSize: 15, fontWeight: 700, color: T.text }}>Bluetooth & BLE</div>
+                </div>
+                <div style={{ fontSize: 14, color: T.textSub, lineHeight: 1.6 }}>Supports standard Bluetooth for audio and super power-efficient BLE for wearables.</div>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+              <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+              </div>
+              <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>Powering the Board</h2>
+            </div>
+            
+            <div style={{ padding: 24, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16, marginBottom: 40 }}>
+              <div style={{ display: 'flex', alignItems: 'center', marginBottom: 16 }}>
+                <div style={{ padding: '4px 10px', background: T.primaryBg, color: T.primary, borderRadius: 6, fontSize: 13, fontWeight: 700, marginRight: 12 }}>CRITICAL</div>
+                <div style={{ fontSize: 16, fontWeight: 600, color: T.text }}>The 3.3V Rule</div>
+              </div>
+              <p style={{ fontSize: 15, color: T.textSub, lineHeight: 1.7, marginBottom: 24 }}>
+                The ESP32 chip itself runs strictly on <strong style={{ color: T.text }}>3.3 Volts</strong>.
+              </p>
+              
+              <div style={{ width: '100%', height: 1, background: T.border, marginBottom: 24 }}></div>
+              
+              <div style={{ fontSize: 14, fontWeight: 600, color: T.text, marginBottom: 16 }}>How to Power It:</div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 24 }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+                  <div style={{ width: 24, height: 24, borderRadius: 6, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 12, marginTop: 2, flexShrink: 0 }}>
+                    <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="12" x2="2" y2="12"></line><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path><line x1="6" y1="16" x2="6.01" y2="16"></line><line x1="10" y1="16" x2="10.01" y2="16"></line></svg>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: 14, fontWeight: 700, color: T.text, marginBottom: 4 }}>USB Port</div>
+                    <div style={{ fontSize: 13, color: T.textSub, lineHeight: 1.5 }}>The easiest way. Plug a Micro-USB into your PC.</div>
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+                  <div style={{ width: 24, height: 24, borderRadius: 6, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 12, marginTop: 2, flexShrink: 0 }}>
+                    <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect><rect x="4" y="6" width="16" height="16" rx="2" ry="2"></rect><line x1="12" y1="11" x2="12" y2="17"></line><line x1="9" y1="14" x2="15" y2="14"></line></svg>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: 14, fontWeight: 700, color: T.text, marginBottom: 4 }}>VIN Pin</div>
+                    <div style={{ fontSize: 13, color: T.textSub, lineHeight: 1.5 }}>Feed a 5V battery directly for standalone robots.</div>
+                  </div>
+                </div>
+              </div>
+              <div style={{ padding: 16, background: T.primaryBg, borderRadius: 12, fontSize: 14, color: T.textSub, lineHeight: 1.6 }}>
+                <strong style={{ color: T.text }}>The Regulator:</strong> USB and VIN provide 5V, so the board has a built-in voltage regulator to safely step it down to 3.3V. You can borrow this 3.3V power for sensors using the 3V3 pin.
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+              <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+              </div>
+              <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>The Pins (I/O)</h2>
+            </div>
+            <p style={{ fontSize: 15, color: T.textSub, lineHeight: 1.7, marginBottom: 20 }}>
+              The metal pins on the sides are how the ESP32 talks to the physical world:
+            </p>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12, marginBottom: 24 }}>
+              <div style={{ padding: 16, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12, textAlign: 'center' }}>
+                <div style={{ fontSize: 24, fontWeight: 800, color: T.primary, marginBottom: 4 }}>15</div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: T.text, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 8 }}>Analog Inputs</div>
+                <div style={{ fontSize: 12, color: T.textSub, lineHeight: 1.5 }}>For reading variable voltage sensors.</div>
+              </div>
+              <div style={{ padding: 16, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12, textAlign: 'center' }}>
+                <div style={{ fontSize: 24, fontWeight: 800, color: T.primary, marginBottom: 4 }}>25</div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: T.text, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 8 }}>PWM Outputs</div>
+                <div style={{ fontSize: 12, color: T.textSub, lineHeight: 1.5 }}>For fading LEDs or controlling motors.</div>
+              </div>
+              <div style={{ padding: 16, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12, textAlign: 'center' }}>
+                <div style={{ fontSize: 24, fontWeight: 800, color: T.primary, marginBottom: 4 }}>9</div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: T.text, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 8 }}>Touch Pads</div>
+                <div style={{ fontSize: 12, color: T.textSub, lineHeight: 1.5 }}>Use pins directly as touch buttons!</div>
+              </div>
+            </div>
+            <div style={{ padding: 16, background: T.primaryBg, borderRadius: 12, fontSize: 14, color: T.textSub, lineHeight: 1.6, marginBottom: 40 }}>
+              <strong style={{ color: T.text }}>Pin Multiplexing:</strong> Most pins aren't locked into just one job. You can program them to act as an input, an output, or a sensor reader depending on what you need.
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 40 }}>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+                  <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                    <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle></svg>
+                  </div>
+                  <h2 style={{ fontSize: 20, fontWeight: 700, color: T.text, margin: 0 }}>Buttons & Lights</h2>
+                </div>
+                <ul style={{ fontSize: 14, color: T.textSub, lineHeight: 1.8, paddingLeft: 24, listStyleType: 'disc', margin: 0 }}>
+                  <li><strong style={{ color: T.text }}>EN Button:</strong> Reset button. Press to restart code.</li>
+                  <li><strong style={{ color: T.text }}>BOOT Button:</strong> Hold to prepare for new code uploads.</li>
+                  <li><strong style={{ color: T.text }}>Red LED:</strong> Power indicator.</li>
+                  <li><strong style={{ color: T.text }}>Blue LED:</strong> User programmable (wired to D2).</li>
+                </ul>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+                  <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                    <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                  </div>
+                  <h2 style={{ fontSize: 20, fontWeight: 700, color: T.text, margin: 0 }}>Computer Translation</h2>
+                </div>
+                <p style={{ fontSize: 14, color: T.textSub, lineHeight: 1.8, margin: 0 }}>
+                  Your computer speaks "USB", but the ESP32 speaks "Serial". The tiny <strong style={{ color: T.text }}>CP2102 chip</strong> near the USB port acts as a live translator between the two so you can easily upload code.
+                </p>
+              </div>
+            </div>
+          </div>
+        ) : componentName === 'Breadboard' ? (
+          <div>
+            <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16, color: T.text }}>
+              {componentName}
+            </h1>
+            <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Breadboard_Half_Size.jpg/640px-Breadboard_Half_Size.jpg" alt="Breadboard" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
+            </div>
+
+            <h2 style={{ fontSize: 24, fontWeight: 700, color: T.primary, marginBottom: 12 }}>Meet the Breadboard: Your Prototyping Canvas</h2>
+            <p style={{ fontSize: 16, color: T.textSub, lineHeight: 1.8, marginBottom: 24 }}>
+              Think of a breadboard as a reusable canvas for building electronics. Instead of permanently soldering wires together, you just push component legs into the little holes to connect them.
+            </p>
+            <p style={{ fontSize: 16, color: T.textSub, lineHeight: 1.8, marginBottom: 32 }}>
+              Here is the secret to how it works under the plastic:
+            </p>
+
+            <div style={{ marginTop: 40 }}>
+              <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+                <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                  <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="8" y1="2" x2="8" y2="4"></line><line x1="16" y1="2" x2="16" y2="4"></line><line x1="8" y1="20" x2="8" y2="22"></line><line x1="16" y1="20" x2="16" y2="22"></line><line x1="22" y1="8" x2="20" y2="8"></line><line x1="22" y1="16" x2="20" y2="16"></line><line x1="4" y1="8" x2="2" y2="8"></line><line x1="4" y1="16" x2="2" y2="16"></line></svg>
+                </div>
+                <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>The Power Rails (The Long Highways)</h2>
+              </div>
+              <div style={{ padding: 24, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16, marginBottom: 40 }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 16 }}>
+                  <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+                    <div style={{ padding: '4px 10px', background: T.primaryBg, color: T.primary, borderRadius: 6, fontSize: 12, fontWeight: 700, marginRight: 12, width: 80, textAlign: 'center', flexShrink: 0 }}>WHERE</div>
+                    <div style={{ fontSize: 15, color: T.textSub, lineHeight: 1.6 }}>The long rows running down the far left and right edges (usually marked with + and - lines).</div>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+                    <div style={{ padding: '4px 10px', background: T.primaryBg, color: T.primary, borderRadius: 6, fontSize: 12, fontWeight: 700, marginRight: 12, width: 80, textAlign: 'center', flexShrink: 0 }}>HOW</div>
+                    <div style={{ fontSize: 15, color: T.textSub, lineHeight: 1.6 }}>Underneath, these holes are connected in <strong style={{ color: T.text }}>long horizontal lines</strong>.</div>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+                    <div style={{ padding: '4px 10px', background: T.primaryBg, color: T.primary, borderRadius: 6, fontSize: 12, fontWeight: 700, marginRight: 12, width: 80, textAlign: 'center', flexShrink: 0 }}>JOB</div>
+                    <div style={{ fontSize: 15, color: T.textSub, lineHeight: 1.6 }}>These are your power highways. You plug your ESP32's 3V3 pin into the positive line, and the GND pin into the negative line. Now, any hole on that entire positive line provides 3.3V power, and any hole on the negative line provides Ground.</div>
+                  </div>
+                </div>
+                <div style={{ width: '100%', height: 1, background: T.border, margin: '20px 0' }}></div>
+                <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+                  <div style={{ width: 24, height: 24, borderRadius: 6, background: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 12, marginTop: 2, flexShrink: 0 }}>
+                    <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: 14, fontWeight: 700, color: '#ef4444', marginBottom: 4 }}>The Split Trap</div>
+                    <div style={{ fontSize: 14, color: T.textSub, lineHeight: 1.5 }}>Important! On full-size breadboards, these power lines are usually <strong style={{ color: T.text }}>split right in the middle</strong>. If you want power to reach the bottom half, you have to use a jumper wire to connect the top power line to the bottom power line.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 40 }}>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+                  <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                    <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
+                  </div>
+                  <h2 style={{ fontSize: 20, fontWeight: 700, color: T.text, margin: 0 }}>The Terminal Strips</h2>
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 12 }}>
+                  <div>
+                    <div style={{ fontSize: 12, fontWeight: 700, color: T.primary, letterSpacing: 0.5, marginBottom: 4 }}>WHERE</div>
+                    <div style={{ fontSize: 14, color: T.textSub, lineHeight: 1.6 }}>The main grids of holes in the middle, usually lettered A-E and F-J.</div>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: 12, fontWeight: 700, color: T.primary, letterSpacing: 0.5, marginBottom: 4 }}>HOW</div>
+                    <div style={{ fontSize: 14, color: T.textSub, lineHeight: 1.6 }}>Underneath, these are connected in <strong style={{ color: T.text }}>short vertical columns of 5 holes</strong>. Row 1, holes A, B, C, D, and E are all connected to each other.</div>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: 12, fontWeight: 700, color: T.primary, letterSpacing: 0.5, marginBottom: 4 }}>JOB</div>
+                    <div style={{ fontSize: 14, color: T.textSub, lineHeight: 1.6 }}>This is where you place your components. If you push an LED leg into Row 10 (hole A), and a resistor into Row 10 (hole B), they are electrically connected because they share the same metal clip underneath.</div>
+                  </div>
+                </div>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+                  <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                    <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><line x1="4" y1="12" x2="20" y2="12"></line></svg>
+                  </div>
+                  <h2 style={{ fontSize: 20, fontWeight: 700, color: T.text, margin: 0 }}>The Trench</h2>
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 12 }}>
+                  <div>
+                    <div style={{ fontSize: 12, fontWeight: 700, color: T.primary, letterSpacing: 0.5, marginBottom: 4 }}>WHERE</div>
+                    <div style={{ fontSize: 14, color: T.textSub, lineHeight: 1.6 }}>The empty gap running straight down the middle of the board.</div>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: 12, fontWeight: 700, color: T.primary, letterSpacing: 0.5, marginBottom: 4 }}>HOW</div>
+                    <div style={{ fontSize: 14, color: T.textSub, lineHeight: 1.6 }}>The trench completely separates the left side (A-E) from the right side (F-J).</div>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: 12, fontWeight: 700, color: T.primary, letterSpacing: 0.5, marginBottom: 4 }}>JOB</div>
+                    <div style={{ fontSize: 14, color: T.textSub, lineHeight: 1.6 }}>This gap is designed specifically for microchips (like your 555 Timer). You straddle the chip across the trench so its left legs plug into the left side, and its right legs plug into the right side. If the trench wasn't there, the left and right legs would short-circuit together.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        ) : componentName === 'Jumper Wires' ? (
+          <div>
+            <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16, color: T.text }}>{componentName}</h1>
+            <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Jump_wire.jpg/640px-Jump_wire.jpg" alt="Jumper Wires" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
+            </div>
+
+            <h2 style={{ fontSize: 24, fontWeight: 700, color: T.primary, marginBottom: 12 }}>The Circulatory System</h2>
+            <p style={{ fontSize: 16, color: T.textSub, lineHeight: 1.8, marginBottom: 40 }}>
+              The circulatory system of your hardware. These carry voltage and digital signals between your ESP32 microcontroller, your breadboard, and your components.
+            </p>
+
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+              <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+              </div>
+              <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>How It Works (The Physics)</h2>
+            </div>
+            <div style={{ padding: 24, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16, marginBottom: 40 }}>
+              <p style={{ fontSize: 15, color: T.textSub, lineHeight: 1.7, margin: 0 }}>
+                Jumper wires are simple electrical conductors. Inside the colored plastic insulation is a bundle of highly conductive copper wire. Copper has loosely bound electrons in its outer atomic shell, meaning it offers almost zero resistance to electricity. When you connect a jumper wire from a power source to a component, the electrical pressure (voltage) instantly pushes those free electrons from one end of the wire to the other, creating a current.
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+              <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+              </div>
+              <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>Types & Wiring</h2>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16, marginBottom: 40 }}>
+              <div style={{ padding: 20, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16 }}>
+                <div style={{ fontSize: 18, fontWeight: 800, color: T.primary, marginBottom: 4 }}>M-M</div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: T.text, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 12 }}>Male-to-Male</div>
+                <div style={{ fontSize: 14, color: T.textSub, lineHeight: 1.6 }}>Both ends have pointy metal pins. Used strictly for connecting one hole on the breadboard to another hole.</div>
+              </div>
+              <div style={{ padding: 20, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16 }}>
+                <div style={{ fontSize: 18, fontWeight: 800, color: T.primary, marginBottom: 4 }}>M-F</div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: T.text, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 12 }}>Male-to-Female</div>
+                <div style={{ fontSize: 14, color: T.textSub, lineHeight: 1.6 }}>One pointy pin, one hollow socket. Connects a breadboard hole directly to pins sticking out of a sensor module.</div>
+              </div>
+              <div style={{ padding: 20, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16 }}>
+                <div style={{ fontSize: 18, fontWeight: 800, color: T.primary, marginBottom: 4 }}>F-F</div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: T.text, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 12 }}>Female-to-Female</div>
+                <div style={{ fontSize: 14, color: T.textSub, lineHeight: 1.6 }}>Both ends have hollow sockets. Used to connect two components directly to each other without a breadboard.</div>
+              </div>
+            </div>
+          </div>
+        ) : componentName === '0.96" OLED Display' ? (
+          <div>
+            <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16, color: T.text }}>{componentName}</h1>
+            <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/OLED_Display.jpg/640px-OLED_Display.jpg" alt="0.96 OLED Display" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
+            </div>
+
+            <h2 style={{ fontSize: 24, fontWeight: 700, color: T.primary, marginBottom: 12 }}>The Micro Monitor</h2>
+            <p style={{ fontSize: 16, color: T.textSub, lineHeight: 1.8, marginBottom: 40 }}>
+              A tiny, crisp screen that uses I2C communication. It is perfect for showing live sensor data, status messages, or debugging information directly on the physical hardware instead of your computer monitor.
+            </p>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 40 }}>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+                  <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                    <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                  </div>
+                  <h2 style={{ fontSize: 20, fontWeight: 700, color: T.text, margin: 0 }}>The Physics (OLED)</h2>
+                </div>
+                <div style={{ padding: 20, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16, flex: 1 }}>
+                  <p style={{ fontSize: 14, color: T.textSub, lineHeight: 1.7, margin: 0 }}>
+                    OLED stands for Organic Light Emitting Diode. Unlike traditional LCD screens that require a bulky backlight behind the display, every single microscopic pixel on an OLED screen produces its own light. When a pixel needs to be black, it physically turns off completely. This results in perfect contrast, ultra-sharp text, and very low power consumption.
+                  </p>
+                </div>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+                  <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                    <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect></svg>
+                  </div>
+                  <h2 style={{ fontSize: 20, fontWeight: 700, color: T.text, margin: 0 }}>The Brains (SSD1306)</h2>
+                </div>
+                <div style={{ padding: 20, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16, flex: 1 }}>
+                  <p style={{ fontSize: 14, color: T.textSub, lineHeight: 1.7, margin: 0 }}>
+                    The glass screen is driven by a hidden chip called the SSD1306. Because controlling 8,192 individual pixels would normally require hundreds of wires, the SSD1306 chip uses the I2C communication protocol. It takes complex graphics commands from your ESP32 over a digital "highway" and translates them into pixel rendering, requiring only two data wires to function.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+              <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22v-5"></path><path d="M9 8V2"></path><path d="M15 8V2"></path><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"></path></svg>
+              </div>
+              <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>Pinout & Wiring</h2>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 12, marginBottom: 40 }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', padding: 16, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12 }}>
+                <div style={{ padding: '4px 10px', background: T.primaryBg, color: T.primary, borderRadius: 6, fontSize: 12, fontWeight: 800, marginRight: 16, minWidth: 70, textAlign: 'center', flexShrink: 0 }}>VCC</div>
+                <div style={{ flex: 1, fontSize: 14, color: T.textSub, lineHeight: 1.6, paddingTop: 2 }}>Power input. Connect to the <strong style={{ color: T.text }}>3V3 (3.3 Volt)</strong> pin on the ESP32.</div>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'flex-start', padding: 16, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12 }}>
+                <div style={{ padding: '4px 10px', background: 'rgba(107, 114, 128, 0.1)', color: T.text, borderRadius: 6, fontSize: 12, fontWeight: 800, marginRight: 16, minWidth: 70, textAlign: 'center', flexShrink: 0 }}>GND</div>
+                <div style={{ flex: 1, fontSize: 14, color: T.textSub, lineHeight: 1.6, paddingTop: 2 }}>Ground connection. Connect to the <strong style={{ color: T.text }}>ESP32 GND</strong>.</div>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'flex-start', padding: 16, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12 }}>
+                <div style={{ padding: '4px 10px', background: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6', borderRadius: 6, fontSize: 12, fontWeight: 800, marginRight: 16, minWidth: 70, textAlign: 'center', flexShrink: 0 }}>SDA</div>
+                <div style={{ flex: 1, fontSize: 14, color: T.textSub, lineHeight: 1.6, paddingTop: 2 }}><strong style={{ color: T.text }}>Serial Data:</strong> The data highway line. Connect to ESP32 <strong style={{ color: T.text }}>GPIO 21</strong>.</div>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'flex-start', padding: 16, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12 }}>
+                <div style={{ padding: '4px 10px', background: 'rgba(245, 158, 11, 0.1)', color: '#f59e0b', borderRadius: 6, fontSize: 12, fontWeight: 800, marginRight: 16, minWidth: 70, textAlign: 'center', flexShrink: 0 }}>SCK</div>
+                <div style={{ flex: 1, fontSize: 14, color: T.textSub, lineHeight: 1.6, paddingTop: 2 }}><strong style={{ color: T.text }}>Serial Clock:</strong> The timing line that keeps data synchronized. Connect to ESP32 <strong style={{ color: T.text }}>GPIO 22</strong>.</div>
+              </div>
+            </div>
+          </div>
+        ) : componentName === 'DHT11 Sensor' ? (
+          <div>
+            <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16, color: T.text }}>{componentName}</h1>
+            <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/DHT11.jpg/640px-DHT11.jpg" alt="DHT11 Sensor" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
+            </div>
+
+            <h2 style={{ fontSize: 24, fontWeight: 700, color: T.primary, marginBottom: 12 }}>The Climate Tracker</h2>
+            <p style={{ fontSize: 16, color: T.textSub, lineHeight: 1.8, marginBottom: 40 }}>
+              A digital sensor module that measures ambient room temperature and humidity simultaneously. It is the foundation for smart agriculture and weather station projects.
+            </p>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 40 }}>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+                  <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                    <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                  </div>
+                  <h2 style={{ fontSize: 20, fontWeight: 700, color: T.text, margin: 0 }}>The Physics</h2>
+                </div>
+                <div style={{ padding: 20, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16, flex: 1 }}>
+                  <p style={{ fontSize: 14, color: T.textSub, lineHeight: 1.7, margin: 0, marginBottom: 12 }}>
+                    <strong style={{ color: T.text }}>Humidity:</strong> It measures the electrical resistance between two tiny electrodes. Sandwiched between them is a moisture-holding substrate. As the air gets more humid, the substrate absorbs water vapor, releasing ions and dropping the electrical resistance.
+                  </p>
+                  <p style={{ fontSize: 14, color: T.textSub, lineHeight: 1.7, margin: 0 }}>
+                    <strong style={{ color: T.text }}>Temperature:</strong> It uses a surface-mounted thermistor. A thermistor is a special resistor that drastically changes its resistance based on how hot or cold it is.
+                  </p>
+                </div>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+                  <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                    <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect></svg>
+                  </div>
+                  <h2 style={{ fontSize: 20, fontWeight: 700, color: T.text, margin: 0 }}>The Brains</h2>
+                </div>
+                <div style={{ padding: 20, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16, flex: 1 }}>
+                  <p style={{ fontSize: 14, color: T.textSub, lineHeight: 1.7, margin: 0 }}>
+                    Because resistance is an analog measurement, the DHT11 contains a built-in 8-bit microchip. This chip converts those raw analog resistance readings into a clean digital signal. Because you are using the "Module" version, a required 10k Ohm pull-up resistor is already soldered onto the circuit board for you.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+              <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22v-5"></path><path d="M9 8V2"></path><path d="M15 8V2"></path><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"></path></svg>
+              </div>
+              <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>Pinout & Wiring</h2>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 12, marginBottom: 40 }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', padding: 16, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12 }}>
+                <div style={{ width: 100, fontSize: 16, fontWeight: 800, color: T.primary }}>VCC (or +)</div>
+                <div style={{ flex: 1, fontSize: 14, color: T.textSub, lineHeight: 1.6, paddingTop: 2 }}>Power input. Connect to <strong style={{ color: T.text }}>3V3</strong>.</div>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'flex-start', padding: 16, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12 }}>
+                <div style={{ width: 100, fontSize: 16, fontWeight: 800, color: T.text }}>GND (or -)</div>
+                <div style={{ flex: 1, fontSize: 14, color: T.textSub, lineHeight: 1.6, paddingTop: 2 }}>Ground connection. Connect to <strong style={{ color: T.text }}>GND</strong>.</div>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'flex-start', padding: 16, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12 }}>
+                <div style={{ width: 100, fontSize: 16, fontWeight: 800, color: '#10b981' }}>DATA (OUT)</div>
+                <div style={{ flex: 1, fontSize: 14, color: T.textSub, lineHeight: 1.6, paddingTop: 2 }}>The single-wire digital output. Connect this to an input GPIO pin on your ESP32 (e.g., <strong style={{ color: T.text }}>GPIO 15</strong>).</div>
+              </div>
+            </div>
+          </div>
+        ) : componentName === 'Ultrasonic Sensor (HC-SR04)' ? (
+          <div>
+            <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16, color: T.text }}>{componentName}</h1>
+            <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/HC-SR04_ultrasonic_sensor.jpg/640px-HC-SR04_ultrasonic_sensor.jpg" alt="Ultrasonic Sensor (HC-SR04)" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
+            </div>
+
+            <h2 style={{ fontSize: 24, fontWeight: 700, color: T.primary, marginBottom: 12 }}>The Bat Radar</h2>
+            <p style={{ fontSize: 16, color: T.textSub, lineHeight: 1.8, marginBottom: 40 }}>
+              Acts identically to bat echolocation. It sends out an ultrasonic ping and measures exactly how long it takes to bounce back, calculating physical distance to an object.
+            </p>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 40 }}>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+                  <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                    <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                  </div>
+                  <h2 style={{ fontSize: 20, fontWeight: 700, color: T.text, margin: 0 }}>The Physics</h2>
+                </div>
+                <div style={{ padding: 20, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16, flex: 1 }}>
+                  <p style={{ fontSize: 14, color: T.textSub, lineHeight: 1.7, margin: 0, marginBottom: 12 }}>
+                    If you look at the HC-SR04, you see two silver mesh cylinders.
+                  </p>
+                  <p style={{ fontSize: 14, color: T.textSub, lineHeight: 1.7, margin: 0, marginBottom: 12 }}>
+                    <strong style={{ color: T.text }}>The Trigger:</strong> One cylinder acts as a high-frequency speaker. It blasts a burst of sound waves at 40,000 Hz (way too high for human ears to hear).
+                  </p>
+                  <p style={{ fontSize: 14, color: T.textSub, lineHeight: 1.7, margin: 0 }}>
+                    <strong style={{ color: T.text }}>The Echo:</strong> The sound wave travels through the air at roughly 343 meters per second. The second cylinder acts as a microphone, waiting to hear that specific high-frequency bounce.
+                  </p>
+                </div>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+                  <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                    <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                  </div>
+                  <h2 style={{ fontSize: 20, fontWeight: 700, color: T.text, margin: 0 }}>The Brains</h2>
+                </div>
+                <div style={{ padding: 20, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16, flex: 1 }}>
+                  <p style={{ fontSize: 14, color: T.textSub, lineHeight: 1.7, margin: 0 }}>
+                    An onboard chip triggers the speaker and then times exactly how many microseconds it takes for the microphone to hear the echo. You use math in your code <strong style={{ color: T.primary }}>(Distance = Time * Speed of Sound)</strong> to convert that delay into centimeters.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+              <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22v-5"></path><path d="M9 8V2"></path><path d="M15 8V2"></path><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"></path></svg>
+              </div>
+              <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>Pinout & Wiring</h2>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 12, marginBottom: 40 }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', padding: 16, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12 }}>
+                <div style={{ width: 100, fontSize: 16, fontWeight: 800, color: '#ef4444' }}>VCC (5V)</div>
+                <div style={{ flex: 1, fontSize: 14, color: T.textSub, lineHeight: 1.6, paddingTop: 2 }}>Power input. This sensor requires 5 Volts to generate a loud enough sound wave. Connect to the <strong style={{ color: T.text }}>VIN (5V)</strong> pin of the ESP32.</div>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'flex-start', padding: 16, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12 }}>
+                <div style={{ padding: '4px 10px', background: 'rgba(107, 114, 128, 0.1)', color: T.text, borderRadius: 6, fontSize: 12, fontWeight: 800, marginRight: 16, minWidth: 70, textAlign: 'center', flexShrink: 0 }}>GND</div>
+                <div style={{ flex: 1, fontSize: 14, color: T.textSub, lineHeight: 1.6, paddingTop: 2 }}>Ground connection. Connect to <strong style={{ color: T.text }}>GND</strong>.</div>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'flex-start', padding: 16, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12 }}>
+                <div style={{ padding: '4px 10px', background: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6', borderRadius: 6, fontSize: 12, fontWeight: 800, marginRight: 16, minWidth: 70, textAlign: 'center', flexShrink: 0 }}>TRIG</div>
+                <div style={{ flex: 1, fontSize: 14, color: T.textSub, lineHeight: 1.6, paddingTop: 2 }}>Trigger: Connect to an ESP32 output GPIO. The ESP32 sends a quick HIGH signal here to command the sensor to shout.</div>
+              </div>
+              <div style={{ padding: 16, background: 'rgba(239, 68, 68, 0.1)', border: `1px solid #ef4444`, borderRadius: 12 }}>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 8 }}>
+                  <div style={{ width: 100, fontSize: 16, fontWeight: 800, color: '#ef4444' }}>ECHO</div>
+                  <div style={{ padding: '2px 6px', background: '#ef4444', color: '#fff', borderRadius: 4, fontSize: 11, fontWeight: 800 }}>WARNING</div>
+                </div>
+                <div style={{ fontSize: 14, color: T.text, lineHeight: 1.6 }}>Connect to an ESP32 input GPIO. Because the sensor is powered by 5V, the ECHO pin will shoot a 5V signal back to the ESP32. You <strong style={{ color: '#ef4444' }}>MUST</strong> use a voltage divider (two 10k Ohm resistors) to lower this to a safe 2.5V before it reaches the ESP32, or you will damage the microcontroller.</div>
+              </div>
+            </div>
+          </div>
+        ) : componentName === 'IR Sensor' ? (
+          <div>
+            <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16, color: T.text }}>{componentName}</h1>
+            <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Infrared_sensor.jpg/640px-Infrared_sensor.jpg" alt="IR Sensor" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
+            </div>
+
+            <h2 style={{ fontSize: 24, fontWeight: 700, color: T.primary, marginBottom: 12 }}>The Digital Eye</h2>
+            <p style={{ fontSize: 16, color: T.textSub, lineHeight: 1.8, marginBottom: 40 }}>
+              Think of the IR (Infrared) Sensor as a simple digital eye that can detect if an object is in front of it without actually touching it. It is the foundation of obstacle-avoiding robots and automated factory conveyor belts.
+            </p>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 40 }}>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+                  <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                    <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                  </div>
+                  <h2 style={{ fontSize: 20, fontWeight: 700, color: T.text, margin: 0 }}>The Physics</h2>
+                </div>
+                <div style={{ padding: 20, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16, flex: 1 }}>
+                  <p style={{ fontSize: 14, color: T.textSub, lineHeight: 1.7, margin: 0, marginBottom: 12 }}>
+                    If you look closely at the front of the module, you will see two LED-like bulbs (usually one clear, one black).
+                  </p>
+                  <p style={{ fontSize: 14, color: T.textSub, lineHeight: 1.7, margin: 0, marginBottom: 12 }}>
+                    <strong style={{ color: T.text }}>The Transmitter:</strong> The clear bulb acts like an invisible flashlight, constantly shooting out a beam of infrared light (light that human eyes cannot see).
+                  </p>
+                  <p style={{ fontSize: 14, color: T.textSub, lineHeight: 1.7, margin: 0 }}>
+                    <strong style={{ color: T.text }}>The Receiver:</strong> The black bulb is a photodiode tuned to look for that exact infrared light. When an object gets close, the invisible beam bounces off the object and reflects back into the black receiver.
+                  </p>
+                </div>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+                  <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                    <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect></svg>
+                  </div>
+                  <h2 style={{ fontSize: 20, fontWeight: 700, color: T.text, margin: 0 }}>The Brains</h2>
+                </div>
+                <div style={{ padding: 20, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16, flex: 1 }}>
+                  <p style={{ fontSize: 14, color: T.textSub, lineHeight: 1.7, margin: 0 }}>
+                    The module has a tiny black chip on it called an <strong style={{ color: T.text }}>LM393 Comparator</strong>. This chip compares the reflected light against a threshold. You can manually adjust this threshold by twisting the small blue box (potentiometer) on the board with a screwdriver. This changes how close an object needs to be before the sensor triggers.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+              <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22v-5"></path><path d="M9 8V2"></path><path d="M15 8V2"></path><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"></path></svg>
+              </div>
+              <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>Pinout & Wiring</h2>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 12, marginBottom: 40 }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', padding: 16, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12 }}>
+                <div style={{ padding: '4px 10px', background: T.primaryBg, color: T.primary, borderRadius: 6, fontSize: 12, fontWeight: 800, marginRight: 16, minWidth: 70, textAlign: 'center', flexShrink: 0 }}>VCC</div>
+                <div style={{ flex: 1, fontSize: 14, color: T.textSub, lineHeight: 1.6, paddingTop: 2 }}>Power input. Connect to the <strong style={{ color: T.text }}>3V3 (3.3 Volt)</strong> pin on the ESP32.</div>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'flex-start', padding: 16, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12 }}>
+                <div style={{ padding: '4px 10px', background: 'rgba(107, 114, 128, 0.1)', color: T.text, borderRadius: 6, fontSize: 12, fontWeight: 800, marginRight: 16, minWidth: 70, textAlign: 'center', flexShrink: 0 }}>GND</div>
+                <div style={{ flex: 1, fontSize: 14, color: T.textSub, lineHeight: 1.6, paddingTop: 2 }}>Ground connection. Connect to the <strong style={{ color: T.text }}>ESP32 GND</strong>.</div>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'flex-start', padding: 16, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12 }}>
+                <div style={{ width: 100, fontSize: 16, fontWeight: 800, color: '#10b981' }}>OUT (or DO)</div>
+                <div style={{ flex: 1, fontSize: 14, color: T.textSub, lineHeight: 1.6, paddingTop: 2 }}><strong style={{ color: T.text }}>Digital Output:</strong> Normally sends HIGH (3.3V). When an object reflects light, it snaps to LOW (0V). Wire to any input GPIO.</div>
+              </div>
+            </div>
+          </div>
+        ) : componentName === 'LDR (Light Sensor)' ? (
+          <div>
+            <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16, color: T.text }}>{componentName}</h1>
+            <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Photoresistor.jpg/640px-Photoresistor.jpg" alt="LDR (Light Sensor)" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
+            </div>
+
+            <h2 style={{ fontSize: 24, fontWeight: 700, color: T.primary, marginBottom: 12 }}>The Electronic Pupil</h2>
+            <p style={{ fontSize: 16, color: T.textSub, lineHeight: 1.8, marginBottom: 40 }}>
+              The LDR (Light Dependent Resistor) module allows your project to measure ambient light. It tells your microcontroller if it is day, night, or if someone just turned off the room lights.
+            </p>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 40 }}>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+                  <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                    <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                  </div>
+                  <h2 style={{ fontSize: 20, fontWeight: 700, color: T.text, margin: 0 }}>The Physics</h2>
+                </div>
+                <div style={{ padding: 20, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16, flex: 1 }}>
+                  <p style={{ fontSize: 14, color: T.textSub, lineHeight: 1.7, margin: 0 }}>
+                    The sensor on the front has a squiggly track running across its face. This is made of a special semiconductor material. When it is in a dark room, the material has very high electrical resistance—it acts like a thick wall blocking electricity. As light particles (photons) hit the squiggly track, they knock electrons loose, drastically lowering the resistance and allowing electricity to flow easily.
+                  </p>
+                </div>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+                  <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                    <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect></svg>
+                  </div>
+                  <h2 style={{ fontSize: 20, fontWeight: 700, color: T.text, margin: 0 }}>The Brains</h2>
+                </div>
+                <div style={{ padding: 20, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16, flex: 1 }}>
+                  <p style={{ fontSize: 14, color: T.textSub, lineHeight: 1.7, margin: 0 }}>
+                    Just like the IR sensor, this module uses an <strong style={{ color: T.text }}>LM393 chip</strong> and a blue twist-dial to let you set exactly what "dark" means for your specific room.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+              <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22v-5"></path><path d="M9 8V2"></path><path d="M15 8V2"></path><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"></path></svg>
+              </div>
+              <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>Pinout & Wiring</h2>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 12, marginBottom: 40 }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', padding: 16, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12 }}>
+                <div style={{ padding: '4px 10px', background: T.primaryBg, color: T.primary, borderRadius: 6, fontSize: 12, fontWeight: 800, marginRight: 16, minWidth: 70, textAlign: 'center', flexShrink: 0 }}>VCC</div>
+                <div style={{ flex: 1, fontSize: 14, color: T.textSub, lineHeight: 1.6, paddingTop: 2 }}>Power input. Connect to <strong style={{ color: T.text }}>3V3</strong>.</div>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'flex-start', padding: 16, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12 }}>
+                <div style={{ padding: '4px 10px', background: 'rgba(107, 114, 128, 0.1)', color: T.text, borderRadius: 6, fontSize: 12, fontWeight: 800, marginRight: 16, minWidth: 70, textAlign: 'center', flexShrink: 0 }}>GND</div>
+                <div style={{ flex: 1, fontSize: 14, color: T.textSub, lineHeight: 1.6, paddingTop: 2 }}>Ground connection. Connect to <strong style={{ color: T.text }}>GND</strong>.</div>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'flex-start', padding: 16, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12 }}>
+                <div style={{ padding: '4px 10px', background: 'rgba(16, 185, 129, 0.1)', color: '#10b981', borderRadius: 6, fontSize: 12, fontWeight: 800, marginRight: 16, minWidth: 70, textAlign: 'center', flexShrink: 0 }}>DO</div>
+                <div style={{ flex: 1, fontSize: 14, color: T.textSub, lineHeight: 1.6, paddingTop: 2 }}><strong style={{ color: T.text }}>Digital Out:</strong> Sends a simple HIGH or LOW signal based on the blue dial threshold. Perfect for "turn on the nightlight" logic.</div>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'flex-start', padding: 16, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12 }}>
+                <div style={{ padding: '4px 10px', background: 'rgba(139, 92, 246, 0.1)', color: '#8b5cf6', borderRadius: 6, fontSize: 12, fontWeight: 800, marginRight: 16, minWidth: 70, textAlign: 'center', flexShrink: 0 }}>AO</div>
+                <div style={{ flex: 1, fontSize: 14, color: T.textSub, lineHeight: 1.6, paddingTop: 2 }}><strong style={{ color: T.text }}>Analog Out:</strong> The magic pin. Outputs a variable voltage based on exact brightness. Connect to an ADC pin (like GPIO 34) for precise 0-4095 readings.</div>
+              </div>
+            </div>
+          </div>
+        ) : componentName === 'Active Buzzer' ? (
+          <div>
+            <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16, color: T.text }}>{componentName}</h1>
+            <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Piezoelectric_buzzer.jpg/640px-Piezoelectric_buzzer.jpg" alt="Active Buzzer" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
+            </div>
+
+            <h2 style={{ fontSize: 24, fontWeight: 700, color: T.primary, marginBottom: 12 }}>The Alarm Bell</h2>
+            <p style={{ fontSize: 16, color: T.textSub, lineHeight: 1.8, marginBottom: 40 }}>
+              The Active Buzzer is the simplest way to give your projects a voice. It is designed to be loud, annoying, and instantly grab your attention.
+            </p>
+
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+              <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
+              </div>
+              <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>How It Works (The Physics)</h2>
+            </div>
+            <div style={{ padding: 24, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16, marginBottom: 40 }}>
+              <p style={{ fontSize: 15, color: T.textSub, lineHeight: 1.7, margin: 0, marginBottom: 16 }}>
+                Inside the black plastic casing is a piezoelectric ceramic disk. When electricity hits this disk, it physically bends and warps.
+              </p>
+              <p style={{ fontSize: 15, color: T.textSub, lineHeight: 1.7, margin: 0 }}>
+                The word <strong style={{ color: T.text }}>"Active"</strong> is the most important part of this component's name. It means it has a built-in oscillator circuit. You do not need to write complex audio frequencies in your code; the moment the buzzer receives steady DC power, the internal circuit forces the ceramic disk to warp back and forth thousands of times per second, generating a loud, continuous beep.
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+              <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22v-5"></path><path d="M9 8V2"></path><path d="M15 8V2"></path><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"></path></svg>
+              </div>
+              <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>Pinout & Wiring</h2>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 12, marginBottom: 40 }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', padding: 16, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12 }}>
+                <div style={{ width: 120, fontSize: 16, fontWeight: 800, color: '#ef4444' }}>Positive (+)</div>
+                <div style={{ flex: 1, fontSize: 14, color: T.textSub, lineHeight: 1.6, paddingTop: 2 }}>The longer leg, or the pin marked with a plus sign. The buzzers in this kit are rated for 5V. To get the loudest sound, this should be powered from the <strong style={{ color: T.text }}>VIN (5V)</strong> rail of the ESP32, not the 3.3V rail.</div>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'flex-start', padding: 16, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12 }}>
+                <div style={{ width: 120, fontSize: 16, fontWeight: 800, color: T.text }}>Negative (-)</div>
+                <div style={{ flex: 1, fontSize: 14, color: T.textSub, lineHeight: 1.6, paddingTop: 2 }}>The shorter leg. Connect this to Ground to complete the circuit and trigger the sound.</div>
+              </div>
+            </div>
+          </div>
+        ) : componentName === 'SG90 Servo Motor' ? (
+          <div>
+            <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16, color: T.text }}>{componentName}</h1>
+            <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Servo_Motor.jpg/640px-Servo_Motor.jpg" alt="SG90 Servo Motor" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
+            </div>
+
+            <h2 style={{ fontSize: 24, fontWeight: 700, color: T.primary, marginBottom: 12 }}>The Precision Arm</h2>
+            <p style={{ fontSize: 16, color: T.textSub, lineHeight: 1.8, marginBottom: 40 }}>
+              Unlike standard DC motors in toy cars that just spin endlessly in circles, a servo motor is a highly intelligent actuator built for exact precision.
+            </p>
+
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+              <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+              </div>
+              <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>How It Works (The Physics)</h2>
+            </div>
+            <div style={{ padding: 24, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16, marginBottom: 40 }}>
+              <p style={{ fontSize: 15, color: T.textSub, lineHeight: 1.7, margin: 0, marginBottom: 16 }}>
+                Inside the blue casing, there is a tiny standard motor, a series of nylon gears to slow it down and increase its physical strength (torque), and a potentiometer attached to the main shaft.
+              </p>
+              <p style={{ fontSize: 15, color: T.textSub, lineHeight: 1.7, margin: 0 }}>
+                As the motor turns, it also turns the potentiometer, which acts as an internal sensor to tell the servo's brain exactly what angle the arm is currently pointing at. This allows it to lock into precise positions anywhere between <strong style={{ color: T.text }}>0 and 180 degrees</strong>.
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+              <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22v-5"></path><path d="M9 8V2"></path><path d="M15 8V2"></path><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"></path></svg>
+              </div>
+              <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>Pinout & Wiring</h2>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 12, marginBottom: 40 }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', padding: 16, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12 }}>
+                <div style={{ width: 140, fontSize: 16, fontWeight: 800, color: '#78350f' }}>Brown (GND)</div>
+                <div style={{ flex: 1, fontSize: 14, color: T.textSub, lineHeight: 1.6, paddingTop: 2 }}>Connect to the Ground rail.</div>
+              </div>
+              <div style={{ padding: 16, background: 'rgba(239, 68, 68, 0.1)', border: `1px solid #ef4444`, borderRadius: 12 }}>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 8 }}>
+                  <div style={{ width: 140, fontSize: 16, fontWeight: 800, color: '#ef4444' }}>Red (VCC)</div>
+                  <div style={{ padding: '2px 6px', background: '#ef4444', color: '#fff', borderRadius: 4, fontSize: 11, fontWeight: 800 }}>CRITICAL</div>
+                </div>
+                <div style={{ fontSize: 14, color: T.text, lineHeight: 1.6 }}>Servos require a massive spike of power to physically move. You <strong style={{ color: '#ef4444' }}>MUST</strong> connect this to the VIN (5V) pin of the ESP32. Connecting it to the 3.3V pin will starve the ESP32 of power and crash your microcontroller.</div>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'flex-start', padding: 16, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12 }}>
+                <div style={{ width: 140, fontSize: 16, fontWeight: 800, color: '#f59e0b' }}>Orange (Signal)</div>
+                <div style={{ flex: 1, fontSize: 14, color: T.textSub, lineHeight: 1.6, paddingTop: 2 }}>Connect to a PWM-capable GPIO pin. Your ESP32 sends a rapid series of electrical pulses down this wire. The specific width of those pulses tells the servo exactly what angle to rotate to.</div>
+              </div>
+            </div>
+          </div>
+        ) : componentName === 'Push Buttons' ? (
+          <div>
+            <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16, color: T.text }}>{componentName}</h1>
+            <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Tact_switch.jpg/640px-Tact_switch.jpg" alt="Push Buttons" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
+            </div>
+
+            <h2 style={{ fontSize: 24, fontWeight: 700, color: T.primary, marginBottom: 12 }}>The Digital Trigger</h2>
+            <p style={{ fontSize: 16, color: T.textSub, lineHeight: 1.8, marginBottom: 40 }}>
+              Also known as tactile switches, these are the most reliable way for a human to give a physical command to a computer chip.
+            </p>
+
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+              <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+              </div>
+              <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>How It Works (The Physics)</h2>
+            </div>
+            <div style={{ padding: 24, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16, marginBottom: 40 }}>
+              <p style={{ fontSize: 15, color: T.textSub, lineHeight: 1.7, margin: 0 }}>
+                A push button is simply a broken bridge. Inside the plastic housing, there is a slightly curved metal dome. When you are not touching the button, the dome hovers above the contact pads, keeping the circuit open so no electricity can flow. When you press down, the dome clicks flat, bridging the gap and allowing electricity to instantly cross to the other side.
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+              <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22v-5"></path><path d="M9 8V2"></path><path d="M15 8V2"></path><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"></path></svg>
+              </div>
+              <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>Pinout & Wiring</h2>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 12, marginBottom: 40 }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', padding: 16, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12 }}>
+                <div style={{ padding: '4px 10px', background: T.primaryBg, color: T.primary, borderRadius: 6, fontSize: 12, fontWeight: 800, marginRight: 16, minWidth: 70, textAlign: 'center', flexShrink: 0 }}>The 4-Pin Layout</div>
+                <div style={{ flex: 1, fontSize: 14, color: T.textSub, lineHeight: 1.6 }}>The button has four metal legs, but internally, the legs on the left side are permanently connected to each other, and the legs on the right side are permanently connected to each other.</div>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'flex-start', padding: 16, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12 }}>
+                <div style={{ padding: '4px 10px', background: 'rgba(16, 185, 129, 0.1)', color: '#10b981', borderRadius: 6, fontSize: 12, fontWeight: 800, marginRight: 16, minWidth: 70, textAlign: 'center', flexShrink: 0 }}>Breadboard Trick</div>
+                <div style={{ flex: 1, fontSize: 14, color: T.textSub, lineHeight: 1.6 }}>To avoid confusion, always wire your buttons <strong style={{ color: T.text }}>diagonally across the breadboard trench</strong>. Connect the top-left pin to Ground, and the bottom-right pin to your ESP32 GPIO.</div>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'flex-start', padding: 16, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12 }}>
+                <div style={{ padding: '4px 10px', background: 'rgba(139, 92, 246, 0.1)', color: '#8b5cf6', borderRadius: 6, fontSize: 12, fontWeight: 800, marginRight: 16, minWidth: 70, textAlign: 'center', flexShrink: 0 }}>Software Secret</div>
+                <div style={{ flex: 1, fontSize: 14, color: T.textSub, lineHeight: 1.6 }}>To read a button reliably, you configure your ESP32 pin using the code <strong style={{ color: T.text, background: T.primaryBg, padding: '2px 4px', borderRadius: 4 }}>INPUT_PULLUP</strong>. This uses a microscopic resistor inside the ESP32 to keep the pin at 3.3V (HIGH) normally. When you press the button, the electricity drains to Ground, and the pin drops to 0V (LOW).</div>
+              </div>
+            </div>
+          </div>
+        ) : componentName === 'LEDs' ? (
+          <div>
+            <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16, color: T.text }}>{componentName}</h1>
+            <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/5mm_Red_LED.jpg/640px-5mm_Red_LED.jpg" alt="LEDs" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
+            </div>
+
+            <h2 style={{ fontSize: 24, fontWeight: 700, color: T.primary, marginBottom: 12 }}>The Status Lights</h2>
+            <p style={{ fontSize: 16, color: T.textSub, lineHeight: 1.8, marginBottom: 40 }}>
+              LEDs (Light Emitting Diodes) are highly efficient components that turn electrical current directly into a bright, focused light with almost zero heat waste.
+            </p>
+
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+              <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+              </div>
+              <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>How It Works (The Physics)</h2>
+            </div>
+            <div style={{ padding: 24, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16, marginBottom: 40 }}>
+              <p style={{ fontSize: 15, color: T.textSub, lineHeight: 1.7, margin: 0, marginBottom: 16 }}>
+                An LED is a semiconductor. When electrons cross a microscopic gap inside the bulb, they release their extra energy in the form of photons (light). The color of the plastic bulb doesn't actually matter; the chemical composition of the metal inside dictates what color the light will be.
+              </p>
+              <p style={{ fontSize: 15, color: T.textSub, lineHeight: 1.7, margin: 0 }}>
+                Because it is a "diode," it is a <strong style={{ color: T.text }}>strict one-way street</strong> for electricity.
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+              <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22v-5"></path><path d="M9 8V2"></path><path d="M15 8V2"></path><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"></path></svg>
+              </div>
+              <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>Pinout & Wiring</h2>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 12, marginBottom: 40 }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', padding: 16, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12 }}>
+                <div style={{ width: 140, fontSize: 16, fontWeight: 800, color: '#ef4444' }}>Anode (+)</div>
+                <div style={{ flex: 1, fontSize: 14, color: T.textSub, lineHeight: 1.6 }}><strong style={{ color: T.text }}>The longer leg.</strong> Electrical current must enter through this leg. It connects toward the power source.</div>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'flex-start', padding: 16, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12 }}>
+                <div style={{ width: 140, fontSize: 16, fontWeight: 800, color: T.text }}>Cathode (-)</div>
+                <div style={{ flex: 1, fontSize: 14, color: T.textSub, lineHeight: 1.6 }}><strong style={{ color: T.text }}>The shorter leg.</strong> If you look closely at the plastic bulb, the side with the shorter leg also has a flattened edge. Current exits this leg toward Ground. If you plug an LED in backward, it completely blocks the power.</div>
+              </div>
+            </div>
+          </div>
+        ) : componentName === 'Resistors' ? (
+          <div>
+            <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16, color: T.text }}>{componentName}</h1>
+            <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/4_Resistors.jpg/640px-4_Resistors.jpg" alt="Resistors" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
+            </div>
+
+            <h2 style={{ fontSize: 24, fontWeight: 700, color: T.primary, marginBottom: 12 }}>The Speed Bumps</h2>
+            <p style={{ fontSize: 16, color: T.textSub, lineHeight: 1.8, marginBottom: 40 }}>
+              Resistors are the unsung heroes of electronics. They do not move, light up, or make noise, but without them, your other components would instantly destroy themselves.
+            </p>
+
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+              <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              </div>
+              <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>How It Works (The Physics)</h2>
+            </div>
+            <div style={{ padding: 24, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16, marginBottom: 40 }}>
+              <p style={{ fontSize: 15, color: T.textSub, lineHeight: 1.7, margin: 0, marginBottom: 16 }}>
+                Think of electricity like high-pressure water rushing through a pipe. A resistor acts like a narrow pinch in that pipe, physically slowing down and strictly limiting how much water can rush through at once. The strength of this pinch is measured in <strong style={{ color: T.text }}>Ohms</strong>.
+              </p>
+              <p style={{ fontSize: 15, color: T.textSub, lineHeight: 1.7, margin: 0 }}>
+                They work by being poor conductors (often made of carbon film). When electricity fights its way through the carbon, the resistor absorbs the excess electrical pressure and releases it safely as heat into the air.
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+              <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22v-5"></path><path d="M9 8V2"></path><path d="M15 8V2"></path><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"></path></svg>
+              </div>
+              <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>Wiring & Usage</h2>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 12, marginBottom: 40 }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', padding: 16, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12 }}>
+                <div style={{ padding: '4px 10px', background: T.primaryBg, color: T.primary, borderRadius: 6, fontSize: 12, fontWeight: 800, marginRight: 16, minWidth: 70, textAlign: 'center', flexShrink: 0 }}>Non-Polarized</div>
+                <div style={{ flex: 1, fontSize: 14, color: T.textSub, lineHeight: 1.6 }}>Resistors have no specific positive or negative leg. You can plug them in facing either direction and they will work perfectly.</div>
+              </div>
+              <div style={{ padding: 16, background: 'rgba(239, 68, 68, 0.1)', border: `1px solid #ef4444`, borderRadius: 12 }}>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 8 }}>
+                  <div style={{ width: 140, fontSize: 16, fontWeight: 800, color: '#ef4444' }}>The Golden Rule</div>
+                  <div style={{ padding: '2px 6px', background: '#ef4444', color: '#fff', borderRadius: 4, fontSize: 11, fontWeight: 800 }}>CRITICAL</div>
+                </div>
+                <div style={{ fontSize: 14, color: T.text, lineHeight: 1.6 }}>You must ALWAYS put a <strong style={{ color: '#ef4444' }}>220 Ohm resistor</strong> in series with an LED. An LED has no internal electrical resistance. If you connect it directly to 3.3V or 5V, it will consume as much power as it possibly can, overheat in a fraction of a second, and permanently burn out with a popping sound.</div>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'flex-start', padding: 16, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12 }}>
+                <div style={{ padding: '4px 10px', background: 'rgba(16, 185, 129, 0.1)', color: '#10b981', borderRadius: 6, fontSize: 12, fontWeight: 800, marginRight: 16, minWidth: 70, textAlign: 'center', flexShrink: 0 }}>Reading Values</div>
+                <div style={{ flex: 1, fontSize: 14, color: T.textSub, lineHeight: 1.6 }}>You know how strong a resistor is by reading the painted color bands on its body.<br/><br/><strong style={{ color: T.text }}>220 Ohm</strong> (used for LEDs) = Red-Red-Brown.<br/><strong style={{ color: T.text }}>10k Ohm</strong> (used for sensors) = Brown-Black-Orange.</div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div style={{ textAlign: 'center', padding: 40 }}>
+            <div style={{ fontSize: 64, marginBottom: 24 }}>🛠️</div>
+            <h1 style={{ fontSize: 28, fontWeight: 800, marginBottom: 16, color: T.text }}>
+              {componentName}
+            </h1>
+            <p style={{ fontSize: 16, color: T.textSub, lineHeight: 1.8 }}>
+              Detailed deep-dive information for this component is currently being written. Check back soon!
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 // ── REFERRAL MODAL ───────────────────────────────────────────────────
 function Referral({ T, onClose }) {
   const [name, setName] = useState('');
@@ -1486,7 +2472,7 @@ const LOAD_MSGS = [
   'Refining compilation instructions...',
 ];
 
-function ProjectLabPage({ T, result, setResult, history, setHistory }) {
+function ProjectLabPage({ T, result, setResult, setHistory }) {
   const [idea, setIdea] = useState('');
   const [loading, setLoading] = useState(false);
   const [loadMsg, setLoadMsg] = useState(0);
@@ -1518,7 +2504,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
     if (saved) {
       try {
         setResult(JSON.parse(saved));
-      } catch (e) {
+      } catch {
         localStorage.removeItem('bfiot_current_project');
       }
     }
@@ -1575,7 +2561,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
           m: `I generated your project blueprint! Ask me anything about the wiring steps or the logic.`,
         },
       ]);
-    } catch (e) {
+    } catch {
       setError(
         'Something went wrong during generation. Check your API parameters or write-up syntax.'
       );
@@ -1622,7 +2608,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
       const answer =
         d.choices?.[0]?.message?.content || "I couldn't fetch an answer.";
       setChatLog((prev) => [...prev, { r: 'ai', m: answer }]);
-    } catch (e) {
+    } catch {
       setChatLog((prev) => [
         ...prev,
         { r: 'ai', m: "Dropped connection packet. Let's try that again." },
@@ -2733,6 +3719,7 @@ function ProjectLabPage({ T, result, setResult, history, setHistory }) {
 }
 
 // ── LOCKED MODULAR VIEWS (Fallback Component) ─────────────────────────
+// eslint-disable-next-line no-unused-vars
 function LockedPage({ info, T, unlocked, setUnlocked }) {
   const title = info ? info.title : 'Module Locked';
   const [inputCode, setInputCode] = useState('');
@@ -2762,7 +3749,7 @@ function LockedPage({ info, T, unlocked, setUnlocked }) {
         const data = await response.json();
         setError(data.message || 'Invalid access key.');
       }
-    } catch (err) {
+    } catch {
       setError('Network error. Check your connection.');
     } finally {
       setLoading(false);
@@ -2958,6 +3945,7 @@ function LockedPage({ info, T, unlocked, setUnlocked }) {
 }
 
 // ── ROOT APP CONTROLLER ──────────────────────────────────────────────
+// eslint-disable-next-line no-unused-vars
 const LINFO = {
   m1: { title: 'Module 1: The Physical Handshake' },
   m2: { title: 'Module 2: The Analog Bridge' },
@@ -2994,6 +3982,8 @@ export default function App() {
   const [k, setK] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const [faqOpen, setFaqOpen] = useState(false);
+  const [activeComponentModal, setActiveComponentModal] = useState(null);
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => setFaqOpen(false), [page]); // Persistent Maker's Log & Cheat Code states
   const [history, setHistory] = useState([]);
   const [result, setResult] = useState(null);
@@ -3004,8 +3994,9 @@ export default function App() {
     const cachedHistory = localStorage.getItem('bfiot_history_log');
     if (cachedHistory) {
       try {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setHistory(JSON.parse(cachedHistory));
-      } catch (e) {
+      } catch {
         localStorage.removeItem('bfiot_history_log');
       }
     }
@@ -4807,7 +5798,7 @@ export default function App() {
                     { n: 'LEDs', icon: '💡', d: 'Light Emitting Diodes. They turn electrical current into light. Always use them with a resistor!' },
                     { n: 'Resistors', icon: '🛑', d: 'They restrict the flow of current. Essential for protecting delicate components like LEDs from receiving too much power.' }
                   ].map(item => (
-                    <div key={item.n} style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12, padding: 20 }}>
+                    <div key={item.n} style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12, padding: 20, display: 'flex', flexDirection: 'column' }}>
                       <div style={{ width: '100%', height: 120, background: T.primaryBg, borderRadius: 8, marginBottom: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
                         <img src={`https://placehold.co/300x120/png?text=${encodeURIComponent(item.n)}`} alt={item.n} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                       </div>
@@ -4817,7 +5808,26 @@ export default function App() {
                         </div>
                         <div style={{ fontSize: 15, fontWeight: 700, color: T.text }}>{item.n}</div>
                       </div>
-                      <p style={{ fontSize: 13.5, color: T.textSub, lineHeight: 1.7 }}>{item.d}</p>
+                      <p style={{ fontSize: 13.5, color: T.textSub, lineHeight: 1.7, flex: 1 }}>{item.d}</p>
+                      <button
+                        onClick={() => setActiveComponentModal(item.n)}
+                        style={{
+                          marginTop: 16,
+                          padding: '8px 16px',
+                          background: 'transparent',
+                          border: `1px solid ${T.primary}`,
+                          color: T.primary,
+                          borderRadius: 8,
+                          fontSize: 13,
+                          fontWeight: 600,
+                          width: '100%',
+                          transition: 'all 0.2s',
+                        }}
+                        onMouseEnter={(e) => { e.currentTarget.style.background = T.primary; e.currentTarget.style.color = '#fff'; }}
+                        onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = T.primary; }}
+                      >
+                        Read More
+                      </button>
                     </div>
                   ))}
                 </div>
@@ -5557,7 +6567,8 @@ export default function App() {
         </div>
         {' '}
       </div>
-      {modal && <Referral T={T} onClose={() => setModal(false)} />}   {' '}
+      {modal && <Referral T={T} onClose={() => setModal(false)} />}
+      <ComponentModal componentName={activeComponentModal} T={T} onClose={() => setActiveComponentModal(null)} />
     </div>
   );
 }
