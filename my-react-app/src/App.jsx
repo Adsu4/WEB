@@ -1362,7 +1362,7 @@ function ComponentModal({ componentName, T, onClose }) {
               {componentName}
             </h1>
             <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-              <img src="https://c8.alamy.com/comp/2GTDCF8/esp32-development-board-isolated-on-white-background-2GTDCF8.jpg" alt="ESP32" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
+              <img src="https://robukits.in/static/uploads/esp32devkit1.png" alt="ESP32" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
             </div>
 
             <h2 style={{ fontSize: 24, fontWeight: 700, color: T.primary, marginBottom: 12 }}>Meet the ESP32: The Brain of Your Projects</h2>
@@ -1390,7 +1390,7 @@ function ComponentModal({ componentName, T, onClose }) {
                   <div style={{ fontSize: 15, color: T.textSub, lineHeight: 1.6 }}>It runs at up to <strong style={{ color: T.text }}>240 MHz</strong>, making it incredibly fast in the microcontroller world.</div>
                 </div>
               </div>
-              
+
               <div style={{ fontSize: 14, fontWeight: 600, color: T.text, marginBottom: 12, marginTop: 24 }}>Memory Architecture</div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12, marginBottom: 40 }}>
                 <div style={{ padding: 16, background: T.primaryBg, borderRadius: 12 }}>
@@ -1440,7 +1440,7 @@ function ComponentModal({ componentName, T, onClose }) {
               </div>
               <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>Powering the Board</h2>
             </div>
-            
+
             <div style={{ padding: 24, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16, marginBottom: 40 }}>
               <div style={{ display: 'flex', alignItems: 'center', marginBottom: 16 }}>
                 <div style={{ padding: '4px 10px', background: T.primaryBg, color: T.primary, borderRadius: 6, fontSize: 13, fontWeight: 700, marginRight: 12 }}>CRITICAL</div>
@@ -1449,9 +1449,9 @@ function ComponentModal({ componentName, T, onClose }) {
               <p style={{ fontSize: 15, color: T.textSub, lineHeight: 1.7, marginBottom: 24 }}>
                 The ESP32 chip itself runs strictly on <strong style={{ color: T.text }}>3.3 Volts</strong>.
               </p>
-              
+
               <div style={{ width: '100%', height: 1, background: T.border, marginBottom: 24 }}></div>
-              
+
               <div style={{ fontSize: 14, fontWeight: 600, color: T.text, marginBottom: 16 }}>How to Power It:</div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 24 }}>
                 <div style={{ display: 'flex', alignItems: 'flex-start' }}>
@@ -1542,7 +1542,7 @@ function ComponentModal({ componentName, T, onClose }) {
               {componentName}
             </h1>
             <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Breadboard_Half_Size.jpg/640px-Breadboard_Half_Size.jpg" alt="Breadboard" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
+              <img src="https://auhbsvzkkblo2s0k.public.blob.vercel-storage.com/breadboard-840-tie-point-500x500-removebg-preview.png" alt="Breadboard" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
             </div>
 
             <h2 style={{ fontSize: 24, fontWeight: 700, color: T.primary, marginBottom: 12 }}>Meet the Breadboard: Your Prototyping Canvas</h2>
@@ -1640,7 +1640,7 @@ function ComponentModal({ componentName, T, onClose }) {
           <div>
             <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16, color: T.text }}>{componentName}</h1>
             <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Jump_wire.jpg/640px-Jump_wire.jpg" alt="Jumper Wires" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
+              <img src="https://robocraze.com/cdn/shop/files/3_Male_to_Female_Jumper_Wires_20cm_20pcs_1000x.png?v=1758691490" alt="Jumper Wires" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
             </div>
 
             <h2 style={{ fontSize: 24, fontWeight: 700, color: T.primary, marginBottom: 12 }}>The Circulatory System</h2>
@@ -1688,7 +1688,7 @@ function ComponentModal({ componentName, T, onClose }) {
           <div>
             <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16, color: T.text }}>{componentName}</h1>
             <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/OLED_Display.jpg/640px-OLED_Display.jpg" alt="0.96 OLED Display" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
+              <img src="https://auhbsvzkkblo2s0k.public.blob.vercel-storage.com/ChatGPT_Image_Jun_8__2026__01_20_57_AM-removebg-preview.png" alt="0.96 OLED Display" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
             </div>
 
             <h2 style={{ fontSize: 24, fontWeight: 700, color: T.primary, marginBottom: 12 }}>The Micro Monitor</h2>
@@ -1754,7 +1754,7 @@ function ComponentModal({ componentName, T, onClose }) {
           <div>
             <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16, color: T.text }}>{componentName}</h1>
             <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/DHT11.jpg/640px-DHT11.jpg" alt="DHT11 Sensor" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
+              <img src="https://auhbsvzkkblo2s0k.public.blob.vercel-storage.com/DHT11_Humidity_Temperature_Sensor_Module_1000x.jpg" alt="DHT11 Sensor" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
             </div>
 
             <h2 style={{ fontSize: 24, fontWeight: 700, color: T.primary, marginBottom: 12 }}>The Climate Tracker</h2>
@@ -1819,7 +1819,7 @@ function ComponentModal({ componentName, T, onClose }) {
           <div>
             <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16, color: T.text }}>{componentName}</h1>
             <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/HC-SR04_ultrasonic_sensor.jpg/640px-HC-SR04_ultrasonic_sensor.jpg" alt="Ultrasonic Sensor (HC-SR04)" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
+              <img src="https://www.kitkraft.in/cdn/shop/files/ultrasonic_sensor_3_e3673ef4-1f94-4979-be20-213ccbe626b4.png?v=1752597803" alt="Ultrasonic Sensor (HC-SR04)" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
             </div>
 
             <h2 style={{ fontSize: 24, fontWeight: 700, color: T.primary, marginBottom: 12 }}>The Bat Radar</h2>
@@ -1894,7 +1894,7 @@ function ComponentModal({ componentName, T, onClose }) {
           <div>
             <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16, color: T.text }}>{componentName}</h1>
             <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Infrared_sensor.jpg/640px-Infrared_sensor.jpg" alt="IR Sensor" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
+              <img src="https://probots.co.in/pub/media/catalog/product/cache/d8ddd0f9b0cd008b57085cd218b48832/i/r/ir-sensor-module-line-following.jpg" alt="IR Sensor" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
             </div>
 
             <h2 style={{ fontSize: 24, fontWeight: 700, color: T.primary, marginBottom: 12 }}>The Digital Eye</h2>
@@ -1962,7 +1962,7 @@ function ComponentModal({ componentName, T, onClose }) {
           <div>
             <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16, color: T.text }}>{componentName}</h1>
             <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Photoresistor.jpg/640px-Photoresistor.jpg" alt="LDR (Light Sensor)" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
+              <img src="https://www.sunrobotics.in/cdn/shop/files/LDR-module-1_60b4d653-45a9-4e6f-83f5-d8877c29bbcb_1920x.png?v=1746160216" alt="LDR (Light Sensor)" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
             </div>
 
             <h2 style={{ fontSize: 24, fontWeight: 700, color: T.primary, marginBottom: 12 }}>The Electronic Pupil</h2>
@@ -2028,7 +2028,7 @@ function ComponentModal({ componentName, T, onClose }) {
           <div>
             <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16, color: T.text }}>{componentName}</h1>
             <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Piezoelectric_buzzer.jpg/640px-Piezoelectric_buzzer.jpg" alt="Active Buzzer" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
+              <img src="https://robu.in/_next/image/?url=https%3A%2F%2Frobu-prod-media.s3.ap-south-1.amazonaws.com%2Fuploads%2F2024%2F10%2FActive-Buzzer.png&w=1920&q=90" alt="Active Buzzer" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
             </div>
 
             <h2 style={{ fontSize: 24, fontWeight: 700, color: T.primary, marginBottom: 12 }}>The Alarm Bell</h2>
@@ -2072,7 +2072,7 @@ function ComponentModal({ componentName, T, onClose }) {
           <div>
             <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16, color: T.text }}>{componentName}</h1>
             <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Servo_Motor.jpg/640px-Servo_Motor.jpg" alt="SG90 Servo Motor" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
+              <img src="https://robukits.in/static/uploads/sg90.png" alt="SG90 Servo Motor" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
             </div>
 
             <h2 style={{ fontSize: 24, fontWeight: 700, color: T.primary, marginBottom: 12 }}>The Precision Arm</h2>
@@ -2123,7 +2123,7 @@ function ComponentModal({ componentName, T, onClose }) {
           <div>
             <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16, color: T.text }}>{componentName}</h1>
             <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Tact_switch.jpg/640px-Tact_switch.jpg" alt="Push Buttons" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
+              <img src="https://projectpoint.in/image/cache/catalog/button_12mm-800x800.jpg" alt="Push Buttons" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
             </div>
 
             <h2 style={{ fontSize: 24, fontWeight: 700, color: T.primary, marginBottom: 12 }}>The Digital Trigger</h2>
@@ -2168,7 +2168,7 @@ function ComponentModal({ componentName, T, onClose }) {
           <div>
             <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16, color: T.text }}>{componentName}</h1>
             <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/5mm_Red_LED.jpg/640px-5mm_Red_LED.jpg" alt="LEDs" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
+              <img src="https://dynokart.in/wp-content/uploads/2018/08/3mm-led-1.jpg" alt="LEDs" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
             </div>
 
             <h2 style={{ fontSize: 24, fontWeight: 700, color: T.primary, marginBottom: 12 }}>The Status Lights</h2>
@@ -2212,7 +2212,7 @@ function ComponentModal({ componentName, T, onClose }) {
           <div>
             <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16, color: T.text }}>{componentName}</h1>
             <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/4_Resistors.jpg/640px-4_Resistors.jpg" alt="Resistors" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
+              <img src="https://5.imimg.com/data5/SELLER/Default/2023/12/369621363/DH/RH/UO/21085075/resistors-th-and-smd.jpg" alt="Resistors" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
             </div>
 
             <h2 style={{ fontSize: 24, fontWeight: 700, color: T.primary, marginBottom: 12 }}>The Speed Bumps</h2>
@@ -2255,7 +2255,7 @@ function ComponentModal({ componentName, T, onClose }) {
               </div>
               <div style={{ display: 'flex', alignItems: 'flex-start', padding: 16, background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12 }}>
                 <div style={{ padding: '4px 10px', background: 'rgba(16, 185, 129, 0.1)', color: '#10b981', borderRadius: 6, fontSize: 12, fontWeight: 800, marginRight: 16, minWidth: 70, textAlign: 'center', flexShrink: 0 }}>Reading Values</div>
-                <div style={{ flex: 1, fontSize: 14, color: T.textSub, lineHeight: 1.6 }}>You know how strong a resistor is by reading the painted color bands on its body.<br/><br/><strong style={{ color: T.text }}>220 Ohm</strong> (used for LEDs) = Red-Red-Brown.<br/><strong style={{ color: T.text }}>10k Ohm</strong> (used for sensors) = Brown-Black-Orange.</div>
+                <div style={{ flex: 1, fontSize: 14, color: T.textSub, lineHeight: 1.6 }}>You know how strong a resistor is by reading the painted color bands on its body.<br /><br /><strong style={{ color: T.text }}>220 Ohm</strong> (used for LEDs) = Red-Red-Brown.<br /><strong style={{ color: T.text }}>10k Ohm</strong> (used for sensors) = Brown-Black-Orange.</div>
               </div>
             </div>
           </div>
@@ -4749,7 +4749,7 @@ export default function App() {
           {' '}
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             {' '}
-            <TToggle dark={dark} onToggle={() => setDark((d) => !d)} T={T} />
+
             {' '}
             <a
               href="https://forms.gle/FLKkVrgrYy6tQxm16"
@@ -5784,23 +5784,29 @@ export default function App() {
 
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16, marginBottom: 52 }}>
                   {[
-                    { n: 'ESP32 Development Board', icon: '🧠', d: 'The brain of the operation. Contains a dual-core processor, Wi-Fi, and Bluetooth. It runs your code and controls everything else.' },
-                    { n: 'Breadboard', icon: '🧲', d: 'The prototyping base. Allows you to connect components together without any soldering using internal metal clips.' },
-                    { n: 'Jumper Wires', icon: '🔌', d: 'The circulatory system. These carry voltage and signals between your ESP32 and your components.' },
-                    { n: '0.96" OLED Display', icon: '📺', d: 'A tiny, crisp screen that uses I2C communication. Perfect for showing sensor data or debugging information directly on the hardware.' },
-                    { n: 'DHT11 Sensor', icon: '🌡️', d: 'A digital sensor that measures ambient temperature and humidity. Great for weather stations.' },
-                    { n: 'Ultrasonic Sensor (HC-SR04)', icon: '🦇', d: 'Acts like bat echolocation. It sends out an ultrasonic ping and measures how long it takes to bounce back, calculating distance.' },
-                    { n: 'IR Sensor', icon: '👁️', d: 'Detects infrared light bouncing off objects. Used for obstacle avoidance or detecting black/white lines.' },
-                    { n: 'LDR (Light Sensor)', icon: '☀️', d: 'A Light Dependent Resistor. Its resistance changes based on how much light hits its face.' },
-                    { n: 'Active Buzzer', icon: '🔊', d: 'A simple speaker that emits a loud beep when provided with power. Great for alarms.' },
-                    { n: 'SG90 Servo Motor', icon: '🦾', d: 'A precise motor that can rotate to specific angles (0-180 degrees) based on PWM signals.' },
-                    { n: 'Push Buttons', icon: '🔘', d: 'Simple tactile switches that close a circuit when pressed, used for user input.' },
-                    { n: 'LEDs', icon: '💡', d: 'Light Emitting Diodes. They turn electrical current into light. Always use them with a resistor!' },
-                    { n: 'Resistors', icon: '🛑', d: 'They restrict the flow of current. Essential for protecting delicate components like LEDs from receiving too much power.' }
+                    { n: 'ESP32 Development Board', icon: '🧠', img: 'https://robukits.in/static/uploads/esp32devkit1.png', d: 'The brain of the operation. Contains a dual-core processor, Wi-Fi, and Bluetooth. It runs your code and controls everything else.' },
+                    { n: 'Breadboard', icon: '🧲', img: 'https://auhbsvzkkblo2s0k.public.blob.vercel-storage.com/breadboard-840-tie-point-500x500-removebg-preview.png', d: 'The prototyping base. Allows you to connect components together without any soldering using internal metal clips.' },
+                    { n: 'Jumper Wires', icon: '🔌', img: 'https://robocraze.com/cdn/shop/files/3_Male_to_Female_Jumper_Wires_20cm_20pcs_1000x.png?v=1758691490', d: 'The circulatory system. These carry voltage and signals between your ESP32 and your components.' },
+                    { n: '0.96" OLED Display', icon: '📺', img: 'https://auhbsvzkkblo2s0k.public.blob.vercel-storage.com/ChatGPT_Image_Jun_8__2026__01_20_57_AM-removebg-preview.png', d: 'A tiny, crisp screen that uses I2C communication. Perfect for showing sensor data or debugging information directly on the hardware.' },
+                    { n: 'DHT11 Sensor', icon: '🌡️', img: 'https://auhbsvzkkblo2s0k.public.blob.vercel-storage.com/DHT11_Humidity_Temperature_Sensor_Module_1000x.jpg', d: 'A digital sensor that measures ambient temperature and humidity. Great for weather stations.' },
+                    { n: 'Ultrasonic Sensor (HC-SR04)', icon: '🦇', img: 'https://www.kitkraft.in/cdn/shop/files/ultrasonic_sensor_3_e3673ef4-1f94-4979-be20-213ccbe626b4.png?v=1752597803', d: 'Acts like bat echolocation. It sends out an ultrasonic ping and measures how long it takes to bounce back, calculating distance.' },
+                    { n: 'IR Sensor', icon: '👁️', img: 'https://probots.co.in/pub/media/catalog/product/cache/d8ddd0f9b0cd008b57085cd218b48832/i/r/ir-sensor-module-line-following.jpg', d: 'Detects infrared light bouncing off objects. Used for obstacle avoidance or detecting black/white lines.' },
+                    { n: 'LDR (Light Sensor)', icon: '☀️', img: 'https://www.sunrobotics.in/cdn/shop/files/LDR-module-1_60b4d653-45a9-4e6f-83f5-d8877c29bbcb_1920x.png?v=1746160216', d: 'A Light Dependent Resistor. Its resistance changes based on how much light hits its face.' },
+                    { n: 'Active Buzzer', icon: '🔊', img: 'https://robu.in/_next/image/?url=https%3A%2F%2Frobu-prod-media.s3.ap-south-1.amazonaws.com%2Fuploads%2F2024%2F10%2FActive-Buzzer.png&w=1920&q=90', d: 'A simple speaker that emits a loud beep when provided with power. Great for alarms.' },
+                    { n: 'SG90 Servo Motor', icon: '🦾', img: 'https://robukits.in/static/uploads/sg90.png', d: 'A precise motor that can rotate to specific angles (0-180 degrees) based on PWM signals.' },
+                    { n: '5V Single Channel Relay', icon: '⚡', img: 'https://5.imimg.com/data5/SELLER/Default/2020/11/FK/WK/OH/15458098/5v-relay-module-500x500.jpg', d: 'An electromechanical switch. It allows your delicate, low-voltage ESP32 to safely control high-power devices by using an internal electromagnet.' },
+                    { n: 'Push Buttons', icon: '🔘', img: 'https://projectpoint.in/image/cache/catalog/button_12mm-800x800.jpg', d: 'Simple tactile switches that close a circuit when pressed, used for user input.' },
+                    { n: 'LEDs', icon: '💡', img: 'https://dynokart.in/wp-content/uploads/2018/08/3mm-led-1.jpg', d: 'Light Emitting Diodes. They turn electrical current into light. Always use them with a resistor!' },
+                    { n: 'Resistors', icon: '🛑', img: 'https://5.imimg.com/data5/SELLER/Default/2023/12/369621363/DH/RH/UO/21085075/resistors-th-and-smd.jpg', d: 'They restrict the flow of current. Essential for protecting delicate components like LEDs from receiving too much power.' },
+                    { n: 'Capacitors', icon: '🔋', img: 'https://www.codrey.com/wp-content/uploads/2019/01/Capcitors.jpg', d: 'They act like tiny, lightning-fast batteries. They store and release electrical energy quickly to smooth out power drops and keep your circuits stable.' },
+                    { n: 'Potentiometer', icon: '🎛️', img: 'https://robodo.in/cdn/shop/products/51mNAteWA9L.jpg?v=1672847436', d: 'An adjustable twist-knob resistor. Turn the dial to smoothly increase or decrease the voltage flowing through your circuit, exactly like a volume knob on a speaker.' },
+                    { n: 'BC547 transistors', icon: '🔀', img: 'https://robukits.in/static/uploads/bc547_2.png', d: 'The electronic muscle of your kit. It acts as a digital switch, allowing a tiny, weak signal from your ESP32 to safely control high-power devices like motors.' },
+                    { n: '555 Timer IC', icon: '⏱️', img: 'https://5.imimg.com/data5/SELLER/Default/2020/11/SW/FE/YR/15458098/555-timer-ic.png', d: 'A legendary microchip that acts as a heartbeat for your circuit. It creates perfect timing pulses to blink lights or make sirens without needing any code.' },
+                    { n: 'USB Cable', icon: '🔌', img: 'https://rukmini1.flixcart.com/image/1500/1500/xif0q/data-cable/micro-usb-cable/7/9/l/15w-micro-usb-cable-for-super-fast-charge-treams-original-imahgmeeq4ttrahz.jpeg?q=70', d: 'The lifeline of your project. It provides raw power to your board and transfers your compiled code from your computer straight into the ESP32\'s memory.' }
                   ].map(item => (
                     <div key={item.n} style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12, padding: 20, display: 'flex', flexDirection: 'column' }}>
                       <div style={{ width: '100%', height: 120, background: T.primaryBg, borderRadius: 8, marginBottom: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-                        <img src={`https://placehold.co/300x120/png?text=${encodeURIComponent(item.n)}`} alt={item.n} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        <img src={item.img || `https://placehold.co/300x120/png?text=${encodeURIComponent(item.n)}`} alt={item.n} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                       </div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
                         <div style={{ width: 36, height: 36, background: T.primaryBg, border: `1px solid ${T.primaryBorder}`, borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18 }}>
