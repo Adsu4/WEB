@@ -151,6 +151,8 @@ const CSS = `
 input,textarea{outline:none;font-family:'Plus Jakarta Sans',sans-serif;}
 a{text-decoration:none;color:inherit}
 button{font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;}
+.sim-run-btn{transition:all 0.2s ease;}
+.sim-run-btn:hover{filter:brightness(1.1);transform:translateY(-1px);}
 
 /* Custom Code Colorizer classes */
 .st-kw{color:#c678dd;font-weight:600;} 
@@ -1064,6 +1066,7 @@ function LessonSimulator({ pageId, T }) {
             </div>
           </div>
           <button
+            className="sim-run-btn"
             onClick={() => {
               setOnDelay(parseInt(tempOnDelay) || 10);
               setOffDelay(parseInt(tempOffDelay) || 10);
@@ -4345,6 +4348,15 @@ export default function App() {
   const unlocked = true;
   const [overrideGlitch, setOverrideGlitch] = useState(false);
   const [showMobileWarning, setShowMobileWarning] = useState(false);
+  const PAGE_ORDER = [
+    'gz1', 'gz2', 'gz3', 'gz4', 'gz5',
+    'p1m1', 'p1m2', 'p1m3', 'p1m4', 'p1m5', 'p1cap',
+    'p2m1', 'p2m2', 'p2m3', 'p2m4', 'p2cap',
+    'p3m1', 'p3m2', 'p3m3', 'p3m4', 'p3cap',
+    'p4m1', 'p4m2', 'p4m3', 'p4cap'
+  ];
+  const currentPageIndex = PAGE_ORDER.indexOf(page);
+  const nextPageId = currentPageIndex !== -1 && currentPageIndex < PAGE_ORDER.length - 1 ? PAGE_ORDER[currentPageIndex + 1] : null;
 
   useEffect(() => {
     if (window.innerWidth < 768) {
@@ -5446,6 +5458,30 @@ export default function App() {
                 <div style={{ marginTop: 52, paddingBottom: 52 }}>
                   <PlumbingSim T={T} />
                 </div>
+                <div style={{ marginTop: 40, borderTop: `1px solid ${T.border}`, paddingTop: 32, display: 'flex', justifyContent: 'flex-end' }}>
+                  <button
+                    onClick={() => {
+                      go(nextPageId);
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    className="sim-run-btn"
+                    style={{
+                      background: T.primary,
+                      color: '#fff',
+                      border: 'none',
+                      borderRadius: 8,
+                      padding: '12px 24px',
+                      fontWeight: 700,
+                      fontSize: 14,
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 8,
+                    }}
+                  >
+                    Next: {crumb[nextPageId] ? crumb[nextPageId][1] : (LESSONS[nextPageId]?.title || 'Module')} ➔
+                  </button>
+                </div>
               </div>
             )}
 
@@ -5661,6 +5697,31 @@ export default function App() {
                   {' '}
                 </section>
                 {' '}
+
+                <div style={{ marginTop: 40, borderTop: `1px solid ${T.border}`, paddingTop: 32, display: 'flex', justifyContent: 'flex-end' }}>
+                  <button
+                    onClick={() => {
+                      go(nextPageId);
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    className="sim-run-btn"
+                    style={{
+                      background: T.primary,
+                      color: '#fff',
+                      border: 'none',
+                      borderRadius: 8,
+                      padding: '12px 24px',
+                      fontWeight: 700,
+                      fontSize: 14,
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 8,
+                    }}
+                  >
+                    Next: {crumb[nextPageId] ? crumb[nextPageId][1] : (LESSONS[nextPageId]?.title || 'Module')} ➔
+                  </button>
+                </div>
               </div>
             )}
 
@@ -6053,6 +6114,31 @@ export default function App() {
                   {' '}
                 </section>
                 {' '}
+
+                <div style={{ marginTop: 40, borderTop: `1px solid ${T.border}`, paddingTop: 32, display: 'flex', justifyContent: 'flex-end' }}>
+                  <button
+                    onClick={() => {
+                      go(nextPageId);
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    className="sim-run-btn"
+                    style={{
+                      background: T.primary,
+                      color: '#fff',
+                      border: 'none',
+                      borderRadius: 8,
+                      padding: '12px 24px',
+                      fontWeight: 700,
+                      fontSize: 14,
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 8,
+                    }}
+                  >
+                    Next: {crumb[nextPageId] ? crumb[nextPageId][1] : (LESSONS[nextPageId]?.title || 'Module')} ➔
+                  </button>
+                </div>
               </div>
             )}
 
@@ -6108,6 +6194,30 @@ export default function App() {
                     <strong style={{ color: T.text }}>220Ω (Red-Red-Brown):</strong> Your best friend. Use this to protect LEDs from burning out. <br />
                     <strong style={{ color: T.text }}>10kΩ (Brown-Black-Orange):</strong> Your second best friend. Used as "pull-up" or "pull-down" resistors for buttons.
                   </p>
+                </div>
+                <div style={{ marginTop: 40, borderTop: `1px solid ${T.border}`, paddingTop: 32, display: 'flex', justifyContent: 'flex-end' }}>
+                  <button
+                    onClick={() => {
+                      go(nextPageId);
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    className="sim-run-btn"
+                    style={{
+                      background: T.primary,
+                      color: '#fff',
+                      border: 'none',
+                      borderRadius: 8,
+                      padding: '12px 24px',
+                      fontWeight: 700,
+                      fontSize: 14,
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 8,
+                    }}
+                  >
+                    Next: {crumb[nextPageId] ? crumb[nextPageId][1] : (LESSONS[nextPageId]?.title || 'Module')} ➔
+                  </button>
                 </div>
               </div>
             )}
@@ -6678,18 +6788,20 @@ export default function App() {
                                   • {f.error || f.q}
                                 </strong>
                                 {' '}
-                                <p
-                                  style={{
-                                    fontSize: 13,
-                                    color: T.textSub,
-                                    marginBottom: 2,
-                                  }}
-                                >
-                                  <strong style={{ color: T.textMuted }}>
-                                    Cause:
-                                  </strong>{' '}
-                                  {f.cause}
-                                </p>
+                                {f.cause && (
+                                  <p
+                                    style={{
+                                      fontSize: 13,
+                                      color: T.textSub,
+                                      marginBottom: 2,
+                                    }}
+                                  >
+                                    <strong style={{ color: T.textMuted }}>
+                                      Cause:
+                                    </strong>{' '}
+                                    {f.cause}
+                                  </p>
+                                )}
                                 {' '}
                                 <p style={{ fontSize: 13, color: T.textSub }}>
                                   <strong style={{ color: T.textMuted }}>
@@ -6881,6 +6993,32 @@ export default function App() {
                       </div>
                     )}
                     {' '}
+                    {nextPageId && (
+                      <div style={{ marginTop: 40, borderTop: `1px solid ${T.border}`, paddingTop: 32, display: 'flex', justifyContent: 'flex-end' }}>
+                        <button
+                          onClick={() => {
+                            go(nextPageId);
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                          }}
+                          className="sim-run-btn"
+                          style={{
+                            background: T.primary,
+                            color: '#fff',
+                            border: 'none',
+                            borderRadius: 8,
+                            padding: '12px 24px',
+                            fontWeight: 700,
+                            fontSize: 14,
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 8,
+                          }}
+                        >
+                          Next: {crumb[nextPageId] ? crumb[nextPageId][1] : (LESSONS[nextPageId]?.title || 'Module')} ➔
+                        </button>
+                      </div>
+                    )}
                   </div>
                   {' '}
                   {/* Right Column (Width: 40% on desktop, sticky sandbox panel) */}
