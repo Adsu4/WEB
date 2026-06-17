@@ -1819,7 +1819,7 @@ function ComponentModal({ componentName, T, onClose }) {
           <div>
             <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16, color: T.text }}>{componentName}</h1>
             <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-              <img src="https://www.kitkraft.in/cdn/shop/files/ultrasonic_sensor_3_e3673ef4-1f94-4979-be20-213ccbe626b4.png?v=1752597803" alt="Ultrasonic Sensor (HC-SR04)" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
+              <img src="https://spare3d.in/wp-content/uploads/2017/06/Spare3d_ultrasonic_sensor_hc_sr04.jpg" alt="Ultrasonic Sensor (HC-SR04)" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
             </div>
 
             <h2 style={{ fontSize: 24, fontWeight: 700, color: T.primary, marginBottom: 12 }}>The Bat Radar</h2>
@@ -2294,7 +2294,7 @@ function ComponentModal({ componentName, T, onClose }) {
                 </div>
                 <h3 style={{ fontSize: 20, fontWeight: 700, color: T.text, margin: 0 }}>Pinout & Wiring</h3>
               </div>
-              
+
               <div style={{ background: T.surfaceAlt, border: `1px solid ${T.border}`, borderRadius: 12, padding: 24, marginBottom: 24 }}>
                 <h4 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: T.primary }}>Low-Voltage Side (ESP32)</h4>
                 <ul style={{ paddingLeft: 24, color: T.textSub, lineHeight: 1.8, marginBottom: 24 }}>
@@ -2302,13 +2302,70 @@ function ComponentModal({ componentName, T, onClose }) {
                   <li><strong style={{ color: T.text }}>GND (or DC-):</strong> Ground connection. Connect to GND.</li>
                   <li><strong style={{ color: T.text }}>IN:</strong> The signal pin. Connect this to an output GPIO on your ESP32. Sending a signal here triggers the switch. (Note: Many relays are "Active-Low", meaning sending LOW turns it ON).</li>
                 </ul>
-                
+
                 <h4 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: T.primary }}>High-Voltage Side (Screw Terminals)</h4>
                 <ul style={{ paddingLeft: 24, color: T.textSub, lineHeight: 1.8 }}>
                   <li><strong style={{ color: T.text }}>COM (Common):</strong> The main power coming in from your heavy battery or wall plug.</li>
                   <li><strong style={{ color: T.text }}>NO (Normally Open):</strong> Connects to your heavy device. It only receives power when the relay clicks ON.</li>
                   <li><strong style={{ color: T.text }}>NC (Normally Closed):</strong> Receives power until the relay clicks ON. Usually left empty for basic projects.</li>
                 </ul>
+              </div>
+            </div>
+
+            <button onClick={() => setComponentName(null)} style={{ padding: '10px 20px', background: 'transparent', border: `1px solid ${T.primary}`, color: T.primary, borderRadius: 8, marginTop: 20, fontSize: 14, fontWeight: 600, transition: 'all 0.2s' }} onMouseEnter={(e) => { e.currentTarget.style.background = T.primary; e.currentTarget.style.color = '#fff'; }} onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = T.primary; }}>
+              &larr; Back to Kit
+            </button>
+          </div>
+        ) : componentName === 'DC Motor with Fan Blade' ? (
+          <div>
+            <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16, color: T.text }}>
+              {componentName}
+            </h1>
+            <div style={{ width: '100%', height: 300, background: T.primaryBg, borderRadius: 16, marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+              <img src="https://i.ibb.co/Ps6kdgvy/file-00000000b07071fab5951d676892daaa.png" alt="DC Motor with Fan Blade" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
+            </div>
+
+            <h2 style={{ fontSize: 24, fontWeight: 700, color: T.primary, marginBottom: 12 }}>The Wind Maker</h2>
+            <p style={{ fontSize: 16, color: T.textSub, lineHeight: 1.8, marginBottom: 24 }}>
+              A simple, continuous rotation motor paired with a lightweight plastic propeller. It turns electrical energy into physical motion and aerodynamic thrust, perfect for automated cooling systems or hovercraft prototypes.
+            </p>
+
+            <div style={{ marginTop: 40 }}>
+              <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+                <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                  <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                </div>
+                <h3 style={{ fontSize: 20, fontWeight: 700, color: T.text, margin: 0 }}>How It Works (The Physics)</h3>
+              </div>
+              <p style={{ fontSize: 16, color: T.textSub, lineHeight: 1.8, marginBottom: 32 }}>
+                Inside the metal canister of the DC motor are stationary magnets (the stator) and a coil of wire wrapped around a central shaft (the rotor/armature). When electricity flows through the wire coil, it creates a temporary electromagnetic field. This field is constantly pushed and pulled by the permanent magnets surrounding it, forcing the central shaft to spin rapidly. When you attach the plastic fan blade to this spinning shaft, the angled blades push air molecules backward, creating an equal and opposite physical thrust forward.
+                <br /><br />
+                <strong>The Brains of the Module:</strong> A standard DC motor has no "brains" or internal chips—it is purely analog. If you give it power, it spins. If you reverse the power (swap the positive and negative wires), it spins in the exact opposite direction!
+              </p>
+            </div>
+
+            <div style={{ marginTop: 40 }}>
+              <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+                <div style={{ width: 40, height: 40, borderRadius: 12, background: T.primaryBg, color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 16 }}>
+                  <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                </div>
+                <h3 style={{ fontSize: 20, fontWeight: 700, color: T.text, margin: 0 }}>Pinout & Wiring</h3>
+              </div>
+              
+              <div style={{ background: T.surfaceAlt, border: `1px solid ${T.border}`, borderRadius: 12, padding: 24, marginBottom: 24 }}>
+                <p style={{ color: T.textSub, lineHeight: 1.8, marginBottom: 24 }}>
+                  <strong style={{ color: T.text }}>Terminals:</strong> The motor has two metal tabs on the back. It does not matter which one is positive or negative; swapping them just changes the spin direction.
+                </p>
+
+                <h4 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: '#ef4444' }}>The Hazard</h4>
+                <p style={{ color: T.textSub, lineHeight: 1.8, marginBottom: 24 }}>
+                  A DC motor pulls a large amount of current and creates dangerous voltage spikes (flyback) when it spins down. <strong style={{ color: '#ef4444' }}>NEVER</strong> wire a DC motor directly to your ESP32's delicate GPIO pins.
+                </p>
+                
+                <h4 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: '#10b981' }}>The Solution</h4>
+                <p style={{ color: T.textSub, lineHeight: 1.8 }}>
+                  You must use your <strong style={{ color: T.text }}>BC547 Transistor</strong> or your <strong style={{ color: T.text }}>5V Relay Module</strong> to control the motor safely. Connect the motor to the VIN (5V) power rail and Ground through your transistor or relay switch, and use the ESP32 to simply turn that switch on or off.
+                </p>
               </div>
             </div>
 
@@ -5841,24 +5898,25 @@ export default function App() {
 
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16, marginBottom: 52 }}>
                   {[
-                    { n: 'ESP32 Development Board', icon: '🧠', img: 'https://robukits.in/static/uploads/esp32devkit1.png', d: 'The brain of the operation. Contains a dual-core processor, Wi-Fi, and Bluetooth. It runs your code and controls everything else.' },
-                    { n: 'Breadboard', icon: '🧲', img: 'https://auhbsvzkkblo2s0k.public.blob.vercel-storage.com/breadboard-840-tie-point-500x500-removebg-preview.png', d: 'The prototyping base. Allows you to connect components together without any soldering using internal metal clips.' },
+                    { n: 'ESP32 Development Board', icon: '🧠', img: 'https://5.imimg.com/data5/SELLER/Default/2024/5/415247702/WU/WQ/YV/60596912/esp-32-development-board-with-wifi-and-bluetooth.jpg', d: 'The brain of the operation. Contains a dual-core processor, Wi-Fi, and Bluetooth. It runs your code and controls everything else.' },
+                    { n: 'Breadboard', icon: '🧲', img: 'https://robocraze.com/cdn/shop/products/2_GL12_840_Points_Breadboard.png?v=1743775778', d: 'The prototyping base. Allows you to connect components together without any soldering using internal metal clips.' },
                     { n: 'Jumper Wires', icon: '🔌', img: 'https://robocraze.com/cdn/shop/files/3_Male_to_Female_Jumper_Wires_20cm_20pcs_1000x.png?v=1758691490', d: 'The circulatory system. These carry voltage and signals between your ESP32 and your components.' },
-                    { n: '0.96" OLED Display', icon: '📺', img: 'https://auhbsvzkkblo2s0k.public.blob.vercel-storage.com/ChatGPT_Image_Jun_8__2026__01_20_57_AM-removebg-preview.png', d: 'A tiny, crisp screen that uses I2C communication. Perfect for showing sensor data or debugging information directly on the hardware.' },
+                    { n: '0.96" OLED Display', icon: '📺', img: 'https://i.ibb.co/FkDrwpqd/Untitled-design-3.png', d: 'A tiny, crisp screen that uses I2C communication. Perfect for showing sensor data or debugging information directly on the hardware.' },
                     { n: 'DHT11 Sensor', icon: '🌡️', img: 'https://auhbsvzkkblo2s0k.public.blob.vercel-storage.com/DHT11_Humidity_Temperature_Sensor_Module_1000x.jpg', d: 'A digital sensor that measures ambient temperature and humidity. Great for weather stations.' },
-                    { n: 'Ultrasonic Sensor (HC-SR04)', icon: '🦇', img: 'https://www.kitkraft.in/cdn/shop/files/ultrasonic_sensor_3_e3673ef4-1f94-4979-be20-213ccbe626b4.png?v=1752597803', d: 'Acts like bat echolocation. It sends out an ultrasonic ping and measures how long it takes to bounce back, calculating distance.' },
+                    { n: 'Ultrasonic Sensor (HC-SR04)', icon: '🦇', img: 'https://spare3d.in/wp-content/uploads/2017/06/Spare3d_ultrasonic_sensor_hc_sr04.jpg', d: 'Acts like bat echolocation. It sends out an ultrasonic ping and measures how long it takes to bounce back, calculating distance.' },
                     { n: 'IR Sensor', icon: '👁️', img: 'https://probots.co.in/pub/media/catalog/product/cache/d8ddd0f9b0cd008b57085cd218b48832/i/r/ir-sensor-module-line-following.jpg', d: 'Detects infrared light bouncing off objects. Used for obstacle avoidance or detecting black/white lines.' },
                     { n: 'LDR (Light Sensor)', icon: '☀️', img: 'https://www.sunrobotics.in/cdn/shop/files/LDR-module-1_60b4d653-45a9-4e6f-83f5-d8877c29bbcb_1920x.png?v=1746160216', d: 'A Light Dependent Resistor. Its resistance changes based on how much light hits its face.' },
                     { n: 'Active Buzzer', icon: '🔊', img: 'https://robu.in/_next/image/?url=https%3A%2F%2Frobu-prod-media.s3.ap-south-1.amazonaws.com%2Fuploads%2F2024%2F10%2FActive-Buzzer.png&w=1920&q=90', d: 'A simple speaker that emits a loud beep when provided with power. Great for alarms.' },
-                    { n: 'SG90 Servo Motor', icon: '🦾', img: 'https://robukits.in/static/uploads/sg90.png', d: 'A precise motor that can rotate to specific angles (0-180 degrees) based on PWM signals.' },
+                    { n: 'SG90 Servo Motor', icon: '🦾', img: 'https://store.moonpreneur.com/cdn/shop/files/servo_800x1026_crop_center@2x.jpg?v=1744700803', d: 'A precise motor that can rotate to specific angles (0-180 degrees) based on PWM signals.' },
                     { n: '5V Single Channel Relay', icon: '⚡', img: 'https://5.imimg.com/data5/SELLER/Default/2020/11/FK/WK/OH/15458098/5v-relay-module-500x500.jpg', d: 'An electromechanical switch. It allows your delicate, low-voltage ESP32 to safely control high-power devices by using an internal electromagnet.' },
+                    { n: 'DC Motor with Fan Blade', icon: '🌀', img: 'https://i.ibb.co/Ps6kdgvy/file-00000000b07071fab5951d676892daaa.png', d: 'A continuous rotation motor paired with a plastic propeller. It turns electrical energy into physical motion and aerodynamic thrust, perfect for automated cooling fans.' },
                     { n: 'Push Buttons', icon: '🔘', img: 'https://projectpoint.in/image/cache/catalog/button_12mm-800x800.jpg', d: 'Simple tactile switches that close a circuit when pressed, used for user input.' },
                     { n: 'LEDs', icon: '💡', img: 'https://dynokart.in/wp-content/uploads/2018/08/3mm-led-1.jpg', d: 'Light Emitting Diodes. They turn electrical current into light. Always use them with a resistor!' },
                     { n: 'Resistors', icon: '🛑', img: 'https://5.imimg.com/data5/SELLER/Default/2023/12/369621363/DH/RH/UO/21085075/resistors-th-and-smd.jpg', d: 'They restrict the flow of current. Essential for protecting delicate components like LEDs from receiving too much power.' },
-                    { n: 'Capacitors', icon: '🔋', img: 'https://www.codrey.com/wp-content/uploads/2019/01/Capcitors.jpg', d: 'They act like tiny, lightning-fast batteries. They store and release electrical energy quickly to smooth out power drops and keep your circuits stable.' },
+                    { n: 'Capacitors', icon: '🔋', img: 'https://i.ibb.co/VcwYXGcq/file-0000000008687208ae5bb40738f77c57.png', d: 'They act like tiny, lightning-fast batteries. They store and release electrical energy quickly to smooth out power drops and keep your circuits stable.' },
                     { n: 'Potentiometer', icon: '🎛️', img: 'https://robodo.in/cdn/shop/products/51mNAteWA9L.jpg?v=1672847436', d: 'An adjustable twist-knob resistor. Turn the dial to smoothly increase or decrease the voltage flowing through your circuit, exactly like a volume knob on a speaker.' },
-                    { n: 'BC547 transistors', icon: '🔀', img: 'https://robukits.in/static/uploads/bc547_2.png', d: 'The electronic muscle of your kit. It acts as a digital switch, allowing a tiny, weak signal from your ESP32 to safely control high-power devices like motors.' },
-                    { n: '555 Timer IC', icon: '⏱️', img: 'https://5.imimg.com/data5/SELLER/Default/2020/11/SW/FE/YR/15458098/555-timer-ic.png', d: 'A legendary microchip that acts as a heartbeat for your circuit. It creates perfect timing pulses to blink lights or make sirens without needing any code.' },
+                    { n: 'BC547 transistors', icon: '🔀', img: 'https://etechrobot.com/wp-content/uploads/2025/11/BC547-Transistor-300x300.png', d: 'The electronic muscle of your kit. It acts as a digital switch, allowing a tiny, weak signal from your ESP32 to safely control high-power devices like motors.' },
+                    { n: '555 Timer IC', icon: '⏱️', img: 'https://probots.co.in/pub/media/catalog/product/cache/d8ddd0f9b0cd008b57085cd218b48832/5/5/555_lrg.jpg', d: 'A legendary microchip that acts as a heartbeat for your circuit. It creates perfect timing pulses to blink lights or make sirens without needing any code.' },
                     { n: 'USB Cable', icon: '🔌', img: 'https://rukmini1.flixcart.com/image/1500/1500/xif0q/data-cable/micro-usb-cable/7/9/l/15w-micro-usb-cable-for-super-fast-charge-treams-original-imahgmeeq4ttrahz.jpeg?q=70', d: 'The lifeline of your project. It provides raw power to your board and transfers your compiled code from your computer straight into the ESP32\'s memory.' }
                   ].map(item => (
                     <div key={item.n} style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12, padding: 20, display: 'flex', flexDirection: 'column' }}>
