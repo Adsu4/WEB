@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 export default function SerialCommSim({ T }) {
   const [isRunning, setIsRunning] = useState(false);
   const [logs, setLogs] = useState([]);
-  const bottomRef = useRef(null);
+  const containerRef = useRef(null);
 
   useEffect(() => {
     let timer;
@@ -22,8 +22,8 @@ export default function SerialCommSim({ T }) {
   }, [isRunning]);
 
   useEffect(() => {
-    if (bottomRef.current) {
-      bottomRef.current.scrollIntoView({ behavior: 'smooth' });
+    if (containerRef.current && logs.length > 0) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
     }
   }, [logs]);
 
@@ -50,7 +50,7 @@ export default function SerialCommSim({ T }) {
         </button>
       </div>
 
-      <div style={{ 
+      <div ref={containerRef} style={{ 
         background: '#0f172a', height: 200, borderRadius: 8, padding: 12, overflowY: 'auto',
         fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: '#38bdf8', border: '1px solid #1e293b'
       }}>
@@ -61,7 +61,6 @@ export default function SerialCommSim({ T }) {
             {l}
           </div>
         ))}
-        <div ref={bottomRef} />
       </div>
 
       <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8, fontSize: 10, color: T.textMuted, fontFamily: 'monospace' }}>
