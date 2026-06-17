@@ -2351,7 +2351,7 @@ function ComponentModal({ componentName, T, onClose }) {
                 </div>
                 <h3 style={{ fontSize: 20, fontWeight: 700, color: T.text, margin: 0 }}>Pinout & Wiring</h3>
               </div>
-              
+
               <div style={{ background: T.surfaceAlt, border: `1px solid ${T.border}`, borderRadius: 12, padding: 24, marginBottom: 24 }}>
                 <p style={{ color: T.textSub, lineHeight: 1.8, marginBottom: 24 }}>
                   <strong style={{ color: T.text }}>Terminals:</strong> The motor has two metal tabs on the back. It does not matter which one is positive or negative; swapping them just changes the spin direction.
@@ -2361,7 +2361,7 @@ function ComponentModal({ componentName, T, onClose }) {
                 <p style={{ color: T.textSub, lineHeight: 1.8, marginBottom: 24 }}>
                   A DC motor pulls a large amount of current and creates dangerous voltage spikes (flyback) when it spins down. <strong style={{ color: '#ef4444' }}>NEVER</strong> wire a DC motor directly to your ESP32's delicate GPIO pins.
                 </p>
-                
+
                 <h4 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: '#10b981' }}>The Solution</h4>
                 <p style={{ color: T.textSub, lineHeight: 1.8 }}>
                   You must use your <strong style={{ color: T.text }}>BC547 Transistor</strong> or your <strong style={{ color: T.text }}>5V Relay Module</strong> to control the motor safely. Connect the motor to the VIN (5V) power rail and Ground through your transistor or relay switch, and use the ESP32 to simply turn that switch on or off.
@@ -2406,13 +2406,13 @@ function ComponentModal({ componentName, T, onClose }) {
                 </div>
                 <h3 style={{ fontSize: 20, fontWeight: 700, color: T.text, margin: 0 }}>Pinout & Wiring</h3>
               </div>
-              
+
               <div style={{ background: T.surfaceAlt, border: `1px solid ${T.border}`, borderRadius: 12, padding: 24, marginBottom: 24 }}>
                 <h4 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: T.primary }}>Ceramic Capacitors (100nF)</h4>
                 <p style={{ color: T.textSub, lineHeight: 1.8, marginBottom: 24 }}>
                   These look like tiny brown discs. They are <strong style={{ color: T.text }}>non-polarized</strong>, meaning they have no positive or negative leg. You can plug them in facing either direction.
                 </p>
-                
+
                 <h4 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: T.primary }}>Electrolytic Capacitors (1uF, 10uF, 100uF)</h4>
                 <p style={{ color: T.textSub, lineHeight: 1.8 }}>
                   These look like miniature soda cans. They <strong style={{ color: T.text }}>ARE polarized</strong>. The longer leg is positive, and the side of the can with the large minus stripe marks the negative leg. If you plug these in backward, they can pop!
@@ -2457,7 +2457,7 @@ function ComponentModal({ componentName, T, onClose }) {
                 </div>
                 <h3 style={{ fontSize: 20, fontWeight: 700, color: T.text, margin: 0 }}>Pinout & Wiring</h3>
               </div>
-              
+
               <div style={{ background: T.surfaceAlt, border: `1px solid ${T.border}`, borderRadius: 12, padding: 24, marginBottom: 24 }}>
                 <ul style={{ paddingLeft: 24, color: T.textSub, lineHeight: 1.8, marginBottom: 24 }}>
                   <li><strong style={{ color: T.text }}>Outer Pins:</strong> The two outside legs are for power. Connect the left leg to 3V3 and the right leg to Ground (you can actually swap these to reverse the direction the dial works).</li>
@@ -2503,7 +2503,7 @@ function ComponentModal({ componentName, T, onClose }) {
                 </div>
                 <h3 style={{ fontSize: 20, fontWeight: 700, color: T.text, margin: 0 }}>Pinout & Wiring</h3>
               </div>
-              
+
               <div style={{ background: T.surfaceAlt, border: `1px solid ${T.border}`, borderRadius: 12, padding: 24, marginBottom: 24 }}>
                 <p style={{ color: T.textSub, lineHeight: 1.8, marginBottom: 12 }}>Hold the transistor so the flat side with the text is facing you, and the pins point down:</p>
                 <ul style={{ paddingLeft: 24, color: T.textSub, lineHeight: 1.8, marginBottom: 24 }}>
@@ -2551,7 +2551,7 @@ function ComponentModal({ componentName, T, onClose }) {
                 </div>
                 <h3 style={{ fontSize: 20, fontWeight: 700, color: T.text, margin: 0 }}>Pinout & Wiring</h3>
               </div>
-              
+
               <div style={{ background: T.surfaceAlt, border: `1px solid ${T.border}`, borderRadius: 12, padding: 24, marginBottom: 24 }}>
                 <p style={{ color: T.textSub, lineHeight: 1.8, marginBottom: 12 }}>The chip has 8 pins. Look for the small indented dot or half-circle notch on the top of the chip to find Pin 1 (top left).</p>
                 <ul style={{ paddingLeft: 24, color: T.textSub, lineHeight: 1.8, marginBottom: 24 }}>
@@ -2599,7 +2599,7 @@ function ComponentModal({ componentName, T, onClose }) {
                 </div>
                 <h3 style={{ fontSize: 20, fontWeight: 700, color: T.text, margin: 0 }}>Types & Wiring</h3>
               </div>
-              
+
               <div style={{ background: T.surfaceAlt, border: `1px solid ${T.border}`, borderRadius: 12, padding: 24, marginBottom: 24 }}>
                 <p style={{ color: T.textSub, lineHeight: 1.8, marginBottom: 24 }}>
                   <strong style={{ color: T.text }}>The Connection:</strong> Plug the micro-USB end into the silver port on the ESP32 and the large USB-A end into your computer.
@@ -4461,72 +4461,22 @@ export default function App() {
             {' '}
             <div
               style={{
-                width: 36,
+                width: 48,
                 height: 36,
-                background: T.primaryBg,
-                border: `1px solid ${T.primaryBorder}`,
-                borderRadius: 10,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 flexShrink: 0,
+                cursor: 'pointer',
+                overflow: 'visible'
               }}
+              onClick={() => window.open('https://bfiot.app', '_blank')}
             >
               {' '}
-              <svg width={18} height={18} viewBox="0 0 18 18" fill="none">
-                <rect
-                  x={1}
-                  y={1}
-                  width={16}
-                  height={16}
-                  rx={3}
-                  stroke={T.primary}
-                  strokeWidth={1}
-                />
-                <circle
-                  cx={9}
-                  cy={9}
-                  r={2.5}
-                  stroke={T.primaryLight}
-                  strokeWidth={1}
-                />
-                <line
-                  x1={1}
-                  y1={9}
-                  x2={6.5}
-                  y2={9}
-                  stroke={T.primary}
-                  strokeWidth={1}
-                />
-                <line
-                  x1={11.5}
-                  y1={9}
-                  x2={17}
-                  y2={9}
-                  stroke={T.primary}
-                  strokeWidth={1}
-                />
-                <line
-                  x1={9}
-                  y1={1}
-                  x2={9}
-                  y2={6.5}
-                  stroke={T.primary}
-                  strokeWidth={1}
-                />
-                <line
-                  x1={9}
-                  y1={11.5}
-                  x2={9}
-                  y2={17}
-                  stroke={T.primary}
-                  strokeWidth={1}
-                />
-              </svg>
-              {' '}
+              <img src="/logo2.png" alt="BFIOT Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
             </div>
             {' '}
-            <div>
+            <div style={{ cursor: 'pointer' }} onClick={() => { setPage('gz'); setSelectedPhase(null); setSelectedModule(null); }}>
               {' '}
               <div
                 style={{
@@ -5093,11 +5043,27 @@ export default function App() {
                 fontSize: 11,
               }}
             >
-              <span style={{ color: T.textMuted }}>bfiot</span>
-              <span style={{ color: T.textMuted }}>/</span>             {' '}
-              <span style={{ color: T.textSub }}>{crumb[0]}</span>
-              <span style={{ color: T.textMuted }}>/</span>             {' '}
-              <span style={{ color: T.primary }}>{crumb[1]}</span>           {' '}
+              <span
+                style={{ color: T.textMuted, cursor: 'pointer', transition: 'color 0.2s' }}
+                onMouseEnter={(e) => e.currentTarget.style.color = T.primary}
+                onMouseLeave={(e) => e.currentTarget.style.color = T.textMuted}
+                onClick={() => window.open('https://bfiot.app', '_blank')}
+              >
+                bfiot
+              </span>
+              {crumb[0] ? (
+                <>
+                  <span style={{ color: T.textMuted }}>/</span>             {' '}
+                  <span style={{ color: T.textSub }}>{crumb[0]}</span>
+                  <span style={{ color: T.textMuted }}>/</span>             {' '}
+                  <span style={{ color: T.primary }}>{crumb[1]}</span>           {' '}
+                </>
+              ) : (
+                <>
+                  <span style={{ color: T.textMuted }}>/</span>             {' '}
+                  <span style={{ color: T.primary }}>home /</span>           {' '}
+                </>
+              )}
             </div>
             {' '}
           </div>
