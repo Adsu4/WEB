@@ -2634,7 +2634,7 @@ function ComponentModal({ componentName, T, onClose }) {
 function Referral({ T, onClose }) {
   const [name, setName] = useState('');
   const [ok, setOk] = useState(false);
-  const txt = `I just unlocked the Beginners Formula to IoT platform!\n\nThe breadboard visualizer is genuinely something else — hover any row and the hidden copper tracks light up live. Plus there's an AI project builder that spits out full ESP32 code for any IoT idea you throw at it.\n\nbfiot.vercel.app\n\n— ${name || 'A curious builder'
+  const txt = `I just unlocked the Beginners Formula to IoT platform!\n\nThe breadboard visualizer is genuinely something else — hover any row and the hidden copper tracks light up live. Plus there's an AI project builder that spits out full ESP32 code for any IoT idea you throw at it.\n\nbfiot.app\n\n— ${name || 'A curious builder'
     }`;
   const copy = () => {
     const el = document.createElement('textarea');
@@ -4435,11 +4435,11 @@ export default function App() {
       <style>{CSS}</style>
       {showMobileWarning && (
         <div style={{
-          position: 'fixed', top: 0, left: 0, right: 0, background: T.amber, color: '#fff', 
+          position: 'fixed', top: 0, left: 0, right: 0, background: T.amber, color: '#fff',
           padding: '12px 24px', zIndex: 9999, display: 'flex', justifyContent: 'space-between', alignItems: 'center',
           boxShadow: '0 4px 12px rgba(0,0,0,0.15)', fontWeight: 600, fontSize: 14
         }}>
-          <span><span style={{marginRight: 8}}>⚠️</span> For the best experience, please use a computer.</span>
+          <span><span style={{ marginRight: 8 }}>⚠️</span> For the best experience, please use a computer.</span>
           <button onClick={() => setShowMobileWarning(false)} style={{
             background: 'rgba(0,0,0,0.2)', border: 'none', color: '#fff', padding: '4px 8px', borderRadius: 4, cursor: 'pointer', fontWeight: 'bold'
           }}>✕</button>
