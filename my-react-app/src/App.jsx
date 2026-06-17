@@ -4344,6 +4344,13 @@ export default function App() {
   const [result, setResult] = useState(null);
   const unlocked = true;
   const [overrideGlitch, setOverrideGlitch] = useState(false);
+  const [showMobileWarning, setShowMobileWarning] = useState(false);
+
+  useEffect(() => {
+    if (window.innerWidth < 768) {
+      setShowMobileWarning(true);
+    }
+  }, []);
 
   useEffect(() => {
     const cachedHistory = localStorage.getItem('bfiot_history_log');
@@ -4425,7 +4432,20 @@ export default function App() {
         transition: 'background 0.25s,color 0.25s',
       }}
     >
-      <style>{CSS}</style>      {/* Hamburger Overlay for Mobile */}     {' '}
+      <style>{CSS}</style>
+      {showMobileWarning && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, right: 0, background: T.amber, color: '#fff', 
+          padding: '12px 24px', zIndex: 9999, display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.15)', fontWeight: 600, fontSize: 14
+        }}>
+          <span><span style={{marginRight: 8}}>⚠️</span> For the best experience, please use a computer.</span>
+          <button onClick={() => setShowMobileWarning(false)} style={{
+            background: 'rgba(0,0,0,0.2)', border: 'none', color: '#fff', padding: '4px 8px', borderRadius: 4, cursor: 'pointer', fontWeight: 'bold'
+          }}>✕</button>
+        </div>
+      )}
+      {/* Hamburger Overlay for Mobile */}     {' '}
       <div
         className={`overlay ${menuOpen ? 'open' : ''}`}
         onClick={() => setMenuOpen(false)}
