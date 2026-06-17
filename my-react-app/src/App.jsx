@@ -2881,7 +2881,7 @@ function ProjectLabPage({ T, result, setResult, setHistory }) {
           Authorization: `Bearer ${OR_KEY}`,
           'Content-Type': 'application/json',
           'HTTP-Referer': 'https://bfiot.vercel.app',
-          'X-Title': 'BFIOT Workbench',
+          'X-Title': 'BFIOT Roadmap',
         },
         body: JSON.stringify({
           model: OR_MODEL,
@@ -2944,7 +2944,7 @@ function ProjectLabPage({ T, result, setResult, setHistory }) {
         code: result.code?.snippet,
       };
 
-      const systemPrompt = `You are the technical mentor from the YouTube channel "BFIOT".    You are helping the user assemble the following project. Avoid generic replies.    PROJECT WORKBENCH DATA:    ${JSON.stringify(projectBrief)}
+      const systemPrompt = `You are the technical mentor from the YouTube channel "BFIOT".    You are helping the user assemble the following project. Avoid generic replies.    PROJECT ROADMAP DATA:    ${JSON.stringify(projectBrief)}
     Keep your answers helpful, highly brief (max 2-3 sentences), and explain matching the active pinouts.`;
 
       const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
@@ -4241,7 +4241,7 @@ function LockedPage({ info, T, unlocked, setUnlocked }) {
               transition: 'all 0.2s',
             }}
           >
-            {loading ? 'Verifying...' : 'Unlock Workbench →'}
+            {loading ? 'Verifying...' : 'Unlock Roadmap →'}
           </button>
         </form>
       )}
@@ -4567,7 +4567,7 @@ export default function App() {
                 fontFamily: "'JetBrains Mono',monospace",
               }}
             >
-              Workbench System Live
+              Roadmap System Live
             </span>
             {' '}
           </div>
@@ -4956,7 +4956,6 @@ export default function App() {
                   fontFamily: "'JetBrains Mono',monospace",
                 }}
               >
-                V3
               </span>
               {' '}
             </div>
@@ -5026,7 +5025,7 @@ export default function App() {
                 strokeLinecap="round"
               />
             </svg>
-            Share Workbench          {' '}
+            Share Roadmap          {' '}
           </button>
           {' '}
         </div>

@@ -16,7 +16,9 @@ export default function ResistorDecoderSim({ T }) {
     { name: 'Blue', val: 6, color: '#0000FF', label: '#fff' },
     { name: 'Violet', val: 7, color: '#EE82EE', label: '#000' },
     { name: 'Gray', val: 8, color: '#808080', label: '#fff' },
-    { name: 'White', val: 9, color: '#FFFFFF', label: '#000' }
+    { name: 'White', val: 9, color: '#FFFFFF', label: '#000' },
+    { name: 'Gold', val: -1, color: '#FFD700', label: '#000' },
+    { name: 'Silver', val: -2, color: '#C0C0C0', label: '#000' }
   ];
 
   const tolCodes = [
@@ -27,7 +29,8 @@ export default function ResistorDecoderSim({ T }) {
   const calculateResistance = () => {
     const base = (band1 * 10) + band2;
     const mult = Math.pow(10, multiplier);
-    const total = base * mult;
+    let total = base * mult;
+    total = Math.round(total * 100) / 100;
     
     if (total >= 1000000) return `${total / 1000000} MΩ`;
     if (total >= 1000) return `${total / 1000} kΩ`;
@@ -76,8 +79,8 @@ export default function ResistorDecoderSim({ T }) {
         {/* Selectors */}
         <div style={{ display: 'flex', gap: 16, width: '100%', justifyContent: 'center' }}>
           {[
-            { label: 'Digit 1', val: band1, set: setBand1, options: colorCodes },
-            { label: 'Digit 2', val: band2, set: setBand2, options: colorCodes },
+            { label: 'Digit 1', val: band1, set: setBand1, options: colorCodes.filter(c => c.val >= 0) },
+            { label: 'Digit 2', val: band2, set: setBand2, options: colorCodes.filter(c => c.val >= 0) },
             { label: 'Multiplier', val: multiplier, set: setMultiplier, options: colorCodes },
             { label: 'Tolerance', val: tolerance, set: setTolerance, options: tolCodes, isTol: true }
           ].map((col, i) => (
