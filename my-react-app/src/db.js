@@ -270,7 +270,7 @@ export const LESSONS = {
       {
         "number": 1,
         "title": "Mount the ESP32",
-        "instruction": "Place the ESP32 onto your breadboard so it bridges the middle gap."
+        "instruction": "Keep the ESP32 off the breadboard. Use Female-to-Male jumper wires to connect the ESP32's pins to the breadboard rows."
       },
       {
         "number": 2,
