@@ -243,9 +243,9 @@ export const LESSONS = {
       "concept": "We use the ESP32 strictly as a 3.3V battery. No code allowed. We will physically close a loop of electricity to light an LED safely.",
       "difficulty": "Beginner",
       "buildTime": "15 mins"
-    ,
-    "simulation": "m1"
-  },
+      ,
+      "simulation": "m1"
+    },
     "parts": [
       {
         "category": "Microcontroller",
@@ -315,9 +315,9 @@ export const LESSONS = {
       "concept": "A potentiometer is an adjustable resistor. By twisting the dial, we change the resistance, altering the current flow to the LED in real-time without code.",
       "difficulty": "Beginner",
       "buildTime": "15 mins"
-    ,
-    "simulation": "m2"
-  },
+      ,
+      "simulation": "m2"
+    },
     "parts": [
       {
         "category": "Component",
@@ -387,9 +387,9 @@ export const LESSONS = {
       "concept": "Computers use logic gates to make decisions. Before writing if-statements in code, we can physically build AND logic (series) and OR logic (parallel) using switches.",
       "difficulty": "Intermediate",
       "buildTime": "20 mins"
-    ,
-    "simulation": "m3"
-  },
+      ,
+      "simulation": "m3"
+    },
     "parts": [
       {
         "category": "Component",
@@ -455,9 +455,9 @@ export const LESSONS = {
       "concept": "A transistor is an electronic switch. A tiny current at its 'Base' allows a massive current to flow from 'Collector' to 'Emitter'. We'll use a light sensor to trigger it.",
       "difficulty": "Advanced",
       "buildTime": "25 mins"
-    ,
-    "simulation": "m4"
-  },
+      ,
+      "simulation": "m4"
+    },
     "parts": [
       {
         "category": "Component",
@@ -646,7 +646,60 @@ export const LESSONS = {
     ]
   },
   "p2m1": {
-    "title": "2.1 Booting the Brain",
+    "title": "2.1 Setting Up the IDE",
+    "phase": "PHASE 2: Software Gatekeeper",
+    "isCapstone": false,
+    "overview": {
+      "hook": "Prepare your computer to talk to the ESP32.",
+      "concept": "Before we write code, we need an editor (Arduino IDE) and the correct translation software (Drivers) so your computer can send instructions to the ESP32 over USB.",
+      "difficulty": "Beginner",
+      "buildTime": "15 mins"
+    },
+    "parts": [
+      {
+        "category": "Cable",
+        "name": "Micro USB Cable",
+        "quantity": 1,
+        "why": "To physically connect the ESP32 to your PC."
+      }
+    ],
+    "steps": [
+      {
+        "number": 1,
+        "title": "Download Arduino IDE",
+        "instruction": "Go to the official Arduino website and download the IDE for your operating system: <a href='https://support.arduino.cc/hc/en-us/articles/360019833020-Download-and-install-Arduino-IDE' target='_blank' style='text-decoration: underline; color: inherit; font-weight: 600;'>Download Arduino ide</a>"
+      },
+      {
+        "number": 2,
+        "title": "Open and Select Board",
+        "instruction": "Open the Arduino IDE. In the top dropdown, click 'Select other board and port...'."
+      },
+      {
+        "number": 3,
+        "title": "Connect the ESP32",
+        "instruction": "Connect the ESP32 using the USB cable. Search for 'ESP32 Dev Module' in the boards list, and select the corresponding COM port."
+      },
+      {
+        "number": 4,
+        "title": "Install Drivers (If Needed)",
+        "instruction": "If no COM port works or appears, your computer is missing the serial driver. Download and install the CP2102 to USB driver (often trial and error to find what suits your device) from here: <a href='https://www.silabs.com/software-and-tools/usb-to-uart-bridge-vcp-drivers?tab=downloads' target='_blank' style='text-decoration: underline; color: inherit; font-weight: 600;'>Download driver</a>"
+      },
+      {
+        "number": 5,
+        "title": "Write and Upload Code",
+        "instruction": "Write your code, click the upload tick button, and wait for it to finish."
+      }
+    ],
+    "whatYouWillObserve": "Your computer is now fully equipped to compile C++ code and beam it directly into the ESP32's brain.",
+    "troubleshooting": [
+      {
+        "q": "The COM port is still not showing up.",
+        "a": "Make sure you use the microusb cable provided with the kit, its a data cable and not a powercable, so its reliable. Other cheap cables might be power only. Another issue of code not uploading might be because your version usb to uart might be wrong. Try installing some other version, thats the solution."
+      }
+    ]
+  },
+  "p2m2": {
+    "title": "2.2 Booting the Brain",
     "phase": "PHASE 2: Software Gatekeeper",
     "isCapstone": false,
     "overview": {
@@ -654,9 +707,9 @@ export const LESSONS = {
       "concept": "Now we introduce software. Instead of hardwiring a 555 timer, we will tell the ESP32 to turn a pin HIGH (3.3V) and LOW (0V) using C++ code.",
       "difficulty": "Beginner",
       "buildTime": "15 mins"
-    ,
-    "simulation": "m5"
-  },
+      ,
+      "simulation": "m5"
+    },
     "parts": [
       {
         "category": "Microcontroller",
@@ -680,7 +733,7 @@ export const LESSONS = {
       {
         "number": 2,
         "title": "Select Board",
-        "instruction": "In Tools > Board, select DOIT ESP32 DEVKIT V1. In Tools > Port, select the COM port."
+        "instruction": "In Tools > Board, select ESP32 Dev Module. In Tools > Port, select the COM port."
       },
       {
         "number": 3,
@@ -725,8 +778,8 @@ export const LESSONS = {
       ]
     }
   },
-  "p2m2": {
-    "title": "2.2 Digital Translation",
+  "p2m3": {
+    "title": "2.3 Digital Translation",
     "phase": "PHASE 2: Software Gatekeeper",
     "isCapstone": false,
     "overview": {
@@ -734,9 +787,9 @@ export const LESSONS = {
       "concept": "Instead of routing current directly through a switch to an LED, we will wire the switch to an input pin, read its state in code, and use an if-statement to turn on an LED.",
       "difficulty": "Beginner",
       "buildTime": "20 mins"
-    ,
-    "simulation": "m6"
-  },
+      ,
+      "simulation": "m6"
+    },
     "parts": [
       {
         "category": "Component",
@@ -799,8 +852,8 @@ export const LESSONS = {
       ]
     }
   },
-  "p2m3": {
-    "title": "2.3 The Illusion of Analog",
+  "p2m4": {
+    "title": "2.4 The Illusion of Analog",
     "phase": "PHASE 2: Software Gatekeeper",
     "isCapstone": false,
     "overview": {
@@ -856,8 +909,8 @@ export const LESSONS = {
       ]
     }
   },
-  "p2m4": {
-    "title": "2.4 The ADC Bridge",
+  "p2m5": {
+    "title": "2.5 The ADC Bridge",
     "phase": "PHASE 2: Software Gatekeeper",
     "isCapstone": false,
     "overview": {
@@ -986,7 +1039,7 @@ export const LESSONS = {
       ]
     }
   },
-  
+
   "p3m1": {
     "title": "3.1 Servos & Motors",
     "phase": "PHASE 3: Actuation & Sensors",
@@ -1307,7 +1360,7 @@ export const LESSONS = {
     }
 
   },
-"p4m1": {
+  "p4m1": {
     "title": "4.1 High-Voltage Bridge",
     "phase": "PHASE 4: Connected IoT",
     "isCapstone": false,
@@ -1316,9 +1369,9 @@ export const LESSONS = {
       "concept": "A relay is an electromechanical switch. When we send a tiny 3.3V signal to the coil, it creates a magnetic field that physically pulls a metal contact shut, allowing high voltage to flow on an isolated circuit.",
       "difficulty": "Advanced",
       "buildTime": "20 mins"
-    ,
-    "simulation": "m11"
-  },
+      ,
+      "simulation": "m11"
+    },
     "parts": [
       {
         "category": "Component",
@@ -1371,9 +1424,9 @@ export const LESSONS = {
       "concept": "The ESP32 has a built-in radio. We can configure it in Access Point (AP) mode. It will broadcast its own Wi-Fi network that your phone can connect to.",
       "difficulty": "Intermediate",
       "buildTime": "25 mins"
-    ,
-    "simulation": "m12"
-  },
+      ,
+      "simulation": "m12"
+    },
     "parts": [
       {
         "category": "Microcontroller",

@@ -544,7 +544,7 @@ function LessonSimulator({ pageId, T }) {
   const potVal = Math.round(((knobAngle - 30) / 300) * 100) || 0; // Blink precise interval engine (M5)
 
   useEffect(() => {
-    if (pageId !== 'p2m1') return;
+    if (pageId !== 'p2m2') return;
     let timer;
     const cycle = () => {
       setOnboardBlink((prev) => {
@@ -1003,7 +1003,7 @@ function LessonSimulator({ pageId, T }) {
         </div>
       )}
       {' '}
-      {pageId === 'p2m1' && (
+      {pageId === 'p2m2' && (
         <div>
           {' '}
           <p style={{ fontSize: 13, color: T.textSub, marginBottom: 16 }}>
@@ -1134,7 +1134,7 @@ function LessonSimulator({ pageId, T }) {
         </div>
       )}
       {' '}
-      {pageId === 'p2m2' && (
+      {pageId === 'p2m3' && (
         <div>
           {' '}
           <p style={{ fontSize: 13, color: T.textSub, marginBottom: 16 }}>
@@ -1209,8 +1209,8 @@ function LessonSimulator({ pageId, T }) {
       )}
       {pageId === 'p1m5' && <HardwareTimerSim T={T} />}
       {pageId === 'p1cap' && <VaultAlarmSim T={T} />}
-      {pageId === 'p2m3' && <AnalogOutputSim T={T} />}
-      {pageId === 'p2m4' && <SerialCommSim T={T} />}
+      {pageId === 'p2m4' && <AnalogOutputSim T={T} />}
+      {pageId === 'p2m5' && <SerialCommSim T={T} />}
       {pageId === 'p2cap' && <ThermometerSim T={T} />}
       {pageId === 'p3m1' && <ServoMotorSim T={T} />}
       {pageId === 'p3m2' && <OledDisplaySim T={T} />}
@@ -3667,9 +3667,8 @@ function ProjectLabPage({ T, result, setResult, setHistory }) {
                                 color: T.textSub,
                                 lineHeight: 1.78,
                               }}
-                            >
-                              {s.instruction}
-                            </p>
+                              dangerouslySetInnerHTML={{ __html: s.instruction }}
+                            />
                             {' '}
                           </div>
                           {' '}
@@ -4351,7 +4350,7 @@ export default function App() {
   const PAGE_ORDER = [
     'gz1', 'gz2', 'gz3', 'gz4', 'gz5',
     'p1m1', 'p1m2', 'p1m3', 'p1m4', 'p1m5', 'p1cap',
-    'p2m1', 'p2m2', 'p2m3', 'p2m4', 'p2cap',
+    'p2m1', 'p2m2', 'p2m3', 'p2m4', 'p2m5', 'p2cap',
     'p3m1', 'p3m2', 'p3m3', 'p3m4', 'p3cap',
     'p4m1', 'p4m2', 'p4m3', 'p4cap'
   ];
@@ -4410,10 +4409,11 @@ export default function App() {
     p1m5: ['Phase 1', 'Module 1.5 · Hardware Timers'],
     p1cap: ['Phase 1', 'Capstone · Vault Alarm'],
 
-    p2m1: ['Phase 2', 'Module 2.1 · Software Gatekeeper'],
-    p2m2: ['Phase 2', 'Module 2.2 · Digital Inputs'],
-    p2m3: ['Phase 2', 'Module 2.3 · Analog Outputs & PWM'],
-    p2m4: ['Phase 2', 'Module 2.4 · Serial Communication'],
+    p2m1: ['Phase 2', 'Module 2.1 · Setting Up the IDE'],
+    p2m2: ['Phase 2', 'Module 2.2 · Software Gatekeeper'],
+    p2m3: ['Phase 2', 'Module 2.3 · Digital Inputs'],
+    p2m4: ['Phase 2', 'Module 2.4 · Analog Outputs & PWM'],
+    p2m5: ['Phase 2', 'Module 2.5 · Serial Communication'],
     p2cap: ['Phase 2', 'Capstone · Thermometer'],
 
     p3m1: ['Phase 3', 'Module 3.1 · Servos & Motors'],
@@ -4741,10 +4741,11 @@ export default function App() {
           </button>
           {p2 && (
             <div style={{ paddingLeft: 2 }}>
-              <LBtn id="p2m1" title="Module 2.1" tag="Software Gatekeeper" active={page === 'p2m1'} locked={!unlocked} onClick={go} T={T} />
-              <LBtn id="p2m2" title="Module 2.2" tag="Digital Inputs" active={page === 'p2m2'} locked={!unlocked} onClick={go} T={T} />
-              <LBtn id="p2m3" title="Module 2.3" tag="Analog Outputs" active={page === 'p2m3'} locked={!unlocked} onClick={go} T={T} />
-              <LBtn id="p2m4" title="Module 2.4" tag="Serial Comm" active={page === 'p2m4'} locked={!unlocked} onClick={go} T={T} />
+              <LBtn id="p2m1" title="Module 2.1" tag="Setting Up the IDE" active={page === 'p2m1'} locked={!unlocked} onClick={go} T={T} />
+              <LBtn id="p2m2" title="Module 2.2" tag="Software Gatekeeper" active={page === 'p2m2'} locked={!unlocked} onClick={go} T={T} />
+              <LBtn id="p2m3" title="Module 2.3" tag="Digital Inputs" active={page === 'p2m3'} locked={!unlocked} onClick={go} T={T} />
+              <LBtn id="p2m4" title="Module 2.4" tag="Analog Outputs" active={page === 'p2m4'} locked={!unlocked} onClick={go} T={T} />
+              <LBtn id="p2m5" title="Module 2.5" tag="Serial Comm" active={page === 'p2m5'} locked={!unlocked} onClick={go} T={T} />
               <LBtn id="p2cap" title="Capstone" tag="Thermometer" active={page === 'p2cap'} locked={!unlocked} onClick={go} T={T} special />
             </div>
           )}
@@ -6588,9 +6589,8 @@ export default function App() {
                                     color: T.textSub,
                                     lineHeight: 1.78,
                                   }}
-                                >
-                                  {s.instruction}
-                                </p>
+                                  dangerouslySetInnerHTML={{ __html: s.instruction }}
+                                />
                                 {' '}
                               </div>
                               {' '}
